@@ -80,6 +80,97 @@ app.controller("history-ctrl", ($scope, $http) => {
 });
 
 
+app.controller('chart-ctrl', ($scope, $http) => {
+	$scope.titles = [];
+	$scope.load_title = () => {
+		var url = `${host_}/categories/name/`;
+		$http
+			.get(url)
+			.then((resp) => {
+				$scope.titles = resp.data;
+				var ctx = document.getElementById('myChart');
+				var myChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: $scope.titles,
+						datasets: [
+							{
+								label: 'Categories',
+								data: [
+									12, 19, 34, 5, 2, 3, 12, 19, 29, 5, 2, 3, 44, 12, 26, 3, 5,
+									19, 16, 25, 33, 17,
+								],
+								backgroundColor: [
+									'rgba(255, 99, 132, 0.2)',
+									'rgba(54, 162, 235, 0.2)',
+									'rgba(255, 206, 86, 0.2)',
+									'rgba(75, 192, 192, 0.2)',
+								],
+								borderColor: [
+									'rgba(255, 99, 132, 1)',
+									'rgba(54, 162, 235, 1)',
+									'rgba(255, 206, 86, 1)',
+									'rgba(75, 192, 192, 1)',
+								],
+								borderWidth: 1,
+							},
+						],
+					},
+				});
+			})
+			.catch((err) => {
+				console.log('Error load items', err);
+			});
+	};
+
+	$scope.load_title();
+});
+
+
+app.controller('chart2-ctrl', ($scope, $http) => {
+	$scope.titles = [];
+	$scope.load_title = () => {
+		var url = `${host_}/categories/name/`;
+		$http
+			.get(url)
+			.then((resp) => {
+				$scope.titles = resp.data;
+				var ctx = document.getElementById('myChart2');
+				var myChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						datasets: [
+							{
+								label: 'Sales',
+								data: [
+									{
+										x: '2022-01-01 00:00:00',
+										y: 50555,
+									},
+									{
+										x: '2022-06-06 00:00:00',
+										y: 60333,
+									},
+									{
+										x: '2022-12-30 23:59:59',
+										y: 20444,
+									},
+								],
+								borderColor: ['rgba(54, 162, 235, 1)'],
+							},
+						],
+					},
+				});
+			})
+			.catch((err) => {
+				console.log('Error load items', err);
+			});
+	};
+
+	$scope.load_title();
+});
+
+
 app.controller("category-ctrl", ($scope, $http) => {
     $scope.categories = [];
     $scope.index = 0;
