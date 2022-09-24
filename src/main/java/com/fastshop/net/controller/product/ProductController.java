@@ -1,4 +1,4 @@
-package com.pegashop.net.controller.product;
+package com.fastshop.net.controller.product;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,15 +7,15 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.pegashop.net.model.Account;
-import com.pegashop.net.model.Authority;
-import com.pegashop.net.model.Product;
-import com.pegashop.net.service.AccountService;
-import com.pegashop.net.service.AuthorityService;
-import com.pegashop.net.service.CategoryService;
-import com.pegashop.net.service.ProductSevice;
-import com.pegashop.net.service._CookieService;
-import com.pegashop.net.service._CopyImage;
+import com.fastshop.net.model.Account;
+import com.fastshop.net.model.Authority;
+import com.fastshop.net.model.Product;
+import com.fastshop.net.service.AccountService;
+import com.fastshop.net.service.AuthorityService;
+import com.fastshop.net.service.CategoryService;
+import com.fastshop.net.service.ProductSevice;
+import com.fastshop.net.service._CookieService;
+import com.fastshop.net.service._CopyImage;
 
 @Controller
 public class ProductController {
