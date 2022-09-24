@@ -1,514 +1,570 @@
-var host_ = "http://localhost:8080/rest";
-var number = document.getElementById("number");
-var username = document.getElementById("username");
-var account_ = document.getElementById("username_");
+var host_ = 'http://localhost:8080/rest';
+var number = document.getElementById('number');
+var username = document.getElementById('username');
+var app = angular.module('app', []);
 
-var id = account_.innerHTML;
-var app = angular.module("app", []);
-number.innerHTML = (localStorage.getItem(id) == undefined) ? 0 : JSON.parse(localStorage.getItem(id)).length;
+number.innerHTML =
+	localStorage.getItem('cart') == undefined
+		? 0
+		: JSON.parse(localStorage.getItem('cart')).length;
 
-function getDateNow() {
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = date.getMonth();
-    var day = date.getDay();
-    var strDate = year + "-" + month + "-" + day;
-    return new Date(strDate);
-};
+app.controller('category-ctrl', ($scope, $http) => {
+	$scope.categories = [];
+	$scope.index = 0;
+	$('#prev').hide();
 
-app.controller("history-ctrl", ($scope, $http) => {
-    $scope.histories = [];
-    $scope.selectId = [];
+	$scope.load_categories = () => {
+		var url = `${host_}/categories`;
+		$http
+			.get(url)
+			.then((resp) => {
+				$scope.categories = resp.data;
+				console.log('load items categories ok. ');
+			})
+			.catch((err) => {
+				console.log('Error load items', err);
+			});
+	};
 
-    $scope.load_histories = () => {
-        var url = `${host_}/history/all`;
-        $http.get(url).then((resp) => {
-            $scope.histories = resp.data;
-        }).catch((err) => {
-            console.log("Error load histories", err);
-        });
-    };
+	$scope.prev = () => {
+		$scope.index = 0;
+		$('#next').show();
+		$('#prev').hide();
+	};
 
-    $scope.add = (id) => {
-        var index = $scope.selectId.findIndex(item => item == id);
-        if (index == -1) {
-            $scope.selectId.push(id);
-        }
-        else {
-            $scope.selectId.splice(index, 1);
-        }
-    };
+	$scope.next = () => {
+		$scope.index = 1;
+		$('#next').hide();
+		$('#prev').show();
+	};
 
-    $scope.remove = (id) => {
-        var url = `${host_}/history/${id}`;
-        $http.delete(url).then((resp) => {
-            var index = $scope.histories.findIndex(item => item.id == id);
-            $scope.histories.splice(index, 1);
-            console.log("Xoa thanh cong " + id, resp);
-        });
-    };
+	$scope.load_categories();
+});
+//Chart  1
+app.controller('chart-ctrl', ($scope, $http) => {
+	$scope.titles = [];
+	$scope.load_title = () => {
+		var url = `${host_}/categories/name/`;
+		$http
+			.get(url)
+			.then((resp) => {
+				$scope.titles = resp.data;
+				var ctx = document.getElementById('myChart');
+				var myChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: $scope.titles,
+						datasets: [
+							{
+								label: 'Categories',
+								data: [
+									12, 19, 34, 5, 2, 3, 12, 19, 29, 5, 2, 3, 44, 12, 26, 3, 5,
+									19, 16, 25, 33, 17,
+								],
+								backgroundColor: [
+									'rgba(255, 99, 132, 0.2)',
+									'rgba(54, 162, 235, 0.2)',
+									'rgba(255, 206, 86, 0.2)',
+									'rgba(75, 192, 192, 0.2)',
+								],
+								borderColor: [
+									'rgba(255, 99, 132, 1)',
+									'rgba(54, 162, 235, 1)',
+									'rgba(255, 206, 86, 1)',
+									'rgba(75, 192, 192, 1)',
+								],
+								borderWidth: 1,
+							},
+						],
+					},
+				});
+			})
+			.catch((err) => {
+				console.log('Error load items', err);
+			});
+	};
 
-    $scope.delete = () => {
-        if ($scope.selectId.length > 0) {
-            $scope.selectId.forEach(id => {
-                var url = `${host_}/history/${id}`;
-                $http.delete(url).then((resp) => {
-                    var index = $scope.histories.findIndex(item => item.id == id);
-                    $scope.histories.splice(index, 1);
-                    $scope.all = false;
-                });
-            });
-        }
-        else {
-            alert("Choose some history to delete");
-        }
-    };
-
-    $scope.choose_all = () => {
-        if ($scope.all) {
-            $scope.histories.forEach(h => {
-                $scope.selectId.push(h.id);
-            });
-        }
-        else {
-            $scope.selectId = [];
-        }
-        console.log($scope.selectId.length);
-    };
-
-    $scope.load_histories();
+	$scope.load_title();
 });
 
+app.controller('chart2-ctrl', ($scope, $http) => {
+	$scope.titles = [];
+	$scope.load_title = () => {
+		var url = `${host_}/categories/name/`;
+		$http
+			.get(url)
+			.then((resp) => {
+				$scope.titles = resp.data;
+				var ctx = document.getElementById('myChart2');
+				var myChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						datasets: [
+							{
+								label: 'Sales',
+								data: [
+									{
+										x: '2022-01-01 00:00:00',
+										y: 50555,
+									},
+									{
+										x: '2022-06-06 00:00:00',
+										y: 60333,
+									},
+									{
+										x: '2022-12-30 23:59:59',
+										y: 20444,
+									},
+								],
+								borderColor: ['rgba(54, 162, 235, 1)'],
+							},
+						],
+					},
+				});
+			})
+			.catch((err) => {
+				console.log('Error load items', err);
+			});
+	};
 
-app.controller("category-ctrl", ($scope, $http) => {
-    $scope.categories = [];
-    $scope.index = 0;
-    $("#prev").hide();
+	$scope.load_title();
+});
+app.controller('employee-ctrl', ($scope, $http) => {
+	$scope.employees = [];
 
-    $scope.load_categories = () => {
-        var url = `${host_}/categories`;
-        $http.get(url).then((resp) => {
-            $scope.categories = resp.data;
-        }).catch((err) => {
-            console.log("Error load items", err);
-        });
-    };
-    
-    $scope.prev = () => {
-        $scope.index = 0;
-        $("#next").show();
-        $("#prev").hide();
-    };
+	// get list employees from API
+	$scope.load_employees = () => {
+		var url = `${host_}/authorities/staff`;
+		$http
+			.get(url)
+			.then((resp) => {
+				$scope.employees = resp.data;
+				console.log('load ok employee');
+			})
+			.catch((err) => {
+				console.log('Error employee', err);
+			});
+	};
 
-    $scope.next = () => {
-        $scope.index = 1;
-        $("#next").hide();
-        $("#prev").show();
-    };
-
-
-    $scope.load_categories();
+	$scope.load_employees();
 });
 
+app.controller('checkout-ctrl', ($scope) => {
+	// luôn lấy dữ liệu từ trong localStorage để khi bấm F5 ko bị mất
+	// $scope.count = (localStorage.getItem("cart") == undefined) ? 0 : JSON.parse(localStorage.getItem("cart")).length;
 
-// cái này là để hiển thị danh sách sản phẩm và thanh toán luôn
-app.controller("checkout-ctrl", ($scope, $http) => {
-    var id = account_.innerHTML;
+	// $scope.cart = {
+	//     // this is an item present
+	//     items: [],
 
-    $scope.qty = 1;
+	//     // this is function remove an item
+	//     remove(id) {
+	//         var index = this.items.findIndex(item => item.id == id);
+	//         this.items.splice(index, 1);
+	//         this.saveToLocalStorage();
+	//     },
 
-    $scope.cart = {
-        items: [],
+	//     // this is function clear all of items
+	//     clear() {
+	//         this.items = [];
+	//         this.saveToLocalStorage();
+	//         number.innerHTML = 0;
+	//     },
 
-        minus(id_product) {
-            var item = this.items.find(item => item.id == id_product);
-            item.qty = (item.qty < 2) ? 1 : item.qty - 1;
-        },
-    
-        plus(id_product) {
-            var item = this.items.find(item => item.id == id_product);
-            item.qty++;
-        },
+	//     // calculate money for each item
+	//     amt_of(item){
+	//         return item.qty*item.price;
+	//     },
 
+	//     // sum items qty into cart, all qty of items
+	//     get count(){
+	//         return this.items
+	//                    .map(item => item.qty)
+	//                    .reduce((total, qty) => total += qty, 0);
+	//     },
 
-        // Thêm sản phẩm vào giỏ hàng
-        add(id_product){
-            var item = this.items.find(item => item.id == id_product);
-            if(item) {
-                item.qty++;
-                this.saveToLocalStorage();
-            }
-            else {
-                $http.get(`${host_}/products/${id_product}`).then(resp => {
-                    resp.data.qty = 1;
-                    this.items.push(resp.data);
-                    this.saveToLocalStorage();
-                })
-            }
-        },
+	//     // sum money all of items
+	//     get amount(){
+	//         return this.items
+	//                    .map(item => item.qty * item.price)
+	//                    .reduce((total, qty) => total += qty, 0);
+	//     },
 
-        // Xóa sản phẩm khỏi giỏ hàng
-        remove(id_product){
-            var index = this.items.findIndex(item => item.id == id_product);
-            this.items.splice(index, 1);
-            number.innerHTML -= 1;
-            this.saveToLocalStorage();
-        },
+	//     // save cart on localstorage
+	//     saveToLocalStorage(){
+	//         var json = JSON.stringify(angular.copy(this.items));
+	//         localStorage.setItem("cart", json);
+	//     },
 
-        // Xóa sạch các mặt hàng trong giỏ
-        clear(){
-            this.items = [];
-            number.innerHTML = 0;
-            this.saveToLocalStorage();
-        },
+	//     // get cart from localstorage
+	//     loadFromLocalStorage(){
+	//         var json = localStorage.getItem("cart");
+	//         this.items = json ? JSON.parse(json) : [];
+	//     },
 
-        // Tính thành tiền của 1 sản phẩm
-        amt_of(item) {
-            return item.price * item.qty;
-        },
+	//     // process payment
+	//     payment() {
+	//         this.clear();
+	//         swal("Good job!", "You clicked the button!", "success");
+	//         this.saveToLocalStorage();
+	//     },
+	// };
 
-        // Tính tổng số lượng các mặt hàng trong giỏ
-        get count() {
-            return this.items
-                       .map(item => item.qty)
-                       .reduce((total, qty) => total += qty, 0);
-        },
+	// $scope.cart.loadFromLocalStorage();
 
-        // Tổng thành tiền các mặt hàng trong giỏ
-        get amount() {
-            return this.items
-                       .map(item => item.qty*item.price)
-                       .reduce((total, qty) => total += qty,0);
-        },
+	$scope.cart = {
+		items: [],
+		//Thêm sản phẩm vào giỏ hàng
+		add(id) {
+			var item = this.items.find((item) => item.id == id);
+			if (item) {
+				item.qty++;
+				this.saveToLocalStorage();
+			} else {
+				$http.get(`/rest/products/${id}`).then((resp) => {
+					resp.data.qty = 1;
+					this.items.push(resp.data);
+					this.saveToLocalStorage();
+				});
+			}
+			alert('Added to cart!');
+		},
+		//Xóa sản phẩm khỏi giỏ hàng
+		remove(id) {
+			var index = this.items.findIndex((item) => item.id == id);
+			this.items.splice(index, 1);
+			this.saveToLocalStorage();
+		},
+		//Xóa sạch các mặt hàng trong giỏ
+		clear() {
+			this.items = [];
+			this.saveToLocalStorage();
+		},
+		//Tính thành tiền của 1 sản phẩm
+		amt_of(item) {},
+		//Tính tổng số lượng các mặt hàng trong giỏ
+		get count() {
+			return this.items
+				.map((item) => item.qty)
+				.reduce((total, qty) => (total += qty), 0);
+		},
+		//Tổng thành tiền các mặt hàng trong giỏ
+		get amount() {
+			return this.items
+				.map((item) => item.qty * item.price)
+				.reduce((total, qty) => (total += qty), 0);
+		},
+		//Lưu giỏ hàng vào local storage
+		saveToLocalStorage() {
+			var json = JSON.stringify(angular.copy(this.items));
+			localStorage.setItem('cart', json);
+		},
+		//Đọc giỏ hàng từ local storage
+		loadFromLocalStorage() {
+			var json = localStorage.getItem('cart');
+			this.items = json ? JSON.parse(json) : [];
+		},
+	};
+	$scope.cart.loadFromLocalStorage();
 
-        // Lưu giỏ hàng vào local storage
-        saveToLocalStorage() {
-            var json = JSON.stringify(angular.copy(this.items));
-            localStorage.setItem(id, json);
-        },
-
-        // Đọc giỏ hàng từ local storage
-        loadFromLocalStorage() {
-            var json = localStorage.getItem(id);
-            this.items= json ? JSON.parse(json):[];
-        }
-    }
-    $scope.cart.loadFromLocalStorage();
-
-    $scope.order = {
-        createDate: new Date(),
-        address:"",
-        account:{username: $("#username_").text()},
-        get orderDetails(){
-            return $scope.cart.items.map(item => {
-                return {
-                    product:{id: item.id},
-                    price: item.price,
-                    quantity: item.qty
-                }
-            });
-        },
-        purchase(){
-            var order = angular.copy(this);
-            // Thực hiện đặt hàng
-            $http.post("/rest/orders", order).then(resp => {
-                alert("Order Success!");
-                $scope.cart.clear();
-                location.href="/order/detail/" + resp.data.id;
-            }).catch(error => {
-                alert("Order error!")
-                console.log(error)
-            })
-        }
-    }
+	$scope.order = {
+		createDate: new Date(),
+		address: '',
+		account: { username: $('#username').text() },
+		get orderDetails() {
+			return $scope.cart.items.map((item) => {
+				return {
+					product: { id: item.id },
+					price: item.price,
+					quantity: item.qty,
+				};
+			});
+		},
+		purchase() {
+			var order = angular.copy(this);
+			//Thực hiện đặt hàng
+			$http
+				.post('/rest/orders', order)
+				.then((resp) => {
+					alert('Order Success!');
+					$scope.cart.clear();
+					location.href = '/order/detail/' + resp.data.id;
+				})
+				.catch((error) => {
+					alert('Order error!');
+					console.log(error);
+				});
+		},
+	};
 });
 
+app.controller('cart-ctrl', ($scope, $http) => {
+	// luôn lấy dữ liệu từ trong localStorage để khi bấm F5 ko bị mất
+	$scope.count =
+		localStorage.getItem('cart') == undefined
+			? 0
+			: JSON.parse(localStorage.getItem('cart')).length;
 
-// cart là cái chỉ để thêm sản phẩm vào giỏ hàng
-app.controller("cart-ctrl", ($scope, $http) => {
+	$scope.status = {
+		qty_js: 1,
 
-    // luôn lấy dữ liệu từ trong localStorage để khi bấm F5 ko bị mất
-    var id = account_.innerHTML;
-    number.innerHTML = (localStorage.getItem(id) == undefined) ? 0 : JSON.parse(localStorage.getItem(id)).length;
-    
-    $scope.qty = 1;
+		minus() {
+			this.qty_js--;
+		},
+		plus() {
+			this.qty_js++;
+		},
+	};
 
-    $scope.minus = () => {
-        $scope.qty = ($scope.qty < 2) ? 1 : $scope.qty-1;
-    };
+	$scope.cart = {
+		// this is an item present
+		items: [],
 
-    $scope.plus = () => {
-        $scope.qty++;
-    };
+		// this is function add an item
+		add(id) {
+			var item = this.items.find((item) => item.id == id);
+			if (item) {
+				item.qty += $scope.status.qty_js;
+				this.saveToLocalStorage();
+			} else {
+				$http.get(`${host_}/products/${id}`).then((resp) => {
+					resp.data.qty = $scope.status.qty_js; // lấy sty_js ban đầu được chọn
+					this.items.push(resp.data);
+					this.saveToLocalStorage();
+					number.innerHTML = $scope.count + 1; // để mặc định number sẽ là $scope.count (+1) để hiện 1 ngay - nó sẽ là localStorage đang giữ bao nhiêu item, nên ko nhất định là 1;
+				});
+			}
+			number.innerHTML = $scope.count + 1; // cập nhật bao nhiêu loại hàng trong cart (not qty)
+		},
 
+		// save cart on localstorage
+		saveToLocalStorage() {
+			var json = JSON.stringify(angular.copy(this.items));
+			localStorage.setItem('cart', json);
+		},
 
-    $scope.cart = {
-        item: [],
+		// get cart from localstorage
+		loadFromLocalStorage() {
+			var json = localStorage.getItem('cart');
+			this.items = json ? JSON.parse(json) : [];
+		},
+	};
 
-        add(id_product) {
-            var item = this.items.find(item => item.id == id_product);
-            if (item) {
-                item.qty += $scope.qty;
-                this.saveToLocalStorage();
-            }
-            else {
-                $http.get(`${host_}/products/${id_product}`).then(resp => {
-                    resp.data.qty = $scope.qty;
-                    this.items.push(resp.data);
-                    this.saveToLocalStorage();
-                    number.innerHTML = Number(number.innerHTML) + 1;   // để mặc định number sẽ là $scope.count (+1) để hiện 1 ngay - nó sẽ là localStorage đang giữ bao nhiêu item, nên ko nhất định là 1;
-                })
-            }
-        },
-
-        //Lưu giỏ hàng vào local storage
-        saveToLocalStorage(){
-            var json = JSON.stringify(angular.copy(this.items));
-            localStorage.setItem(id, json);
-        },
-
-        //Đọc giỏ hàng từ local storage
-        loadFromLocalStorage(){
-            var json = localStorage.getItem(id);
-            this.items = json ? JSON.parse(json) : [];
-        }
-    }
-
-    $scope.cart.loadFromLocalStorage();
+	$scope.cart.loadFromLocalStorage();
 });
 
+app.controller('product-ctrl', ($scope, $http) => {
+	$scope.form = {};
+	$scope.items = [];
+	$scope.open = 0;
 
-app.controller("product-ctrl", ($scope, $http) => {
-    $scope.form = {};
-    $scope.items = [];
-    $scope.open = 0;
+	$scope.load_product = () => {
+		var url = `${host_}/products`;
+		$http
+			.get(url)
+			.then((resp) => {
+				$scope.items = resp.data;
+				console.log('load items product ok. ');
+			})
+			.catch((err) => {
+				console.log('Error load items', err);
+			});
+	};
 
-    $scope.load_product = () => {
-        var url = `${host_}/products`;
-        $http.get(url).then((resp) => {
-            $scope.items = resp.data;
-            console.log("load items product ok. ");
-        }).catch((err) => {
-            console.log("Error load items", err);
-        });
-    };
+	$scope.edit = (id) => {
+		var url = `${host_}/products/${id}`;
+		$http
+			.get(url)
+			.then((resp) => {
+				$scope.form = resp.data;
+				$scope.open = 1;
+				console.log('edit ok', resp);
+			})
+			.catch((err) => {
+				console.log('edit fail', err);
+			});
+	};
 
+	$scope.create = () => {
+		var url = `${host_}/products`;
+		var item = angular.copy($scope.form);
+		$http
+			.post(url, item)
+			.then((resp) => {
+				$scope.items.push(item);
+				$scope.load_product();
+				console.log('Create success', resp);
+			})
+			.catch((err) => {
+				console.log('error create', err);
+			});
+	};
 
-    $scope.edit = (id) => {
-        var url = `${host_}/products/${id}`;
-        $http.get(url).then((resp) => {
-            $scope.form = resp.data;
-            $scope.open = 1;
-            console.log("edit ok", resp);
-        }).catch((err) => {
-            console.log("edit fail", err);
-        });
-    };
+	$scope.update = () => {
+		var item = angular.copy($scope.form);
+		var url = `${host_}/products/${$scope.form.id}`;
+		$http
+			.put(url, item)
+			.then((resp) => {
+				var index = $scope.items.findIndex((item) => item.id == $scope.form.id);
+				$scope.items[index] = item;
+				$scope.load_product();
+				console.log('update success', resp);
+			})
+			.catch((err) => {
+				console.log('Error', err);
+			});
+	};
 
-    $scope.create = () => {
-        var url = `${host_}/products`;
-        var item = angular.copy($scope.form);
+	$scope.delete = (id) => {
+		var url = `${host_}/products/${id}`;
+		$http
+			.delete(url)
+			.then((result) => {
+				var index = $scope.items.findIndex((item) => item.id == $scope.form.id);
+				$scope.items.splice(index, 1);
+				$scope.clear();
+				console.log('delete success', result);
+			})
+			.catch((err) => {
+				console.log('error', err);
+			});
+	};
 
-        item.available = (item.number == 0) ? false : true;
-        item.createDate = (item.createDate == null) ? getDateNow(): item.createDate;
-        item.image = document.getElementById("form-image").files[0].name;
-        item.describe = NaN;
+	$scope.reset = () => {
+		$scope.form = { price: 0, number: 0 };
+		$scope.open = 0;
+	};
 
+	$scope.sum_seconds_food = 48 * 60 * 60;
 
-        $http.post(url, item).then((resp) => {
-            $scope.items.push(item);
-            $scope.load_product();
-            console.log("Create success", resp);
-        }).catch((err) => {
-            console.log("error create", err);
-        });
-    };
-
-    $scope.update = () => {
-        var item = angular.copy($scope.form);
-        var url = `${host_}/products/${$scope.form.id}`;
-        $http.put(url, item).then((resp) => {
-            var index = $scope.items.findIndex(item => item.id == $scope.form.id);
-            $scope.items[index] = item;
-            $scope.load_product();
-            console.log("update success", resp);
-        }).catch((err) => {
-            console.log("Error", err);
-        });
-    };
-
-    $scope.delete = (id) => {
-        var url = `${host_}/products/${id}`;
-        $http.delete(url).then((result) => {
-            var index = $scope.items.findIndex(item => item.id == $scope.form.id);
-            $scope.items.splice(index, 1);
-            $scope.clear();
-            console.log("delete success", result);
-        }).catch((err) => {
-            console.log("error", err);
-        });
-    };
-
-    $scope.reset = () => {
-        $scope.form = {"price": 0, "number": 0};
-        $scope.open = 0;
-    };
-
-
-
-    $scope.sum_seconds_food = 48*60*60;
-    
-
-    $scope.load_product();
+	$scope.load_product();
 });
 
+app.controller('order-ctrl', ($scope, $http) => {
+	$scope.orders = [];
+	$scope.orderdetails = [];
+	$scope.bill = {};
+	$scope.sum = 0;
 
-app.controller("order-ctrl", ($scope, $http) => {
-    $scope.orders = [];
-    $scope.orderdetails = [];
-    $scope.bill = {};
-    $scope.sum = 0;
+	// load all of order
+	$scope.load_orders = () => {
+		var url_order = `${host_}/orders`;
+		$http
+			.get(url_order)
+			.then((resp) => {
+				$scope.orders = resp.data;
+				console.log('load order', resp);
+			})
+			.catch((err) => {
+				console.log('error order', err);
+			});
+	};
 
-    // load all of order
-    $scope.load_orders = () => {
-        var url_order = `${host_}/orders`;
-        $http.get(url_order).then((resp) => {
-            $scope.orders = resp.data;
-            console.log("load order", resp);
-        }).catch((err) => {
-            console.log("error order", err);
-        });
-    };
+	// load all of detail
+	$scope.load_orderdetails = () => {
+		var url_orderdetails = `${host_}/orderdetails`;
+		$http
+			.get(url_orderdetails)
+			.then((resp) => {
+				$scope.orderdetails = resp.data;
+				console.log('load order detail', resp);
+			})
+			.catch((err) => {
+				console.log('error order detail', err);
+			});
+	};
 
-    // load all of detail
-    $scope.load_orderdetails = () => {
-        var url_orderdetails = `${host_}/orderdetails`;
-        $http.get(url_orderdetails).then((resp) => {
-            $scope.orderdetails = resp.data;
-            console.log("load order detail", resp);
-        }).catch((err) => {
-            console.log("error order detail", err);
-        });
-    };
+	// edit order to show product and qua
+	$scope.edit = (id) => {
+		var url_orderdetails = `${host_}/details/order/${id}`;
+		var s = 0;
+		$http
+			.get(url_orderdetails)
+			.then((resp) => {
+				$scope.bill = resp.data;
+				for (let index = 0; index < $scope.bill.length; index++) {
+					s +=
+						Number($scope.bill[index].quantity) *
+						Number($scope.bill[index].product.price);
+				}
+				$scope.sum = s;
+				console.log('load form detail ' + $scope.sum, resp);
+			})
+			.catch((err) => {
+				console.log('error order detail', err);
+			});
+	};
 
-    // edit order to show product and qua
-    $scope.edit = (id) => {
-        var url_orderdetails = `${host_}/details/order/${id}`;
-        var s = 0;
-        $http.get(url_orderdetails).then((resp) => {
-            $scope.bill = resp.data;
-            for (let index = 0; index < $scope.bill.length; index++) {
-                s += Number($scope.bill[index].quantity) * Number($scope.bill[index].product.price);
-            }
-            $scope.sum = s;
-            console.log("load form detail " + $scope.sum, resp);
-        }).catch((err) => {
-            console.log("error order detail", err);
-        });
-    };
-
-
-    $scope.load_orders();
-    $scope.load_orderdetails();
+	$scope.load_orders();
+	$scope.load_orderdetails();
 });
 
+app.controller('keyword-ctrl', ($scope, $http) => {
+	$scope.id_last = 0;
+	$scope.keywords = [];
+	$scope.set_keyword = { id: 0, keysearch: '', account: {} };
 
-app.controller("keyword-ctrl", ($scope, $http) => {
-    $scope.id_last = 0;
-    $scope.keywords = [];
-    $scope.set_keyword  = {"id":0, "keysearch":"", "account": {}};
+	$scope.loadKeyword = () => {
+		var url = `${host_}/keywords/account/${username.innerHTML}`;
+		$http.get(url).then((resp) => {
+			$scope.keywords = resp.data;
+		});
 
-    $scope.loadKeyword = () => {
-        var url = `${host_}/keywords/account/${username.innerHTML}`;
-        $http.get(url).then((resp) => {
-            $scope.keywords = resp.data;
-        });
+		var url_acc_ = `${host_}/accounts/${username.innerHTML}`;
+		$http.get(url_acc_).then((resp) => {
+			$scope.set_keyword.account = resp.data;
+		});
 
-        var url_acc_=`${host_}/accounts/${username.innerHTML}`;
-        $http.get(url_acc_).then((resp) => {
-            $scope.set_keyword.account = resp.data;
-        });
+		var url_last_id = `${host_}/keywords/lastid/${username.innerHTML}`;
+		$http.get(url_last_id).then((resp) => {
+			$scope.id_last = Number(resp.data);
+		});
+	};
 
-        var url_last_id = `${host_}/keywords/lastid/${username.innerHTML}`;
-        $http.get(url_last_id).then((resp) => {
-            $scope.id_last = Number(resp.data);
-        });
-    };
+	// dang bi loi cho nay khi add va delete
+	$scope.add = () => {
+		var search_input = document.getElementById('search-gallery');
+		search_input.addEventListener('keypress', function (event) {
+			if (event.key === 'Enter') {
+				var url = `${host_}/keywords`;
+				$scope.set_keyword.id = $scope.id_last + 1;
+				var item = angular.copy($scope.set_keyword);
+				$http
+					.post(url, item)
+					.then((resp) => {
+						$scope.keywords.push($scope.set_keyword);
+						$scope.clear();
+						console.log('> add success keyword ', resp);
+					})
+					.catch((err) => {
+						console.log('error add keyword ', err);
+					});
 
+				$('.menu-search').hide();
+			}
+		});
+	};
 
-    // dang bi loi cho nay khi add va delete
-    $scope.add = () => {
-        var search_input = document.getElementById("search-gallery");
-        search_input.addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                var url = `${host_}/keywords`;
-                $scope.set_keyword.id = $scope.id_last + 1;
-                var item = angular.copy($scope.set_keyword);
-                $http.post(url, item).then((resp) => {
-                    $scope.keywords.push($scope.set_keyword);
-                    $scope.clear();
-                    console.log("> add success keyword ", resp);
-                }).catch((err) => {
-                    console.log("error add keyword ", err);
-                });
+	$scope.delete = (id) => {
+		var url = `${host_}/keywords/${id}`;
+		$http
+			.delete(url)
+			.then((resp) => {
+				var index = $scope.keywords.findIndex((item) => item.id == id);
+				$scope.keywords.splice(index, 1);
+				$scope.clear();
+				console.log('> delete success keyword ', resp);
+			})
+			.catch((err) => {
+				console.log('error delete key ave id ' + id, err);
+			});
+	};
 
-                $(".menu-search").hide();
-            }
-       });
-    };
+	$scope.clear = () => {
+		$scope.set_keyword = { id: 0, keysearch: '', account: {} };
+		$scope.loadKeyword();
+	};
 
-    $scope.delete = (id) => {
-        var url = `${host_}/keywords/${id}`;
-        $http.delete(url).then((resp) => {
-            var index = $scope.keywords.findIndex(item => item.id == id);
-            $scope.keywords.splice(index, 1);
-            $scope.clear();
-            console.log("> delete success keyword ", resp);
-        }).catch((err) => {
-            console.log("error delete key ave id " + id, err);
-        });
-    };
-
-    $scope.clear = () => {
-        $scope.set_keyword  = {"id":0, "keysearch":"", "account": {}};
-        $scope.loadKeyword();
-    }
-
-    $scope.loadKeyword();
-});
-
-
-app.controller("changed-ctrl", ($scope, $http) => {
-    $scope.account = {};
-    var id = account_.innerHTML;
-    var url = `${host_}/accounts/${id}`;
-    $http.get(url).then((resp) => {
-        $scope.account = resp.data;
-        console.log($scope.account.password);
-    });
-
-    $scope.pass1 = "";
-    $scope.pass2 = "";
-    $scope.pass3 = "";
-    $scope.error1 = "";
-    $scope.error2 = "";
-    $scope.error3 = "";
-
-    $scope.change = () => {
-        $scope.error2 = ($scope.pass2 == "" || $scope.pass2 == NaN) ? "(*) Password mới không được để trống." : "" ;
-        $scope.error1 = ($scope.pass1 == "" || $scope.pass1 == NaN) ? "(*) Password hiện tại không được để trống.":
-                        ($scope.pass1  !=  $scope.account.password) ? "(*) Password hiện tại không đúng"            : "" ;
-        $scope.error3 = ($scope.pass3 == "" || $scope.pass3 == NaN) ? "(*) Xác nhận password không được để trống.": 
-                        ($scope.pass2 != $scope.pass3) ? "(*) Mật khẩu xác nhận không trùng nhau."                : "" ;
-        
-        if ($scope.error1 != "" && $scope.error2 != "" && $scope.error3 != "") {
-            $scope.account.password = $scope.pass3;
-
-            $http.put(url, $scope.account).then((resp) => {
-                console.log("thanh cong", resp);
-            }).catch((err) => {
-                console.log("that bai", err);
-            });
-        }
-    };
+	$scope.loadKeyword();
 });
