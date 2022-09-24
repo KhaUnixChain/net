@@ -1,0 +1,54 @@
+package com.fastshop.net.controller.rest;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fastshop.net.model.Order;
+import com.fastshop.net.model.OrderDetail;
+import com.fastshop.net.repository.OrderDetailDAO;
+import com.fastshop.net.service.OrderService;
+
+@CrossOrigin("*")
+@RestController
+public class RestOrderController {
+    @Autowired
+    OrderService orderService;
+    @Autowired
+    OrderDetailDAO orderDetailDAO;
+
+    @GetMapping("/rest/orders")
+    public List<Order> getAll() {
+        return orderService.findAll();
+    }
+
+    @GetMapping("/rest/orders/{id}")
+    public Order getOrderId(@PathVariable("id") Long id) {
+        return orderService.findById(id);
+    }
+
+    @GetMapping("/rest/details/order/{id}")
+    public List<OrderDetail> gDetailsWithOrder(@PathVariable("id") Long id) {
+        Order order = orderService.findById(id);
+        return orderDetailDAO.findByOrder(order);
+    }
+
+
+    @PutMapping("/rest/orders/{id}")
+    public Order put(@PathVariable("id") Long id, @RequestBody Order order) {
+        orderService.save(order);
+        return order;
+    }
+
+    @DeleteMapping("/rest/orders/{id}")
+    public void delete(@PathVariable("id") Long id) {
+        orderService.deleteById(id);
+    }
+}
