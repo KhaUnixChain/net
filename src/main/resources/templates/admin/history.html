@@ -1,0 +1,65 @@
+<div th:fragment="subfragment" class="page-wrapper">
+  <div class="card mt-4 bg-white mb-4" ng-controller="history-ctrl">
+    <div class="card-header d-flex justify-content-between">
+      <h3 class="ms-2 card-title text-primary">
+        <input ng-click="choose_all()" type="checkbox" class="me-3" style="width: 24px; height: 24px; vertical-align: middle;" ng-model="all"> Lịch sử hoạt động
+      </h3>
+      <svg ng-click="delete()" xmlns="http://www.w3.org/2000/svg" style="color: red; cursor: pointer;" class="icon icon-tabler icon-tabler-trash me-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <line x1="4" y1="7" x2="20" y2="7"></line>
+        <line x1="10" y1="11" x2="10" y2="17"></line>
+        <line x1="14" y1="11" x2="14" y2="17"></line>
+        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+     </svg>
+    </div>
+
+    <div class="pt-3 ms-4 me-2">
+
+      <!--  -->
+
+      <div class="hover row mb-4" ng-repeat="history in histories">
+        <div class="d-flex align-items-center justify-content-between">
+          <span class="align-items-center d-flex">
+            <div style="width: 300px;">
+              <input ng-checked="all" ng-click="add(history.id)"  type="checkbox" name="history" style="width: 17px; height: 17px; vertical-align: middle;" class="align-items-center me-3">
+              <strong class="small text-muted me-4">{{history.schedual | date: 'dd-MM-yyyy HH:mm' }}</strong>
+            </div>
+            <div>
+              <img th:src="@{/dist/img/logo/logo_favicon.png}" style="width: 23px; height: 18px;" class="me-2" alt="">
+              <a href="{{history.link}}" class="fs-5 ms-2 text-muted">
+                <span class="fs-5 me-4">{{history.title}}</span>
+              </a>
+            </div>
+          </span>
+          <span ng-click="remove(history.id)">
+            <!-- icon x -->
+            <svg style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg me-3" viewBox="0 0 16 16">
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <!--  -->
+
+
+
+    </div>
+      <ul class="pagination mb-2 me-2 ms-auto">
+        <li class="page-item me-3">
+          <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="15 6 9 12 15 18" /></svg>
+            Trở về
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">
+            Tiếp tục
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="9 6 15 12 9 18" /></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
