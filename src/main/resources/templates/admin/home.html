@@ -134,11 +134,13 @@
               </div>
             </div>
           </div>
-          <div class="col-md-8">
+           <div class="col-12">
             <div class="card">
               <div class="card-body">
-                <h3 class="card-title">Biểu đồ doanh thu trong 6 tháng đến nay</h3>
-                <div id="chart-uptime" class="chart-lg"></div>
+                <h3 class="card-title">Cập nhật số lượng đang bán</h3>
+                <div ng-controller="chart-ctrl">
+                  <canvas id="myChart" width="500" height="200" class="mb-5"></canvas>
+                </div>
               </div>
             </div>
           </div>
