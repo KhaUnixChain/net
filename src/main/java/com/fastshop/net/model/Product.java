@@ -25,7 +25,8 @@ import lombok.Data;
 
 @SuppressWarnings("serial")
 @Data
-@Entity @Table(name = "Products")
+@Entity 
+@Table(name = "Products")
 public class Product implements Serializable{
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,4 +65,8 @@ public class Product implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	List<Comment> comments;
+
+	@ManyToOne
+	@JoinColumn(name = "Discountid")
+	Discount discount;
 }
