@@ -33,8 +33,11 @@ public class Discount implements Serializable{
     @Column(name = "DateEnd")
     Date dateEnd = new Date();
 
-    @Column(name = "free", columnDefinition = "int")
-    Integer free;
+    @Column(name = "free", columnDefinition = "float")
+    Double free;
+
+    @Column(name = "dolar", columnDefinition = "float")
+    Double dolar;
 
     @JsonIgnore
     @OneToMany(mappedBy = "discount")
