@@ -9,15 +9,29 @@
             Danh mục nổi bật
           </h4>
           <div class="page-header d-print-none" ng-controller="keyword-ctrl">
-
+            <style>
+              @media screen and (max-width: 800px) {
+                div#hint-box-search {
+                  opacity: 0;
+                }
+                .carouse-sales {
+                  display: none;
+                }
+              }
+              @media screen and (min-width: 70%) {
+                div#hint-box-search {
+                  opacity: 1;
+                }
+              }
+            </style>
             <!-- ở đây phải thêm style position để nó chạy về cuối -->
             <form class="d-flex justify-content-start" style="position: relative;">
               <div class="col input-icon me-2" style="z-index: 1;">
                               <!-- chỗ này để láy value -->
-                <input ng-model = "set_keyword.keysearch" type="text" style="height: 40px;" ng-click="add()"  max="100" class="form-control" onfocus="checkFocus()" placeholder="Tìm kiếm sản phẩm ..." id="search-gallery" autocomplete="off">
+                <input ng-model = "set_keyword.keysearch" type="text" style="height: 40px;" ng-click="add()"  max="100" class="form-control" onfocus="checkFocus()" placeholder="Tìm kiếm sản phẩm ..." id="search-gallery" autocomplete="off" />
 
                 <!-- cái này phải nằm trên cái kính lúp -->
-                <div class="menu-search pt-1" onclick="checkFocus()">
+                <div class="menu-search pt-1" id="hint-box-search" onclick="checkFocus()">
 
                   <!-- danh sách các từ đã search và gợi ý -->
                   <div ng-repeat="kw in keywords.slice().reverse() | limitTo:5" class="d-flex justify-content-between align-items-center ps-2 pe-2 show-key">
@@ -65,7 +79,6 @@
                       </div>
                     </div>
                   </div>
-
                 </div>
 
                 <!-- kinh lup của input search "tìm kiếm sản phẩm ..." -->
@@ -116,7 +129,7 @@
           <h4 class="text-primary">
             Danh mục ưu đãi
           </h4>
-          <div class="col-lg-6">
+          <div class="col-lg-6 mb-3">
             <div class="card">
               <div class="card-body">
                 <div class="row align-items-center">
@@ -149,7 +162,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-6 pb-2">
+          <div class="col-lg-6 mb-3">
             <div class="card">
               <div class="card-body">
                 <div class="row align-items-center">
@@ -188,7 +201,7 @@
 
       <!-- carouse -->
       <div class="row d-print-none mb-3">
-        <div class="col-md-9 h-100">
+        <div class="col-lg-9 h-100">
           <div class="card">
             <div id="carousel-captions" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
@@ -219,11 +232,10 @@
             </div>
           </div>
         </div>
-        <div class="col-3">
+        <div class="col carouse-sales">
           <a href="/user/sales">
-            <img height="150px" src="https://salt.tikicdn.com/ts/upload/37/4f/14/dd8b33c6bc1ccebaecaf45dde02ca166.png" class="mb-1 d-block w-100">
+            <img src="http://localhost:8080/dist/img/sale/sale10.png" class="h-100">
           </a>
-          <img height="148px" src="https://salt.tikicdn.com/cache/w750/ts/upload/f7/13/b2/176603fe0d12efd70ffa3a2aa136a633.png.webp" class="d-block w-100">
         </div>
       </div>
 
@@ -258,7 +270,7 @@
                   [[${item.name}]]
                 </div>
                 <div class="fs-6 text-muted mt-1 star-evaluate">
-                  <a href="#" class="text-muted">
+                  <a href="#" class="text-muted mb-4">
                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
@@ -333,7 +345,7 @@
               </div>
               <div class="row">
                 <div class="col-lg-3 me-3 border">
-                  <!---------- filter city ----------->
+                  <!--  filter city -->
                   <label class="col-ls-12 form-label">Nơi bán</label>
                   <div>
                     <label class="form-check">
@@ -362,7 +374,7 @@
                 </div>
 
                 <div class="col-lg-4 me-3 border">
-                  <!---------- filter color ------------->
+                  <!-- filter color -->
                   <label class="col-ls-12 form-label">Màu sắc</label>
                   <div class="row">
                     <!-- tone màu 1 -->
@@ -423,7 +435,7 @@
                   </div>
                 </div>
 
-                <!------------ filter theo dịch vụ ---------------->
+                <!-- filter theo dịch vụ -->
                 <div class="col-lg-4 border">
                   <label class="col-lg-12 form-label">Dịch vụ</label>
                   <div>
@@ -452,7 +464,7 @@
                   </div>
                 </div>
 
-                <!------------------ filter price ------------------>
+                <!-- filter price -->
                 <div class="price mt-4">
                   <a href="#">
                     <span class="badge">Dưới 500k</span>

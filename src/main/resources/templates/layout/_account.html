@@ -1,5 +1,5 @@
 
-<!---------------------------- this is header for admin ------------------------------------>
+<!-- this is header for nobody -->
 <div th:fragment="header-nb" class="navbar-nav flex-row order-md-last">
   <div class="nav-item">
     <div class="btn-list">
@@ -28,15 +28,7 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-<!---------------------------- this is header for user ------------------------------------->
+<!-- this is header for user -->
 <div th:fragment="header-sb" class="navbar-nav">
   <div class="nav-item dropdown">
     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
@@ -72,6 +64,21 @@
       </a>
     </div>
 
+    <!-- drop down này cho staff -->
+    <div th:if="${auth.role.id == 'STAFF'}" class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="font-size: 11px !important; vertical-align: middle;">
+      <a href="/user/myorder" class="dropdown-item">1. Quản lý hóa đơn</a>
+      <a href="/profile" class="dropdown-item">2. Thông tin hồ sơ</a>
+      <a href="#" class="dropdown-item">3. Xác nhận tình trạng</a>
+      <a href="/company/logout" class="dropdown-item">
+        <svg xmlns="http://www.w3.org/2000/svg" style="color: red;" class="icon icon-tabler icon-tabler-power" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M7 6a7.75 7.75 0 1 0 10 0"></path>
+          <line x1="12" y1="4" x2="12" y2="12"></line>
+        </svg>
+        Thoát tài khoản
+      </a>
+    </div>
+
 
 
 
@@ -80,7 +87,7 @@
       <a href="#" class="dropdown-item">1. Quản lý thống kê</a>
       <a href="#" class="dropdown-item">2. Lịch sử báo cáo</a>
       <div class="dropdown-divider"></div>
-      <a href="/logout" class="dropdown-item">
+      <a href="/company/logout" class="dropdown-item">
         <svg xmlns="http://www.w3.org/2000/svg" style="color: red;" class="icon icon-tabler icon-tabler-power" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
           <path d="M7 6a7.75 7.75 0 1 0 10 0"></path>

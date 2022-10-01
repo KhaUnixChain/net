@@ -1,154 +1,154 @@
 <div th:fragment="subfragment" class="page-wrapper">
 	<div class="page-wrapper">
-        <hr class="mt-0 mb-3">
-        <form method="post" enctype="multipart/form-data" th:object="${item}">
-            <div class="row">
-                <div class="col-xl-2 mb-4 me-2 bg-white">
-                  <h3 class="text-primary p-3">
-                    Tài khoản của bạn
-                  </h3>
-                  <ul class="list-profile">
-                    <li class="list-item">
-                      <a href="/user/myorder" class="text-muted">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-description" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                          <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
-                          <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
-                          <path d="M9 17h6"></path>
-                          <path d="M9 13h6"></path>
-                       </svg>
-                       Quản lý hóa đơn
-                      </a>
-                    </li>
-                    <li class="list-item">
-                      <a href="/profile" class="text-muted">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                          <circle cx="12" cy="7" r="4"></circle>
-                          <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
-                       </svg>
-                        Tài khoản của tôi
-                      </a>
-                    </li>
-                    <li class="list-item">
-                      <a href="" class="text-muted">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                          <path d="M3 20l1.3 -3.9a9 8 0 1 1 3.4 2.9l-4.7 1"></path>
-                          <line x1="12" y1="12" x2="12" y2="12.01"></line>
-                          <line x1="8" y1="12" x2="8" y2="12.01"></line>
-                          <line x1="16" y1="12" x2="16" y2="12.01"></line>
-                       </svg> Nhận xét sản phẩm</a>
-                    </li>
-                    <li class="list-item">
-                      <a href="" class="text-muted">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell-ringing" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                          <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path>
-                          <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
-                          <path d="M21 6.727a11.05 11.05 0 0 0 -2.794 -3.727"></path>
-                          <path d="M3 6.727a11.05 11.05 0 0 1 2.792 -3.727"></path>
-                        </svg>
-                        Thông báo của tôi
-                      </a>
-                    </li>
-                    <li class="list-item">
-                      <a href="/user/discount" class="text-muted">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tag" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                          <circle cx="8.5" cy="8.5" r="1" fill="currentColor"></circle>
-                          <path d="M4 7v3.859c0 .537 .213 1.052 .593 1.432l8.116 8.116a2.025 2.025 0 0 0 2.864 0l4.834 -4.834a2.025 2.025 0 0 0 0 -2.864l-8.117 -8.116a2.025 2.025 0 0 0 -1.431 -.593h-3.859a3 3 0 0 0 -3 3z"></path>
-                       </svg>
-                       Quản lý các ưu đãi
-                      </a>
-                    </li>
-                    <li class="list-item">
-                      <a href="/user/address" class="text-muted">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                          <circle cx="12" cy="11" r="3"></circle>
-                          <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
-                       </svg> 
-                       Địa chỉ mặc định
-                      </a>
-                    </li>
-                    <li class="list-item">
-                      <a href="/user/wallet" class="text-muted">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-free-rights" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                          <circle cx="12" cy="12" r="9"></circle>
-                          <path d="M13.867 9.75c-.246 -.48 -.708 -.769 -1.2 -.75h-1.334c-.736 0 -1.333 .67 -1.333 1.5c0 .827 .597 1.499 1.333 1.499h1.334c.736 0 1.333 .671 1.333 1.5c0 .828 -.597 1.499 -1.333 1.499h-1.334c-.492 .019 -.954 -.27 -1.2 -.75"></path>
-                          <path d="M12 7v2"></path>
-                          <path d="M12 15v2"></path>
-                          <path d="M6 6l1.5 1.5"></path>
-                          <path d="M16.5 16.5l1.5 1.5"></path>
-                       </svg>
-                       Thông tin ví thanh toán
-                      </a>
-                    </li>
-                    <li class="list-item">
-                      <a href="/logout" class="text-muted">
-                        <svg xmlns="http://www.w3.org/2000/svg" style="color: red;" class="icon icon-tabler icon-tabler-power" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                          <path d="M7 6a7.75 7.75 0 1 0 10 0"></path>
-                          <line x1="12" y1="4" x2="12" y2="12"></line>
-                        </svg>
-                        Thoát tài khoản
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                
+    <hr class="mt-0 mb-3">
+    <form method="post" enctype="multipart/form-data" th:object="${item}">
+      <div class="row">
+          <div class="col-xl-2 mb-4 me-2 bg-white">
+            <h3 class="text-primary p-3">
+              Tài khoản của bạn
+            </h3>
+            <ul class="list-profile">
+              <li class="list-item">
+                <a href="/user/myorder" class="text-muted">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-description" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
+                    <path d="M9 17h6"></path>
+                    <path d="M9 13h6"></path>
+                  </svg>
+                  Quản lý hóa đơn
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="/profile" class="text-muted">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                  </svg>
+                  Tài khoản của tôi
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="" class="text-muted">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M3 20l1.3 -3.9a9 8 0 1 1 3.4 2.9l-4.7 1"></path>
+                    <line x1="12" y1="12" x2="12" y2="12.01"></line>
+                    <line x1="8" y1="12" x2="8" y2="12.01"></line>
+                    <line x1="16" y1="12" x2="16" y2="12.01"></line>
+                  </svg> Nhận xét sản phẩm</a>
+              </li>
+              <li class="list-item">
+                <a href="" class="text-muted">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell-ringing" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path>
+                    <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+                    <path d="M21 6.727a11.05 11.05 0 0 0 -2.794 -3.727"></path>
+                    <path d="M3 6.727a11.05 11.05 0 0 1 2.792 -3.727"></path>
+                  </svg>
+                  Thông báo của tôi
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="/user/discount" class="text-muted">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tag" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="8.5" cy="8.5" r="1" fill="currentColor"></circle>
+                    <path d="M4 7v3.859c0 .537 .213 1.052 .593 1.432l8.116 8.116a2.025 2.025 0 0 0 2.864 0l4.834 -4.834a2.025 2.025 0 0 0 0 -2.864l-8.117 -8.116a2.025 2.025 0 0 0 -1.431 -.593h-3.859a3 3 0 0 0 -3 3z"></path>
+                  </svg>
+                  Quản lý các ưu đãi
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="/user/address" class="text-muted">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="12" cy="11" r="3"></circle>
+                    <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
+                  </svg> 
+                  Địa chỉ mặc định
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="/user/wallet" class="text-muted">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-free-rights" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="M13.867 9.75c-.246 -.48 -.708 -.769 -1.2 -.75h-1.334c-.736 0 -1.333 .67 -1.333 1.5c0 .827 .597 1.499 1.333 1.499h1.334c.736 0 1.333 .671 1.333 1.5c0 .828 -.597 1.499 -1.333 1.499h-1.334c-.492 .019 -.954 -.27 -1.2 -.75"></path>
+                    <path d="M12 7v2"></path>
+                    <path d="M12 15v2"></path>
+                    <path d="M6 6l1.5 1.5"></path>
+                    <path d="M16.5 16.5l1.5 1.5"></path>
+                  </svg>
+                  Thông tin ví thanh toán
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="/logout" class="text-muted">
+                  <svg xmlns="http://www.w3.org/2000/svg" style="color: red;" class="icon icon-tabler icon-tabler-power" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M7 6a7.75 7.75 0 1 0 10 0"></path>
+                    <line x1="12" y1="4" x2="12" y2="12"></line>
+                  </svg>
+                  Thoát tài khoản
+                </a>
+              </li>
+            </ul>
+          </div>
+          
 
-                <!-- this is address -->
-                <div class="col-xl-9 bg-white">
-                  <!-- Account details card-->
-                  <div class="mt-3">
-                    <button class="btn btn-lg col-12" style="height:60px; border: 1px dashed lightgray; box-shadow: none;">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                      </svg>
-                      <span class="text-primary ms-2 fs-4">Thêm địa chỉ mới</span>
-                    </button>
-                  </div>
-                  <div class="row">
-                      <div class="col border border-light d-flex justify-content-between mt-3">
-                          <div class="col-11">
-                              <div class="d-flex justify-content-start">
-                                  <div class="d-flex justify-content-start align-items-center">
-                                      <span class="me-2">[[${#strings.toUpperCase(auth.account.fullname)}]]</span>
-                                      <span class="text-success">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
-                                              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                              <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
-                                          </svg>
-                                      </span>
-                                      <span class="text-success ms-1">Địa chỉ mặc định</span>
-                                  </div>
-                              </div>
-                              <div class="mt-2" style="font-size: 12px; color: black;">
-                                  <span class="text-muted">Địa chỉ mặc định : </span>[[${address}]]
-                              </div>
-                              <div class="mt-2" style="font-size: 12px; color: black;">
-                                  <span class="text-muted">Số điện thoại : </span>[[${auth.account.phone}]]
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-2 d-flex justify-content-center mt-3">
-                        <a href="#">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-vector-pen" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                              <path fill-rule="evenodd" d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                          </svg>
-                          Chỉnh sửa
-                        </a>
-                      </div>
-                  </div>
-              
+          <!-- this is address -->
+          <div class="col-xl-9 mb-4 bg-white">
+            <!-- Account details card-->
+            <div class="mt-3">
+              <button class="btn btn-lg col-12" style="height:60px; border: 1px dashed lightgray; box-shadow: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                </svg>
+                <span class="text-primary ms-2 fs-4">Thêm địa chỉ mới</span>
+              </button>
+            </div>
+            <div class="row">
+                <div class="col border border-light d-flex justify-content-between mt-3">
+                    <div class="col-11">
+                        <div class="d-flex justify-content-start">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <span class="me-2">[[${#strings.toUpperCase(auth.account.fullname)}]]</span>
+                                <span class="text-success">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                        <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                                    </svg>
+                                </span>
+                                <span class="text-success ms-1">Địa chỉ mặc định</span>
+                            </div>
+                        </div>
+                        <div class="mt-2" style="font-size: 12px; color: black;">
+                            <span class="text-muted">Địa chỉ mặc định : </span>[[${address}]]
+                        </div>
+                        <div class="mt-2" style="font-size: 12px; color: black;">
+                            <span class="text-muted">Số điện thoại : </span>[[${auth.account.phone}]]
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 d-flex justify-content-center mt-3">
+                  <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-vector-pen" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
+                        <path fill-rule="evenodd" d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
+                    </svg>
+                    Chỉnh sửa
+                  </a>
                 </div>
             </div>
-        </form>
+        
+          </div>
+      </div>
+    </form>
     </div>
     <link th:href="@{/dist/css/profile.css}" rel="stylesheet"/>
 </div>

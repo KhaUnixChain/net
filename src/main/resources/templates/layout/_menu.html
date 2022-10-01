@@ -71,14 +71,17 @@
                   </a>
                   <div class="dropdown-menu">
                     <a href="./cards-masonry.html" class="dropdown-item">
-                      Mua 1 tặng 1
+                      Giảm giá tiền mặt
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack ms-2" viewBox="0 0 16 16">
+                        <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                        <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"/>
+                      </svg>
                     </a>
                     <a href="./cards.html" class="dropdown-item">
-                      Giảm giá 10%
-                      <span class="badge badge-sm bg-warning text-uppercase ms-2">-10%</span>
-                    </a>
-                    <a href="./card-actions.html" class="dropdown-item">
-                      Freeship
+                      Giảm
+                      <span class="badge badge-sm bg-primary text-uppercase ms-2">-10%</span>
+                      <span class="badge badge-sm bg-warning text-uppercase ms-2">-30%</span>
+                      <span class="badge badge-sm bg-danger text-uppercase ms-2">-50%</span>
                     </a>
                   </div>
                 </div>
@@ -166,9 +169,26 @@
           </div>
         </li>
       </ul>
-      <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
-        <span id="timeBlock" style="width: max-content; font-weight: bolder;" class="form-control text-center text-muted">00 : 00 : 00</span>
-      </div>
+    </div>
+  </div>
+</div>
+
+<!-- this is of staff -->
+<div th:fragment="menu-staff" class="collapse navbar-collapse" id="navbar-menu">
+  <div class="navbar navbar-expand-md navbar-light">
+    <div class="container-xl">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/staff/home" >
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="5 12 3 12 12 3 21 12 19 12" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+            </span>
+            <span class="nav-link-title">
+              Đơn hàng hôm nay
+            </span>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
