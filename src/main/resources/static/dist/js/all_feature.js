@@ -33,7 +33,8 @@ function onCbChangeCategory(id) {
 function checkFocus() {
     var hasFocus = $('#search-gallery').is(':focus');
     var hasHover = $('.menu-search').is(':hover');
-    if (hasFocus) {
+    var w = $('.menu-search').width();
+    if (hasFocus && w > 700) {
         $(".menu-search").show();
     }
     else {
