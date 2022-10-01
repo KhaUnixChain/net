@@ -98,7 +98,7 @@ public class CustomerController {
         try {
             model.addAttribute("page", "user.history");
             model.addAttribute("now", new Date());
-            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));
+            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));  // thêm để khi cố ý đổi link thì tự động vô login
             return "index";
         } catch (Exception e) {
             return "redirect:/login";
@@ -112,6 +112,7 @@ public class CustomerController {
             model.addAttribute("page", "user.myorder");
             model.addAttribute("title_main", "Fastshop - Quản lý hóa đơn");
             model.addAttribute("orders", orderService.findAll());
+            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));
             return "index";
         } catch (Exception e) {
             return "redirect:/login";
@@ -122,26 +123,40 @@ public class CustomerController {
 
     @RequestMapping("/user/address")
     public String address(Model model, @ModelAttribute("auth") Authority auth) {
-        model.addAttribute("page", "user.address");
-        model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));
-        model.addAttribute("title_main", "Fastshop - Địa chỉ mặc định của bạn");
-        return "index";
+        try {
+            model.addAttribute("page", "user.address");
+            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));  // thêm để khi cố ý đổi link thì tự động vô login
+            model.addAttribute("title_main", "Fastshop - Địa chỉ mặc định của bạn");
+            return "index";
+        } catch (Exception e) {
+            return "redirect:/login";
+        }
     }
 
 
     @RequestMapping("/user/wallet")
     public String wallet(Model model, @ModelAttribute("auth") Authority auth) {
-        model.addAttribute("page", "user.wallet");
-        model.addAttribute("title_main", "Fastshop - Thông tin hồ sơ tài khoản thanh toán");
-        return "index";
+        try {
+            model.addAttribute("page", "user.wallet");
+            model.addAttribute("title_main", "Fastshop - Thông tin hồ sơ tài khoản thanh toán");
+            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));  // thêm để khi cố ý đổi link thì tự động vô login
+            return "index";
+        } catch (Exception e) {
+             return "redirect:/login";
+        }
     }
 
 
     @RequestMapping("/user/discount")
     public String discount(Model model, @ModelAttribute("auth") Authority auth) {
-        model.addAttribute("page", "user.discount");
-        model.addAttribute("title_main", "Fastshop - Ưu đãi của bạn ở đây");
-        return "index";
+        try {
+            model.addAttribute("page", "user.discount");
+            model.addAttribute("title_main", "Fastshop - Ưu đãi của bạn ở đây");
+            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));  // thêm để khi cố ý đổi link thì tự động vô login
+            return "index";
+        } catch (Exception e) {
+            return "redirect:/login";
+        }
     }
 
 
