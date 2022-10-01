@@ -16,10 +16,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   </head>
-  <body class="border-top-wide border-primary d-flex flex-column" ng-app="login-app">
+  <body class="border-top-wide border-primary d-flex flex-column">
     <div class="page page-center">
       <div class="container-tight py-4">
-        <form th:object="${dtoLogin}" th:action="@{/auth/login}" class="card card-md" method="post" ng-controller="login-ctrl">
+        <form th:object="${dtoLogin}" th:action="@{/auth/login}" class="card card-md" method="post">
           <div class="card-body">
             <div class="text-center mb-4">
               <a href="/fastshop.com" class="d-flex justify-content-center mb-2">
