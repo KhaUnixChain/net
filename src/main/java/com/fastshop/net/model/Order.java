@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,10 +29,6 @@ public class Order  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 
-	@NotBlank(message = "Address cannot blank.")
-	@Column(name = "address", columnDefinition = "nvarchar(100)", nullable = false)
-	String address;
-
 	@Temporal(TemporalType.DATE)
 	@Column(name = "Createdate")
 	Date createDate = new Date();
@@ -41,6 +36,10 @@ public class Order  implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "Username")
 	Account account;
+
+	@ManyToOne
+	@JoinColumn(name = "Addressid")
+	Address address;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")
