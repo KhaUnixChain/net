@@ -64,10 +64,6 @@ public class Account  implements Serializable{
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
-	List<Keyword> keywords;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "account")
 	List<History> histories;
 
 	@JsonIgnore
