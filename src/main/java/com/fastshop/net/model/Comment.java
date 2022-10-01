@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import lombok.Data;
 
@@ -21,6 +23,11 @@ public class Comment implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
+
+    @Column(name = "rate", columnDefinition = "int")
+    @Min(0)
+    @Max(5)
+    Integer rate;
 
     @Column(name = "feedback", columnDefinition = "nvarchar(250)")
     String feedback;
