@@ -24,7 +24,6 @@ import com.fastshop.net.service._GetListFile;
 import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryService;
-import com.fastshop.net.service.KeywordService;
 import com.fastshop.net.service.OrderService;
 
 @Controller
@@ -42,8 +41,6 @@ public class CustomerController {
     @Autowired
     CategoryService categoryService;
     @Autowired
-    KeywordService keywordService;
-    @Autowired
     OrderService orderService;
     @Autowired
     private ApplicationContext applicationContext;
@@ -59,7 +56,7 @@ public class CustomerController {
         }
         Resource[] resources_hot = applicationContext.getResources("classpath*:/static/hot/*");
         Resource[] resources_dis = applicationContext.getResources("classpath*:/static/dist/img/discount/*");
-        int number_hint_keyword = (auth==null || keywordService.findByAccount(auth.getAccount()).size() == 0) ? 5 : 3;
+        int number_hint_keyword = 5;
         model.addAttribute("files", resources_hot);
         model.addAttribute("discount", resources_dis);
         model.addAttribute("products", list);
