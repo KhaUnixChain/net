@@ -31,21 +31,19 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           
-          <!--------------------- logo ------------------------------>
+          <!-- logo -->
           <h1 th:replace="~{/layout/_logo::logo}"></h1>
-
-
 
           <div class="navbar-nav flex-row order-md-last">
             
-            <!-------------------- language  ------------------------>
+            <!-- language -->
             <div th:replace="~{/layout/_language::language}"></div>
             
-            <!-------------- mode light dark and cart --------------->
+            <!-- mode light dark and cart -->
             <div th:replace="~{/layout/_mode_cart::mode_cart}"></div>
 
 
-            <!----------------------- account ----------------------->
+            <!-- account -->
             <div th:replace="${auth == null} ? ~{/layout/_account :: header-nb} : ~{/layout/_account :: header-sb}"></div>
 
 
@@ -55,10 +53,18 @@
 
 
 
-      <!------------------------------- menu ---------------------------------->
+      <!-- menu -->
       <div class="navbar-expand-md">
         <th:block th:if="${auth != null}">
-          <div th:insert="${auth.role.id == 'ADMIN'} ? ~{/layout/_menu :: menu-admin} : ~{/layout/_menu :: menu-user}" class="navbar-expand-md"></div>
+          <th:block th:if="${auth.role.id == 'ADMIN'}">
+            <div th:insert="~{/layout/_menu :: menu-admin}" class="navbar-expand-md"></div>
+          </th:block>
+          <th:block th:if="${auth.role.id == 'STAFF'}">
+            <div th:insert="~{/layout/_menu :: menu-staff}" class="navbar-expand-md"></div>
+          </th:block>
+          <th:block th:if="${auth.role.id == 'USER'}">
+            <div th:insert="~{/layout/_menu :: menu-user}" class="navbar-expand-md"></div>
+          </th:block>
         </th:block>
         <th:unless th:if="${auth == null}">
           <div th:insert="~{/layout/_menu :: menu-user}" class="navbar-expand-md"></div>
@@ -67,7 +73,7 @@
 
 
 
-      <!------------------------------- main ---------------------------------->
+      <!-- main -->
       <div class="page-wrapper">
         <div class="container-xl">
           <div class="page-wrapper" th:replace="${view}"></div>
@@ -75,11 +81,10 @@
       </div>
 
 
-      <!------------------------------ footer --------------------------------->
+      <!-- footer -->
       <footer th:replace="~{/layout/_footer::footer}"></footer>
     </div>
     <script th:src="@{/angular/sumary.js}"></script>
-    <!-- <script th:src="@{/dist/js/all_map.js}" type="text/javascript" defer></script> -->
     <script th:src="@{/dist/js/all_feature.js}" type="text/javascript" defer></script>
     <script th:src="@{/dist/libs/apexcharts/dist/apexcharts.min.js}" type="text/javascript" defer></script>
     <script th:src="@{/dist/libs/jsvectormap/dist/js/jsvectormap.min.js}" type="text/javascript" defer></script>
