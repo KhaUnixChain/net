@@ -42,7 +42,7 @@
 
 
 
-    <div th:if="${auth.role.id == 'ADMIN'}" class="nav-item dropdown d-none d-md-flex me-2">
+    <div th:if="${auth.role.id == 'ADMIN' || auth.role.id == 'STAFF'}" class="nav-item dropdown d-none d-md-flex me-2">
       <span class="badge bg-red" style="border-radius: 50%;" id="number" hidden></span>
       <a href="#" class="nav-link px-0 me-1" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
         <!-- thông báo icon -->
