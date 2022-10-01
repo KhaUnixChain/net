@@ -22,7 +22,6 @@ import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryService;
 import com.fastshop.net.service.HistoryService;
-import com.fastshop.net.service.KeywordService;
 import com.fastshop.net.service.ProductSevice;
 import com.fastshop.net.service._SessionService;
 
@@ -42,8 +41,6 @@ public class WebMainController {
     AccountService accountService;
     @Autowired
     CategoryService categoryService;
-    @Autowired
-    KeywordService keywordService;
     @Autowired
     HistoryService historyService;
     @Autowired
@@ -70,7 +67,7 @@ public class WebMainController {
     @RequestMapping("/fastshop.com")
     public String index(Model model, @ModelAttribute("auth") Authority auth) throws IOException {
         String title_main = "Fastshop.com - Nơi những mặt hàng được vận chuyển nhanh chóng mặt";
-        int number_hint_keyword = (auth==null || keywordService.findByAccount(auth.getAccount()).size() == 0) ? 5 : 3;
+        int number_hint_keyword = 5;
         Resource[] resources_hot = applicationContext.getResources("classpath*:/static/hot/*");
         Resource[] resources_dis = applicationContext.getResources("classpath*:/static/dist/img/discount/*");
         model.addAttribute("files", resources_hot);
@@ -82,19 +79,21 @@ public class WebMainController {
 
         // thêm history
         if (auth != null) {
-            History history = new History();
-            history.setTitle(title_main);
-            history.setLink("http://localhost:8080/fastshop.com");
-            history.setSchedual(new Date());
-            history.setAccount(auth.getAccount());
-            historyService.save(history);   
+            if (auth.getRole().getId().equals("ADMIN")) {
+                History history = new History();
+                history.setTitle(title_main);
+                history.setLink("http://localhost:8080/fastshop.com");
+                history.setSchedual(new Date());
+                history.setAccount(auth.getAccount());
+                historyService.save(history);    
+            }  
         }
         return "index";
     }
 
 
     /**
-     * this ls login for admin & user from form
+     * this ls login for user from form
      * @param model
      * @return
      */
@@ -104,6 +103,20 @@ public class WebMainController {
         model.addAttribute("dtoLogin", dtoLogin);
         model.addAttribute("message", "");
         return "sign-in";
+    }
+
+
+    /**
+     * this ls login for admin & staff from form
+     * @param model
+     * @return
+     */
+    @RequestMapping("/login.fastshop.com")
+    public String employee(Model model) {
+        DtoLogin dtoLogin = new DtoLogin("", "");
+        model.addAttribute("dtoLogin", dtoLogin);
+        model.addAttribute("message", "");
+        return "login_staff_admin";
     }
 
 
@@ -120,7 +133,7 @@ public class WebMainController {
 
 
     /**
-     * this is log out admin & user if user login from form
+     * this is log out user if user login from form
      * @param model
      * @return
      */
@@ -129,6 +142,19 @@ public class WebMainController {
         model.addAttribute("auth", null);
         cookie.remove("username");
         return "redirect:/fastshop.com";
+    }
+
+
+    /**
+     * this is log out admin & staff if user login from form
+     * @param model
+     * @return
+     */
+    @RequestMapping("/company/logout")
+    public String logoutCopany(Model model) {
+        model.addAttribute("auth", null);
+        cookie.remove("username");
+        return "redirect:/login.fastshop.com";
     }
 
 
@@ -206,7 +232,8 @@ public class WebMainController {
         if (username != null) {
             Account account = accountService.findByUsernameOrEmail(username, username);
             Authority authority = authService.findByAccount(account);
-            page = (authority.getRole().getId().equals("ADMIN")) ? "admin.home" : "";
+            page = (authority.getRole().getId().equals("ADMIN")) ? "admin.home" : 
+                   (authority.getRole().getId().equals("STAFF")) ? "staff.home" : "";
         }
         return page;
     }
