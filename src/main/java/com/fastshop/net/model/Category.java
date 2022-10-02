@@ -30,4 +30,8 @@ public class Category implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "category")
 	List<Product> products;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "category")
+	List<CategoryDetail> categoryDetails;
 }
