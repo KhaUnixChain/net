@@ -198,15 +198,20 @@ public class WebMainController {
      */
     @RequestMapping("/profile")
     public String profile(Model model, @ModelAttribute("auth") Authority auth) {
-        String username = auth.getAccount().getUsername();
-        Account item = accountService.findById(username);
-        model.addAttribute("page", "profile.home");
-        model.addAttribute("title_main", "Fastshop - Hồ sơ cá nhân");
-        model.addAttribute("item", item);
-        model.addAttribute("error1", "");
-        model.addAttribute("error2", "");
-        model.addAttribute("error3", "");
-        return "index";
+        try {
+            String username = auth.getAccount().getUsername();
+            Account item = accountService.findById(username);
+            model.addAttribute("_", auth.getAccount());  // thêm để khi cố ý đổi link thì tự động vô login
+            model.addAttribute("page", "profile.home");
+            model.addAttribute("title_main", "Fastshop - Hồ sơ cá nhân");
+            model.addAttribute("item", item);
+            model.addAttribute("error1", "");
+            model.addAttribute("error2", "");
+            model.addAttribute("error3", "");
+            return "index";
+        } catch (Exception e) {
+            return "redirect:/login";
+        }
     }
 
 
