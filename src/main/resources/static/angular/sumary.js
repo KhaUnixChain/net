@@ -510,17 +510,17 @@ app.controller("keyword-ctrl", ($scope, $http) => {
     $scope.set_keyword  = {"id":0, "keysearch":"", "account": {}};
 
     $scope.loadKeyword = () => {
-        var url = `${host_}/keywords/account/${username.innerHTML}`;
+        var url = `${host_}/keywords/account/${id}`;
         $http.get(url).then((resp) => {
             $scope.keywords = resp.data;
         });
 
-        var url_acc_=`${host_}/accounts/${username.innerHTML}`;
+        var url_acc_=`${host_}/accounts/${id}`;
         $http.get(url_acc_).then((resp) => {
             $scope.set_keyword.account = resp.data;
         });
 
-        var url_last_id = `${host_}/keywords/lastid/${username.innerHTML}`;
+        var url_last_id = `${host_}/keywords/lastid/${id}`;
         $http.get(url_last_id).then((resp) => {
             $scope.id_last = Number(resp.data);
         });
@@ -560,24 +560,11 @@ app.controller("keyword-ctrl", ($scope, $http) => {
         });
     };
 
-    $scope.clear = () => {
-        $scope.set_keyword  = {"id":0, "keysearch":"", "account": {}};
-        $scope.loadKeyword();
-    }
-
     $scope.loadKeyword();
 });
 
 
 app.controller("changed-ctrl", ($scope, $http) => {
-    $scope.account = {};
-    var id = account_.innerHTML;
-    var url = `${host_}/accounts/${id}`;
-    $http.get(url).then((resp) => {
-        $scope.account = resp.data;
-        console.log($scope.account.password);
-    });
-
     $scope.pass1 = "";
     $scope.pass2 = "";
     $scope.pass3 = "";
@@ -586,20 +573,26 @@ app.controller("changed-ctrl", ($scope, $http) => {
     $scope.error3 = "";
 
     $scope.change = () => {
-        $scope.error2 = ($scope.pass2 == "" || $scope.pass2 == NaN) ? "(*) Password mới không được để trống." : "" ;
-        $scope.error1 = ($scope.pass1 == "" || $scope.pass1 == NaN) ? "(*) Password hiện tại không được để trống.":
-                        ($scope.pass1  !=  $scope.account.password) ? "(*) Password hiện tại không đúng"            : "" ;
-        $scope.error3 = ($scope.pass3 == "" || $scope.pass3 == NaN) ? "(*) Xác nhận password không được để trống.": 
-                        ($scope.pass2 != $scope.pass3) ? "(*) Mật khẩu xác nhận không trùng nhau."                : "" ;
-        
-        if ($scope.error1 != "" && $scope.error2 != "" && $scope.error3 != "") {
-            $scope.account.password = $scope.pass3;
+        var id = account_.innerHTML;
+        var url = `${host_}/accounts/${id}`;
+        $http.get(url).then((resp) => {
+            $scope.account = resp.data;
 
-            $http.put(url, $scope.account).then((resp) => {
-                console.log("thanh cong", resp);
-            }).catch((err) => {
-                console.log("that bai", err);
-            });
-        }
+            $scope.error1 = ($scope.pass1 == "" || $scope.pass1 == NaN) ? "(*) Password hiện tại không được để trống." :
+                            (!angular.equals($scope.pass1, $scope.account.password)) ? "(*) Password hiện tại không chính xác": "" ;
+            
+            $scope.error2 = ($scope.pass2 == "" || $scope.pass2 == NaN) ? "(*) Password mới không được để trống." : "" ;
+            $scope.error3 = ($scope.pass3 == "" || $scope.pass3 == NaN) ? "(*) Xác nhận password không được để trống." : 
+                            ($scope.pass2       != $scope.pass3) ? "(*) Mật khẩu xác nhận không trùng nhau."                 : "" ;
+            
+
+            if ($scope.error1 == "" && $scope.error2 == "" && $scope.error3 == "") {
+                $scope.account.password = $scope.pass3;
+                var item = angular.copy($scope.account);
+                $http.put(url, item).then((resp) => {
+                    alert("Đổi mật khẩu thành công", resp);
+                });
+            }
+        });
     };
 });
