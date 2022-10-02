@@ -22,6 +22,7 @@ import com.fastshop.net.service.ProductSevice;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._GetListFile;
 import com.fastshop.net.service.AccountService;
+import com.fastshop.net.service.AddressService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryService;
 import com.fastshop.net.service.OrderService;
@@ -42,6 +43,8 @@ public class CustomerController {
     CategoryService categoryService;
     @Autowired
     OrderService orderService;
+    @Autowired
+    AddressService addressService;
     @Autowired
     private ApplicationContext applicationContext;
     
@@ -68,10 +71,12 @@ public class CustomerController {
 
     
     @RequestMapping("/user/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id) {
+    public String detail(Model model, @ModelAttribute("auth") Authority auth, @PathVariable("id") Integer id) {
         Product product = productSevice.findById(id);
+        String address = (auth == null) ? null : addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername());
         model.addAttribute("page", "user.detail");
         model.addAttribute("title_main", "Fastshop - Chi tiết sản phẩm");
+        model.addAttribute("address", address);
         model.addAttribute("product", product);
         return "index";
     }
@@ -125,8 +130,10 @@ public class CustomerController {
     public String address(Model model, @ModelAttribute("auth") Authority auth) {
         try {
             model.addAttribute("page", "user.address");
-            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));  // thêm để khi cố ý đổi link thì tự động vô login
+            model.addAttribute("addresses", addressService.findAllAddressByAccount(auth.getAccount().getUsername()));
+            model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
             model.addAttribute("title_main", "Fastshop - Địa chỉ mặc định của bạn");
+            model.addAttribute("_", orderService.findAddressByUsername(auth.getAccount()));  // thêm để khi cố ý đổi link thì tự động vô login
             return "index";
         } catch (Exception e) {
             return "redirect:/login";
