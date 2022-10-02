@@ -11,9 +11,12 @@ import com.fastshop.net.model.Address;
 
 @Repository
 public interface AddressDAO extends JpaRepository<Address, Long>{
-    @Query("SELECT o.place FROM Address o WHERE o.username = ?1")
-    List<String> findAllAddressByAccount(String username);
+    @Query("SELECT o FROM Address o WHERE o.username = ?1")
+    List<Address> findAllAddressByAccount(String username);
 
     @Query("SELECT o.place FROM Address o WHERE o.username = ?1 AND o.choose = true")
     Optional<String> findByAccountWithChooseIsTrue(String username);
+
+    @Query("SELECT o FROM Address o WHERE o.username = ?1 AND o.id = ?2")
+    Optional<Address> findByUsernameAndId(String username, Long id);
 }
