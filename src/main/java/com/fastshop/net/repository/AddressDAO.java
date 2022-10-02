@@ -14,6 +14,6 @@ public interface AddressDAO extends JpaRepository<Address, Long>{
     @Query("SELECT o.place FROM Address o WHERE o.username = ?1")
     List<String> findAllAddressByAccount(String username);
 
-    @Query("SELECT o.place FROM Address o WHERE o.username = ?1 AND o.choose = 1")
+    @Query("SELECT o.place FROM Address o WHERE o.username = ?1 AND o.choose = true")
     Optional<String> findByAccountWithChooseIsTrue(String username);
 }
