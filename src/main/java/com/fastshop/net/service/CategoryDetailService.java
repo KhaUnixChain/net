@@ -7,5 +7,6 @@ import com.fastshop.net.model.CategoryDetail;
 
 public interface CategoryDetailService {
     void save(CategoryDetail categoryDetail);
+    List<String> getPropertyByCategory(Category category);
     List<CategoryDetail> findByCategory(Category category);
 }

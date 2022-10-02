@@ -54,5 +54,10 @@ public class CategoryServiceImpl implements CategoryService{
     public List<Category> findByStatus(Boolean status) {
         return categoryDAO.findByStatus(status);
     }
+
+    @Override
+    public Category findById(String id) {
+        return categoryDAO.findById(id).get();
+    }
     
 }
