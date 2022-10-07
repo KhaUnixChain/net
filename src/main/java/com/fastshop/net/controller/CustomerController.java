@@ -26,6 +26,7 @@ import com.fastshop.net.service.AddressService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryService;
 import com.fastshop.net.service.OrderService;
+import com.fastshop.net.service.ProductDetailService;
 
 @Controller
 public class CustomerController {
@@ -45,6 +46,8 @@ public class CustomerController {
     OrderService orderService;
     @Autowired
     AddressService addressService;
+    @Autowired
+    ProductDetailService productDetailService;
     @Autowired
     private ApplicationContext applicationContext;
     
@@ -71,14 +74,18 @@ public class CustomerController {
 
     
     @RequestMapping("/user/detail/{id}")
-    public String detail(Model model, @ModelAttribute("auth") Authority auth, @PathVariable("id") Integer id) {
+    public String detailUser(Model model, @ModelAttribute("auth") Authority auth, @PathVariable("id") Integer id) {
         Product product = productSevice.findById(id);
-        String address = (auth == null) ? null : addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername());
         model.addAttribute("page", "user.detail");
         model.addAttribute("title_main", "Fastshop - Chi tiết sản phẩm");
-        model.addAttribute("address", address);
         model.addAttribute("product", product);
-        return "index";
+        try {
+            model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
+            return "index";
+        } catch (Exception e) {
+            model.addAttribute("address", null);
+            return "index";
+        }
     }
 
     
