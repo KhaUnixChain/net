@@ -591,6 +591,8 @@ app.controller("changed-ctrl", ($scope, $http) => {
                 var item = angular.copy($scope.account);
                 $http.put(url, item).then((resp) => {
                     alert("Đổi mật khẩu thành công", resp);
+                }).catch((err) => {
+                    alert("Đổi mật khẩu that bai", err);
                 });
             }
         });
