@@ -69,4 +69,7 @@ public class Product implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "Discountid")
 	Discount discount;
+
+	@OneToMany(mappedBy = "product")
+	List<ProductDetail> productDetails;
 }
