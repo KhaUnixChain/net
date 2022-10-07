@@ -1,0 +1,57 @@
+<div th:fragment="subfragment" class="page-wrapper">
+    <div class="page-wrapper">
+      <div class="container-fluid mt-4 mb-4 bg-white">
+        <div class="row pt-4">
+          <div class="col-lg-5 mb-30">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item d-flex justify-content-center active pt-3 pb-3">
+                  <img style="width: 70%; border-radius: 5px;" th:src="@{${'/dist/img/products/'+{product.image}}}" class="bg-white" alt="Image">
+                </div>
+              </div>
+              <a class="carousel-control-prev text-muted" href="#product-carousel" data-slide="prev">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                  <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                </svg>
+              </a>
+              <a class="carousel-control-next text-muted" href="#product-carousel" data-slide="next">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                  <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-7 h-auto mb-4">
+            <div class="h-100 bg-white text-dark">
+              <h1>[[${product.name}]]</h1>
+              
+              <!-- thông tin chi tiết -->
+              <div class="mt-4 bg-white row">
+                <h3 class="mb-2 text-primary">Thông tin chi tiết</h3>
+                <div class="tab-pane fade show active" id="tab-pane-2">
+                  <div class="row">
+                    <form method="post" action="">
+                      <div class="form-group mb-3" th:each="detail, index : ${details}">
+                        <label class="mb-1">[[ ${index.index + 1} ]] [[ ${detail.property} ]] :</label>
+                        <input type="text" class="form-control">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Đăng thông tin</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Mô tả sản phẩm -->
+          <div class="form-group mb-3">
+            <h3 class="mb-1 text-primary">Mô tả sản phẩm</h3>
+            <textarea class="form-control mb-3" rows="7">[[ ${describe} ]]</textarea>
+            <button type="submit" class="btn btn-primary">Đổi mô tả sản phẩm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script th:src="@{/dist/js/detail.js}"></script>
+    <link rel="stylesheet" th:href="@{/dist/css/detail.css}">
+  </div>
+</div>
