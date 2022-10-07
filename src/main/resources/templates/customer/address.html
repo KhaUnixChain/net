@@ -165,12 +165,12 @@
             <div class="ms-4 me-4">
               <div class="form-group form-check text-start" hidden>
                 <label class="form-check-label">
-                  <input class="form-check-input me-3" name="address" type="radio" value="0" checked> Khong co dia chi
+                  <input class="form-check-input me-3" name="place" type="radio" value="0" checked> Khong co dia chi
                 </label>
               </div>
               <div class="form-group form-check text-start mb-2" th:each="add : ${addresses}">
                 <label class="form-check-label">
-                  <input class="form-check-input me-3" name="address" type="radio" th:value="${add.id}"> [[${add.place}]]
+                  <input class="form-check-input me-3" name="place" type="radio" th:value="${add.id}"> [[${add.place}]]
                 </label>
               </div>
             </div>
