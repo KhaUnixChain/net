@@ -1,26 +1,26 @@
 <div th:fragment="subfragment" class="page-wrapper">
     <div class="page-wrapper" ng-controller="cart-ctrl">
-      <div class="container-fluid mt-4 bg-white">
+      <div class="container-fluid mt-4 mb-3 bg-white">
         <div class="row pt-4">
-            <div class="col-lg-5 mb-30">
-              <div id="product-carousel" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item d-flex justify-content-center active pt-3 pb-3">
-                    <img style="width: 70%; border-radius: 5px;" th:src="@{${'/dist/img/products/'+{product.image}}}" class="bg-white" alt="Image">
-                  </div>
+          <div class="col-lg-5 mb-30">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item d-flex justify-content-center active pt-3 pb-3">
+                  <img style="width: 70%; border-radius: 5px;" th:src="@{${'/dist/img/products/'+{product.image}}}" class="bg-white" alt="Image">
                 </div>
-                <a class="carousel-control-prev text-muted" href="#product-carousel" data-slide="prev">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-                  </svg>
-                </a>
-                <a class="carousel-control-next text-muted" href="#product-carousel" data-slide="next">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                  </svg>
-                </a>
               </div>
+              <a class="carousel-control-prev text-muted" href="#product-carousel" data-slide="prev">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                  <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                </svg>
+              </a>
+              <a class="carousel-control-next text-muted" href="#product-carousel" data-slide="next">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                  <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                </svg>
+              </a>
             </div>
+          </div>
 
             <div class="col-lg-7 h-auto mb-30">
               <div class="h-100 bg-white ps-3 text-dark">
@@ -65,7 +65,8 @@
                     <strong>
                       <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="me-1 bi bi-cone-striped" viewBox="0 0 16 16">
                         <path d="m9.97 4.88.953 3.811C10.159 8.878 9.14 9 8 9c-1.14 0-2.158-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12zm-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.275 3.9C6.8 3.965 7.382 4 8 4c.618 0 1.2-.036 1.725-.098zm4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257 2.391.598z"/>
-                      </svg> [[ ${address == null ? 'Thêm địa chỉ' : 'Đổi địa chỉ'} ]]
+                      </svg>
+                      [[ ${address == null ? 'Thêm địa chỉ' : 'Đổi địa chỉ'} ]]
                     </strong>
                   </a>
                 </div>
@@ -157,13 +158,12 @@
                 </div>
               </div>
             </div>
-          </div>
 
           <!-- Mô tả sản phẩm -->
           <div class="mt-4 bg-white ps-3 row">
             <h2 class="mb-2 text-primary">Mô tả sản phẩm</h2>
-            <p th:if="${product.describe == null}">( Không có nội dung sản phẩm này)</p>
-            <p th:if="${product.describe != null}">[[${product.describe}]]</p>
+            <p th:if="${product.describe == null}" class="bg-light text-muted p-3" style="letter-spacing: 0.3px;">( Không có nội dung sản phẩm này)</p>
+            <p th:if="${product.describe != null}" class="bg-light text-muted p-3" style="letter-spacing: 0.3px; word-spacing: 0.5px;">[[ ${product.describe} ]]</p>
           </div>
 
 
@@ -171,26 +171,12 @@
           <div class="mt-4 bg-white ps-3 row">
             <h2 class="mb-2 text-primary">Thông tin chi tiết</h2>
             <div class="tab-pane fade show active" id="tab-pane-2">
-              <h4 class="mb-3 text-muted">Thông tin chi tiết sản phẩm này</h4>
-              <p>Bia được sản xuất từ nguồn nguyên liệu thượng hạng cùng bí quyết nấu bia đến từ Châu Âu, chính hãng bia Larue. Bia Larue Xanh 330ml có mùi thơm đặc trưng, hương vị đậm đà, mang lại những trải nghiệm thú vị cho người thưởng thức. Cam kết bia chính hãng, uy tín, chất lượng. Sản phẩm dành cho người trên 18 tuổi và không dành cho phụ nữ mang thai. Thưởng thức có trách nhiệm, đã uống đồ uống có cồn thì không lái xe!</p>
               <div class="row">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <span class="col-lg-2">Thương hiệu : </span>
-                        <span class="col-lg-9">Larue (Pháp)</span>
-                    </li>
-                    <li class="list-group-item">
-                        <span class="col-lg-2">Sản xuất : </span>
-                        <span class="col-lg-9">Việt Nam</span>
-                    </li>
-                    <li class="list-group-item">
-                        <span class="col-lg-2">Dành cho : </span>
-                        <span class="col-lg-9">Mọi đối tượng trên 18 tuổi</span>
-                    </li>
-                    <li class="list-group-item">
-                        <span class="col-lg-2">Lưu ý : </span>
-                        <span class="col-lg-9">Sản phẩm dành cho người trên 18 tuổi và không dành cho phụ nữ mang thai. Thưởng thức có trách nhiệm, đã uống đồ uống có cồn thì không lái xe!</span>
-                    </li>
+                  <li class="list-group-item" th:each="d : ${product.productDetails}">
+                    <span class="col-lg-2">[[${d.categoryDetail.property}]] : </span>
+                    <span class="col-lg-9">[[${d.info}]]</span>
+                  </li>
                 </ul> 
               </div>
             </div>
@@ -309,7 +295,7 @@
                   <div class="form-group mt-3">
                       <label for="name">ID của bạn *</label>
                       <input type="text" class="form-control" th:if="${auth != null}" th:value="${auth.account.username}" disabled>
-                      <input type="text" class="form-control" th:if="${auth == null}" value="Null" disabled>
+                      <input type="text" class="form-control" th:if="${auth == null}" value="..." disabled>
                   </div>
                   <div class="form-group mb-4 mt-3">
                       <input type="submit" class="btn btn-primary px-3" value="Đăng lên">
