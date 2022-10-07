@@ -1,17 +1,13 @@
 package com.fastshop.net.controller.address;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Address;
@@ -36,7 +32,7 @@ public class AddressController {
 
     @RequestMapping("/user/address/update")
     public String save(@ModelAttribute("auth") Authority authority) {
-        Long id =  Long.parseLong(request.getParameter("address"));
+        Long id =  Long.parseLong(request.getParameter("place"));
         if (id != 0) {
             addressService.update(authority.getAccount().getUsername(), id);
         }
