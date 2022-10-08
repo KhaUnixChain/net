@@ -21,7 +21,7 @@
               </form>
               
 
-              <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-employee" role="button">
+              <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-employee" role="button">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 Thêm nhân viên
               </a>
@@ -43,7 +43,7 @@
                   <th>Email</th>
                   <th>Số điện thoại</th>
                   <th>Lương cố định</th>
-                  <th>Khác</th>
+                  <th>Active</th>
                 </tr>
               </thead>
               <tbody class="bg-light">
@@ -56,14 +56,13 @@
                   <th class="text-muted">4,500,000 đ</th>
                   <td>
                     <a href="#" class="bg-white p-2" data-bs-toggle="modal" th:data-bs-target="${'#modal-delete-' + e.username}"  style="border-radius: 50%;">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" style="color: red;" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <line x1="4" y1="7" x2="20" y2="7"></line>
-                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                        <line x1="14" y1="11" x2="14" y2="17"></line>
-                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
-                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-                     </svg>
+                      <svg th:if="${e.active}" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plug-fill text-danger" viewBox="0 0 16 16">
+                        <path d="M6 0a.5.5 0 0 1 .5.5V3h3V.5a.5.5 0 0 1 1 0V3h1a.5.5 0 0 1 .5.5v3A3.5 3.5 0 0 1 8.5 10c-.002.434-.01.845-.04 1.22-.041.514-.126 1.003-.317 1.424a2.083 2.083 0 0 1-.97 1.028C6.725 13.9 6.169 14 5.5 14c-.998 0-1.61.33-1.974.718A1.922 1.922 0 0 0 3 16H2c0-.616.232-1.367.797-1.968C3.374 13.42 4.261 13 5.5 13c.581 0 .962-.088 1.218-.219.241-.123.4-.3.514-.55.121-.266.193-.621.23-1.09.027-.34.035-.718.037-1.141A3.5 3.5 0 0 1 4 6.5v-3a.5.5 0 0 1 .5-.5h1V.5A.5.5 0 0 1 6 0z"/>
+                      </svg>
+
+                      <svg th:if="${!e.active}" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plug-fill text-dark" viewBox="0 0 16 16">
+                        <path d="M6 0a.5.5 0 0 1 .5.5V3h3V.5a.5.5 0 0 1 1 0V3h1a.5.5 0 0 1 .5.5v3A3.5 3.5 0 0 1 8.5 10c-.002.434-.01.845-.04 1.22-.041.514-.126 1.003-.317 1.424a2.083 2.083 0 0 1-.97 1.028C6.725 13.9 6.169 14 5.5 14c-.998 0-1.61.33-1.974.718A1.922 1.922 0 0 0 3 16H2c0-.616.232-1.367.797-1.968C3.374 13.42 4.261 13 5.5 13c.581 0 .962-.088 1.218-.219.241-.123.4-.3.514-.55.121-.266.193-.621.23-1.09.027-.34.035-.718.037-1.141A3.5 3.5 0 0 1 4 6.5v-3a.5.5 0 0 1 .5-.5h1V.5A.5.5 0 0 1 6 0z"/>
+                      </svg>
                     </a>
 
 
@@ -74,9 +73,9 @@
                           <div class="modal-status bg-danger"></div>
                           <div class="modal-body text-center py-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 9v2m0 4v.01"></path><path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path></svg>
-                            <h3 class="text-dark">Xóa nhân viên <span class="text-dark">' [[${e.username}]] '</span> này ?</h3>
+                            <h3 class="text-dark">Đổi <strong class="text-primary">active</strong> cho <span class="text-dark">' [[${e.username}]] '</span> này ?</h3>
                             
-                            <div class="text-muted">Tất cả các dữ liệu về nhân viên này sẽ bị xóa vĩnh viễn trong server. Xin cẩn thận khi thao tác !</div>
+                            <div class="text-muted">Tất cả các dữ liệu về nhân viên này sẽ disable hoặc enable trong server. Cẩn thận khi thao tác !</div>
                           </div>
                           <div class="modal-footer">
                             <div class="w-100">
@@ -87,8 +86,8 @@
                                   </a>
                                 </div>
                                 <div class="col">
-                                  <a th:href="${'/account/delete/'+e.username}" class="btn btn-danger w-100">
-                                    Xóa nhân viên
+                                  <a th:href="${'/account/active/'+e.username}" class="btn btn-danger w-100">
+                                    Đổi hiệu lực
                                   </a>
                                 </div>
                               </div>
@@ -137,6 +136,10 @@
               <div class="form-group mb-2">
                 <label for="phone"><b class="text-danger">*</b> Phone:</label>
                 <input type="text" th:field="*{phone}" class="form-control" name="phone" autocomplete="off">
+              </div>
+              <div class="form-group mb-2">
+                <input type="checkbox" th:field="*{active}" style="vertical-align: middle;" name="active">
+                <label for="active">Active</label>
               </div>
               <button type="submit" class="btn btn-primary mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
