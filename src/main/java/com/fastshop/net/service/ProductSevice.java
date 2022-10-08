@@ -11,4 +11,5 @@ public interface ProductSevice {
     List<Product> findAll();
     List<Product> findByCategoryId(String cid);
     List<Product> findByKeywordName(String kw);
+    List<Product> findByFilter(Integer rate, String cateId, double priceFrom, double priceTo);
 }

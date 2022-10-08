@@ -1,11 +1,14 @@
 package com.fastshop.net.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fastshop.net.model.Category;
+import com.fastshop.net.model.Comment;
 import com.fastshop.net.model.Product;
 import com.fastshop.net.repository.CategoryDAO;
 import com.fastshop.net.repository.ProductDAO;
@@ -47,5 +50,26 @@ public class ProductServiceImpl implements ProductSevice{
     @Override
     public List<Product> findByKeywordName(String kw) {
         return productDAO.findByKeywordName(kw);
+    }
+
+    @Override
+    public List<Product> findByFilter(Integer rate, String cateId, double priceFrom, double priceTo) {
+        List<Product> list1 = productDAO.findByFilter(cateId, priceFrom, priceTo);
+        if (rate == 0) {
+            return list1;
+        }
+        else {
+            List<Product> list2 = new ArrayList<>();
+            for (Product product : list1) {
+                if (product.getComments().size() > 0) {
+                    for (Comment c : product.getComments()) {
+                        if (c.getRate() <= rate) {
+                            list2.add(product);
+                        }
+                    }
+                }
+            }
+            return list2;
+        }
     }
 }

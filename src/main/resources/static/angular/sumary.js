@@ -505,62 +505,91 @@ app.controller("order-ctrl", ($scope, $http) => {
 
 
 app.controller("keyword-ctrl", ($scope, $http) => {
-    $scope.id_last = 0;
+    $scope.keysearch = "";
     $scope.keywords = [];
-    $scope.set_keyword  = {"id":0, "keysearch":"", "account": {}};
 
-    $scope.loadKeyword = () => {
-        var url = `${host_}/keywords/account/${id}`;
-        $http.get(url).then((resp) => {
-            $scope.keywords = resp.data;
-        });
-
-        var url_acc_=`${host_}/accounts/${id}`;
-        $http.get(url_acc_).then((resp) => {
-            $scope.set_keyword.account = resp.data;
-        });
-
-        var url_last_id = `${host_}/keywords/lastid/${id}`;
-        $http.get(url_last_id).then((resp) => {
-            $scope.id_last = Number(resp.data);
-        });
-    };
+    var keywords_load = localStorage.getItem("keywords");
+    if (keywords_load == undefined) {
+        localStorage.setItem("keywords", JSON.stringify($scope.keywords));
+    }
+    else {
+        $scope.keywords = JSON.parse(keywords_load);
+    }
 
 
     // dang bi loi cho nay khi add va delete
-    $scope.add = () => {
+    $scope.add = function () {
         var search_input = document.getElementById("search-gallery");
         search_input.addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                var url = `${host_}/keywords`;
-                $scope.set_keyword.id = $scope.id_last + 1;
-                var item = angular.copy($scope.set_keyword);
-                $http.post(url, item).then((resp) => {
-                    $scope.keywords.push($scope.set_keyword);
-                    $scope.clear();
-                    console.log("> add success keyword ", resp);
-                }).catch((err) => {
-                    console.log("error add keyword ", err);
-                });
+            if (event.key === "Enter" && $scope.keysearch != "") {
+                $scope.keywords.push($scope.keysearch);
+                // this is create new set to access not duplicate data
+                var set = new Set($scope.keywords);
 
-                $(".menu-search").hide();
+                // this is convert Array from to Set before
+                $scope.keywords = Array.from(set);
+
+                // Save a array keywords after converted
+                localStorage.setItem("keywords", JSON.stringify($scope.keywords));
+
+                // go head a any page with URL + kw
+                window.location.href = "http://localhost:8080/user/search?keyword=" +$scope.keysearch; 
             }
        });
     };
 
-    $scope.delete = (id) => {
-        var url = `${host_}/keywords/${id}`;
-        $http.delete(url).then((resp) => {
-            var index = $scope.keywords.findIndex(item => item.id == id);
-            $scope.keywords.splice(index, 1);
-            $scope.clear();
-            console.log("> delete success keyword ", resp);
-        }).catch((err) => {
-            console.log("error delete key ave id " + id, err);
-        });
+    $scope.delete = (kw) => {
+        var index = $scope.keywords.findIndex(item => item == kw);
+        $scope.keywords.splice(index, 1);
+        localStorage.setItem("keywords", JSON.stringify($scope.keywords));
     };
 
-    $scope.loadKeyword();
+
+    // -----------------------------------------------------------------------------------------------
+    // do không thể dùng id của thymeleaf cho ng-click nên đổi category thành angular để lấy id
+    $scope.categories = [];
+    $scope.load_categories = () => {
+        var url = `${host_}/categories`;
+        $http.get(url).then((resp) => {
+            $scope.categories = resp.data;
+        }).catch((err) => {
+            console.log("Error load items", err);
+        });
+    };
+    $scope.load_categories();
+
+
+    $scope.priceFrom = 0;
+    $scope.priceTo   = 1000000;
+    $scope.map_filter = {"rate": 0, "cateId": "", "priceFrom": $scope.priceFrom, "priceTo": $scope.priceTo};
+
+    $scope.add_item_filter = (id) => {
+        var item = String(id);
+        var index = item.indexOf("-");
+        var fStr = item.substring(0, index);
+        var lstr = item.substring(index+1, item.length);
+        $scope.map_filter[fStr] = lstr;
+        console.log($scope.map_filter);
+    };
+
+    $scope.add_price_filter = () => {
+        if ($scope.priceFrom < $scope.priceTo) {
+            $scope.map_filter["priceFrom"] = $scope.priceFrom;
+            $scope.map_filter["priceTo"] = $scope.priceTo;
+        }
+        console.log($scope.map_filter);
+    };
+
+    $scope.filter_submit = () => {
+        var rate = Number($scope.map_filter["rate"]);
+        var cateId = String($scope.map_filter["cateId"]);
+        var priceFrom = Number($scope.map_filter["priceFrom"]);
+        var priceTo = Number($scope.map_filter["priceTo"]);
+        var url = `http://localhost:8080/user/filter?rate=${rate}&cateId=${cateId}&priceFrom=${priceFrom}&priceTo=${priceTo}`;
+        window.location.href = url;
+        console.log(url);
+    };
+
 });
 
 

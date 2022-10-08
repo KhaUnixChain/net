@@ -52,7 +52,7 @@ public class CustomerController {
     private ApplicationContext applicationContext;
     
     @RequestMapping("/user/home")
-    public String home(Model model, @ModelAttribute("auth") Authority auth, @RequestParam("cid") Optional<String> cid) throws IOException {
+    public String home(Model model, @ModelAttribute("auth") Authority auth, @RequestParam("cid") Optional<String> cid) {
         List<Product> list;
         if (cid.isPresent()) {
             list = productSevice.findByCategoryId(cid.get());
@@ -60,15 +60,42 @@ public class CustomerController {
         else {
             list = productSevice.findAll();
         }
-        Resource[] resources_hot = applicationContext.getResources("classpath*:/static/hot/*");
-        Resource[] resources_dis = applicationContext.getResources("classpath*:/static/dist/img/discount/*");
         int number_hint_keyword = 5;
-        model.addAttribute("files", resources_hot);
-        model.addAttribute("discount", resources_dis);
         model.addAttribute("products", list);
         model.addAttribute("page", "user.home");
         model.addAttribute("title_main", "Fastshop.com - Nơi những mặt hàng được vận chuyển nhanh chóng mặt");
         model.addAttribute("hints", categoryService.getOneProductEachCategories(number_hint_keyword));
+        return "index";
+    }
+
+    @RequestMapping("/user/search")
+    public String search(Model model, @RequestParam("keyword") String kw) {
+        List<Product> list = null;
+        list = productSevice.findByKeywordName(kw);
+        int number_hint_keyword = 5;
+        model.addAttribute("products", list);
+        model.addAttribute("page", "user.home");
+        model.addAttribute("title_main", "Fastshop.com - Nơi những mặt hàng được vận chuyển nhanh chóng mặt");
+        model.addAttribute("hints", categoryService.getOneProductEachCategories(number_hint_keyword));
+        return "index";
+    }
+
+
+    @RequestMapping("/user/filter")
+    public String filter(Model model, 
+                         @RequestParam("rate") Integer rate, 
+                         @RequestParam("cateId") String cateId, 
+                         @RequestParam("priceFrom") Integer priceFrom, 
+                         @RequestParam("priceTo") Integer priceTo)
+    {
+        List<Product> list = null;
+        list = productSevice.findByFilter(rate, cateId, priceFrom, priceTo);
+        int number_hint_keyword = 5;
+        model.addAttribute("products", list);
+        model.addAttribute("page", "user.home");
+        model.addAttribute("title_main", "Fastshop.com - Nơi những mặt hàng được vận chuyển nhanh chóng mặt");
+        model.addAttribute("hints", categoryService.getOneProductEachCategories(number_hint_keyword));
+        System.out.println(list.size());
         return "index";
     }
 
@@ -208,5 +235,17 @@ public class CustomerController {
             page = (authority.getRole().getId().equals("ADMIN")) ? "admin.home" : "";
         }
         return page;
+    }
+
+    @ModelAttribute("files")
+    public Resource[] files() throws IOException {
+        Resource[] resources_hot = applicationContext.getResources("classpath*:/static/hot/*");
+        return resources_hot;
+    }
+
+    @ModelAttribute("discount")
+    public Resource[] discount() throws IOException {
+        Resource[] resources_dis = applicationContext.getResources("classpath*:/static/dist/img/discount/*");
+        return resources_dis;
     }
 }
