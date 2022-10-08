@@ -43,4 +43,9 @@ public class ProductServiceImpl implements ProductSevice{
     public void deleteById(Integer id) {
         productDAO.deleteById(id);
     }
+
+    @Override
+    public List<Product> findByKeywordName(String kw) {
+        return productDAO.findByKeywordName(kw);
+    }
 }

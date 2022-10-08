@@ -10,4 +10,5 @@ public interface ProductSevice {
     Product findById(Integer id);
     List<Product> findAll();
     List<Product> findByCategoryId(String cid);
+    List<Product> findByKeywordName(String kw);
 }
