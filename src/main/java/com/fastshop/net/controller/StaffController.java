@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
@@ -73,6 +74,33 @@ public class StaffController {
             model.addAttribute("title_main", "Form thông tin chi tiết mô tả sản phẩm");
             return "index";
         } catch (Exception e) {
+            return "redirect:/login.fastshop.com";
+        }
+    }
+
+    @RequestMapping("/staff/describe/{id}")
+    public String change(Model model, @RequestParam("describe") String describe, @PathVariable("id") Integer id) {
+        try {
+            Product product = productSevice.findById(id);
+            product.setDescribe(describe);
+            productSevice.save(product);
+            model.addAttribute("page", "staff.detail");
+            return "redirect:/staff/detail/" + id;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/login.fastshop.com";
+        }
+    }
+
+
+    @RequestMapping("/staff/redetail/{id}")
+    public String redetail(Model model, @RequestParam("describe") String describe, @PathVariable("id") Integer id) {
+        try {
+            
+            model.addAttribute("page", "staff.detail");
+            return "redirect:/staff/detail/" + id;
+        } catch (Exception e) {
+            e.printStackTrace();
             return "redirect:/login.fastshop.com";
         }
     }
