@@ -54,14 +54,19 @@ public class AuthController {
     @RequestMapping("/auth/company/login")
     public String authLoginStaff(@Validated @ModelAttribute("dtoLogin") DtoLogin dtoLogin, Errors errors) {
         if (errors.hasErrors()) {
-            return "employee/login_staff_admin";
+            return "login_staff_admin";
         }
         else {
             try {
                 Account account = accountService.findByUsernameOrEmailAndPassword(dtoLogin.getUsernameOrEmail().trim(), dtoLogin.getUsernameOrEmail().trim(), dtoLogin.getPassword().trim());
                 Authority auth = authorityService.findByAccount(account);
-                cookie.add("username", auth.getAccount().getUsername(), 30*24*60*60);
-                return auth.getRole().getId().equals("ADMIN") ? "redirect:/admin/home" : "redirect:/staff/home";
+                if (auth.getRole().getId().equals("USER")) {
+                    return "error/error-404";
+                }
+                else {
+                    cookie.add("username", auth.getAccount().getUsername(), 30*24*60*60);
+                    return auth.getRole().getId().equals("ADMIN") ? "redirect:/admin/home" : "redirect:/staff/home";
+                }
             } catch (Exception e) {
                 return "error/error-404";
             }
