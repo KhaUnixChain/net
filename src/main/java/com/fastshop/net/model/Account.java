@@ -54,7 +54,7 @@ public class Account  implements Serializable{
 	@Column(name = "phone", columnDefinition = "varchar(15)", nullable = false, unique = true)
 	private String phone;
 
-	Boolean enable;
+	Boolean active;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
