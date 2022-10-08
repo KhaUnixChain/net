@@ -17,6 +17,6 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
     @Override
     public List<ProductDetail> findByProduct(Product product) {
-        return productDetailDAO.findByProductId(product.getId());
+        return productDetailDAO.findByProduct(product);
     }
 }
