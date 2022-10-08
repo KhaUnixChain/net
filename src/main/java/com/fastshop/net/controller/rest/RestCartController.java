@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fastshop.net.model.CartItem;
-import com.fastshop.net.service.ProductSevice;
+import com.fastshop.net.service.ProductService;
 
 @CrossOrigin("*")
 @RestController
 public class RestCartController {
     @Autowired
-    ProductSevice productSevice;
+    ProductService productSevice;
 
     @GetMapping("/rest/get/cartitems")
     public Map<Integer, CartItem> getCartItems() {

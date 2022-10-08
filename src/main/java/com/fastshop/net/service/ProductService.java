@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.fastshop.net.model.Product;
 
-public interface ProductSevice {
+public interface ProductService {
     void save(Product product);
     void deleteById(Integer id);
     Product findById(Integer id);

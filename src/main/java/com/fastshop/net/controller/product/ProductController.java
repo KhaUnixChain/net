@@ -13,7 +13,7 @@ import com.fastshop.net.model.Product;
 import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryService;
-import com.fastshop.net.service.ProductSevice;
+import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._CopyImage;
 
@@ -26,7 +26,7 @@ public class ProductController {
     @Autowired
     _CookieService cookieService;
     @Autowired
-    ProductSevice productSevice;
+    ProductService productSevice;
     @Autowired
     AccountService accountService;
     @Autowired

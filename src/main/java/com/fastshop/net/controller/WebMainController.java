@@ -22,7 +22,7 @@ import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryService;
 import com.fastshop.net.service.HistoryService;
-import com.fastshop.net.service.ProductSevice;
+import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service._SessionService;
 
 @Controller
@@ -44,7 +44,7 @@ public class WebMainController {
     @Autowired
     HistoryService historyService;
     @Autowired
-    ProductSevice cartSevice;
+    ProductService cartSevice;
     @Autowired
     private ApplicationContext applicationContext;
 

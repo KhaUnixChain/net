@@ -11,10 +11,10 @@ import com.fastshop.net.model.Comment;
 import com.fastshop.net.model.Product;
 import com.fastshop.net.repository.CategoryDAO;
 import com.fastshop.net.repository.ProductDAO;
-import com.fastshop.net.service.ProductSevice;
+import com.fastshop.net.service.ProductService;
 
 @Service
-public class ProductServiceImpl implements ProductSevice{
+public class ProductServiceImpl implements ProductService{
     @Autowired
     ProductDAO productDAO;
     @Autowired

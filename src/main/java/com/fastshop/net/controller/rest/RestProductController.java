@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fastshop.net.model.Product;
-import com.fastshop.net.service.ProductSevice;
+import com.fastshop.net.service.ProductService;
 
 @CrossOrigin("*")
 @RestController
 public class RestProductController {
     @Autowired
-    ProductSevice productSevice;
+    ProductService productSevice;
 
     @GetMapping("/rest/products")
     public List<Product> getAll(Model model) {

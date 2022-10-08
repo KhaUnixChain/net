@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Product;
-import com.fastshop.net.service.ProductSevice;
+import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._GetListFile;
 import com.fastshop.net.service.AccountService;
@@ -39,7 +39,7 @@ public class CustomerController {
     @Autowired
     AccountService accountService;
     @Autowired
-    ProductSevice productSevice;
+    ProductService productSevice;
     @Autowired
     CategoryService categoryService;
     @Autowired
