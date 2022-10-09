@@ -42,8 +42,10 @@ public class AuthController {
                 Authority auth = authorityService.findByAccount(account);
                 cookie.add("username", auth.getAccount().getUsername(), 30*24*60*60);
                 return "redirect:/fastshop.com";
-            } catch (Exception e) {
-                return "error/error-404";
+            } catch (NullPointerException e) {
+                return "error/error-500";
+            } catch (Exception k) {
+                return "error/error-400";
             }
         }
     }

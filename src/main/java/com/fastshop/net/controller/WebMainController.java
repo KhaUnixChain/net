@@ -9,9 +9,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
@@ -68,29 +66,33 @@ public class WebMainController {
      */
     @RequestMapping("/fastshop.com")
     public String index(Model model, @ModelAttribute("auth") Authority auth) throws IOException {
-        String title_main = "Fastshop.com - Nơi những mặt hàng được vận chuyển nhanh chóng mặt";
-        int number_hint_keyword = 5;
-        Resource[] resources_hot = applicationContext.getResources("classpath*:/static/hot/*");
-        Resource[] resources_dis = applicationContext.getResources("classpath*:/static/dist/img/discount/*");
-        model.addAttribute("files", resources_hot);
-        model.addAttribute("discount", resources_dis);
-        model.addAttribute("products", cartSevice.findAll());
-        model.addAttribute("title_main", title_main);
-        model.addAttribute("hints", categoryService.getOneProductEachCategories(number_hint_keyword));
+        try {
+            String title_main = "Fastshop.com - Nơi những mặt hàng được vận chuyển nhanh chóng mặt";
+            int number_hint_keyword = 5;
+            Resource[] resources_hot = applicationContext.getResources("classpath*:/static/hot/*");
+            Resource[] resources_dis = applicationContext.getResources("classpath*:/static/dist/img/discount/*");
+            model.addAttribute("files", resources_hot);
+            model.addAttribute("discount", resources_dis);
+            model.addAttribute("products", cartSevice.findAll());
+            model.addAttribute("title_main", title_main);
+            model.addAttribute("hints", categoryService.getOneProductEachCategories(number_hint_keyword));
 
 
-        // thêm history
-        if (auth != null) {
-            if (auth.getRole().getId().equals("ADMIN")) {
-                History history = new History();
-                history.setTitle(title_main);
-                history.setLink("http://localhost:8080/fastshop.com");
-                history.setSchedual(new Date());
-                history.setAccount(auth.getAccount());
-                historyService.save(history);    
-            }  
+            // thêm history
+            if (auth != null) {
+                if (auth.getRole().getId().equals("ADMIN")) {
+                    History history = new History();
+                    history.setTitle(title_main);
+                    history.setLink("http://localhost:8080/fastshop.com");
+                    history.setSchedual(new Date());
+                    history.setAccount(auth.getAccount());
+                    historyService.save(history);    
+                }  
+            }
+            return "index";
+        } catch (NullPointerException e) {
+            return "error/error-500";
         }
-        return "index";
     }
 
 
@@ -165,36 +167,10 @@ public class WebMainController {
      * @param model
      * @return
      */
-	 @RequestMapping("/forgot")
-	 public String forgot(Model model) {
-		 model.addAttribute("accounts", new MailInfo());
-		 return "forgot";
-	 }
-
-    @PostMapping("/forgot")
-	 public String sendMail(Model model, @RequestParam("email") String email) {
-		try {
-			Account account = accountService.findByEmail(email);
-
-			if (account != null) {
-				cookie.add("email", account.getEmail(),1*24*60);
-				String nameEmail = cookie.getValue("email");
-				mailService.send(email, "Mật khẩu của bạn",
-					 "<a href='http://localhost:8080/ChangeForgot/'+${nameEmail})>ĐỔI MẬT KHẨU MỚI</a>");
-				model.addAttribute("message", "Send is seccussful");
-
-			} else {
-				model.addAttribute("message", "Send is not seccussful");
-			}
-		} catch (Exception e) {
-			return e.getMessage();
-		}
-		return "/forgot";
-	}
-
-    @RequestMapping("/ChangeForgot")
-	public String ChangeForgot(Model model) {
-		return "change-forgot";
+	@RequestMapping("/forgot")
+	public String forgot(Model model) {
+		model.addAttribute("accounts", new MailInfo());
+		return "forgot";
 	}
 
 
