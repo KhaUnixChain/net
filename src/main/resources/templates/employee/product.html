@@ -1,39 +1,36 @@
 <div th:fragment="subfragment" class="page-wrapper">
-  <div class="container py-4">
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title text-primary">CHỈNH SỬA CHI TIẾT SẢN PHẨM</h3>
+  <div class="container d-flex justify-content-center">
+    <div class="card mt-4 mb-4">
+      <div class="card-header row d-flex justify-content-between">
+        <div class="col-lg-6">
+          <h3 class="card-title text-primary">CHỈNH SỬA CHI TIẾT SẢN PHẨM</h3>
+          <p style="font-size: 11px; color: red; font-style: italic;">* Nhấn Enter hoặc Đến khi hoàn thành</p>
+        </div>
+        
+        <div class="form-group col-lg-6">
+          <input type="text" class="form-control" placeholder="Tìm kiếm bằng tên ...">
+        </div>
       </div>
       <div class="table-responsive">
         <table class="table table-borderless">
           <thead>
             <tr>
-              <th class="text-center">Id</th>
               <th class="text-center">Hình ảnh.</th>
               <th>Tên sản phẩm.</th>
-              <th>Số lượng.</th>
-              <th>Giá cả.</th>
-              <th></th>
+              <th>Nút kích hoạt</th>
             </tr>
           </thead>
           <tbody>
             <!-- this is tr -->
             <tr th:each="item : ${items}">
               <td class="text-center">
-                <span class="text-muted">[[${ item.id } ]]</span>
-              </td>
-              <td class="text-center">
                 <img class="bg-white" th:src="@{${'/dist/img/products/' + item.image} }" width="35px" height="35px">
               </td>
               <td class="text-reset">[[ ${ item.name } ]]</td>
-              <th>[[ ${ item.number } ]]</th>
-              <td>
-                <strong style="font-weight: bolder;">$</strong> [[ ${ item.price } ]]
-              </td>
               <td class="text-center">
                 <!-- this is edit -->
-                <a class="btn btn-default d-none d-sm-inline-block" th:href="@{ ${'/staff/detail/' + item.id } }" style="text-decoration: none;">
-                    Thông tin chi tiết
+                <a class="btn btn-default" th:href="@{ ${'/staff/detail/' + item.id } }" style="text-decoration: none;">
+                    Thông tin
                 </a>
               </td>
             </tr>

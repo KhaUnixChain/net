@@ -28,7 +28,7 @@ public class RestProductDetailController {
 
     @GetMapping("/rest/productdetails/{id}")
     public List<ProductDetail> getAll(@PathVariable("id") Integer id) {
-        Product product = 
-        return productDetailService.findByProduct();
+        Product product = productService.findById(id);
+        return productDetailService.findByProduct(product);
     }
 }

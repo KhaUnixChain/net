@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Product;
-import com.fastshop.net.service.ProductSevice;
+import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._GetListFile;
 import com.fastshop.net.service.AccountService;
@@ -32,7 +32,7 @@ public class StaffController {
     @Autowired
     AccountService accountService;
     @Autowired
-    ProductSevice productSevice;
+    ProductService productSevice;
     @Autowired
     CategoryService categoryService;
     @Autowired
@@ -93,10 +93,18 @@ public class StaffController {
     }
 
 
+/**
+ * Làm thế nào để lưu thông tin vô trong product detail
+ * category detail và category là cố định không thay đổi j hết
+ * có thể dùng rest để thực thi, mỗi một detail đc in ra từ trang detail.html được coi là 1 product detail nên khó lưu
+ * @param model
+ * @param describe
+ * @param id
+ * @return
+ */
     @RequestMapping("/staff/redetail/{id}")
     public String redetail(Model model, @RequestParam("describe") String describe, @PathVariable("id") Integer id) {
         try {
-            
             model.addAttribute("page", "staff.detail");
             return "redirect:/staff/detail/" + id;
         } catch (Exception e) {
@@ -104,6 +112,17 @@ public class StaffController {
             return "redirect:/login.fastshop.com";
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**
