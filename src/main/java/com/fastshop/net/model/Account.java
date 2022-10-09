@@ -34,7 +34,7 @@ import lombok.Setter;
 public class Account  implements Serializable{
 	@Id
 	@NotBlank(message = "(*) Username cannot blank.")
-	@Column(name = "username", columnDefinition = "varchar(15)", nullable = false)
+	@Column(name = "username", columnDefinition = "varchar(30)", nullable = false)
 	private String username;
 
 	@Pattern(regexp = "^[a-zA-Z0-9]{6,}$", message = "(*) Password's not enough to private and blank.")
