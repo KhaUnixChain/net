@@ -22,5 +22,5 @@ public class MailInfo {
 		this.to = to;
 		this.subject = subject;
 		this.body = body;
-		}
+	}
 }

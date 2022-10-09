@@ -189,7 +189,7 @@ public class WebMainController {
 		} catch (Exception e) {
 			return e.getMessage();
 		}
-		return "forgot";
+		return "/forgot";
 	}
 
     @RequestMapping("/ChangeForgot")
