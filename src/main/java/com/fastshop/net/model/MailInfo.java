@@ -8,19 +8,19 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Mail {
+public class MailInfo {
 	private String from;
 	private String to;
-	private String[] cc = null;
-	private String[] bcc = null;
+	private String[] cc;
+	private String[] bcc;
 	private String subject;
 	private String body;
-	private String[] attachments = null;
+	private String[] attachments;
 	
-	public Mail(String to, String subject, String body) {
-		this.from = "nhomchung1999@gmail.com";  // thường là gmail của công ty
+	public MailInfo(String to, String subject, String body) {
+		this.from = "namtxpd04205@fpt.edu.vn";
 		this.to = to;
 		this.subject = subject;
 		this.body = body;
-	}
+		}
 }
