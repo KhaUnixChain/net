@@ -7,6 +7,7 @@ import com.fastshop.net.model.Product;
 
 public interface CategoryService {
     void save(Category category);
+    Category findById(String id);
     List<Category> findAll();
     List<Category> findByStatus(Boolean status);
     List<Product> getOneProductEachCategories(int number);

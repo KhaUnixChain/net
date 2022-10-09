@@ -18,13 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Product;
-import com.fastshop.net.service.ProductSevice;
+import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._GetListFile;
 import com.fastshop.net.service.AccountService;
+import com.fastshop.net.service.AddressService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryService;
 import com.fastshop.net.service.OrderService;
+import com.fastshop.net.service.ProductDetailService;
 
 @Controller
 public class CustomerController {
@@ -37,16 +39,20 @@ public class CustomerController {
     @Autowired
     AccountService accountService;
     @Autowired
-    ProductSevice productSevice;
+    ProductService productSevice;
     @Autowired
     CategoryService categoryService;
     @Autowired
     OrderService orderService;
     @Autowired
+    AddressService addressService;
+    @Autowired
+    ProductDetailService productDetailService;
+    @Autowired
     private ApplicationContext applicationContext;
     
     @RequestMapping("/user/home")
-    public String home(Model model, @ModelAttribute("auth") Authority auth, @RequestParam("cid") Optional<String> cid) throws IOException {
+    public String home(Model model, @ModelAttribute("auth") Authority auth, @RequestParam("cid") Optional<String> cid) {
         List<Product> list;
         if (cid.isPresent()) {
             list = productSevice.findByCategoryId(cid.get());
@@ -54,11 +60,7 @@ public class CustomerController {
         else {
             list = productSevice.findAll();
         }
-        Resource[] resources_hot = applicationContext.getResources("classpath*:/static/hot/*");
-        Resource[] resources_dis = applicationContext.getResources("classpath*:/static/dist/img/discount/*");
         int number_hint_keyword = 5;
-        model.addAttribute("files", resources_hot);
-        model.addAttribute("discount", resources_dis);
         model.addAttribute("products", list);
         model.addAttribute("page", "user.home");
         model.addAttribute("title_main", "Fastshop.com - Nơi những mặt hàng được vận chuyển nhanh chóng mặt");
@@ -66,14 +68,51 @@ public class CustomerController {
         return "index";
     }
 
+    @RequestMapping("/user/search")
+    public String search(Model model, @RequestParam("keyword") String kw) {
+        List<Product> list = null;
+        list = productSevice.findByKeywordName(kw);
+        int number_hint_keyword = 5;
+        model.addAttribute("products", list);
+        model.addAttribute("page", "user.home");
+        model.addAttribute("title_main", "Fastshop.com - Nơi những mặt hàng được vận chuyển nhanh chóng mặt");
+        model.addAttribute("hints", categoryService.getOneProductEachCategories(number_hint_keyword));
+        return "index";
+    }
+
+
+    @RequestMapping("/user/filter")
+    public String filter(Model model, 
+                         @RequestParam("rate") Integer rate, 
+                         @RequestParam("cateId") String cateId, 
+                         @RequestParam("priceFrom") Integer priceFrom, 
+                         @RequestParam("priceTo") Integer priceTo)
+    {
+        List<Product> list = null;
+        list = productSevice.findByFilter(rate, cateId, priceFrom, priceTo);
+        int number_hint_keyword = 5;
+        model.addAttribute("products", list);
+        model.addAttribute("page", "user.home");
+        model.addAttribute("title_main", "Fastshop.com - Nơi những mặt hàng được vận chuyển nhanh chóng mặt");
+        model.addAttribute("hints", categoryService.getOneProductEachCategories(number_hint_keyword));
+        System.out.println(list.size());
+        return "index";
+    }
+
     
     @RequestMapping("/user/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id) {
+    public String detailUser(Model model, @ModelAttribute("auth") Authority auth, @PathVariable("id") Integer id) {
         Product product = productSevice.findById(id);
         model.addAttribute("page", "user.detail");
         model.addAttribute("title_main", "Fastshop - Chi tiết sản phẩm");
         model.addAttribute("product", product);
-        return "index";
+        try {
+            model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
+            return "index";
+        } catch (Exception e) {
+            model.addAttribute("address", null);
+            return "index";
+        }
     }
 
     
@@ -125,8 +164,10 @@ public class CustomerController {
     public String address(Model model, @ModelAttribute("auth") Authority auth) {
         try {
             model.addAttribute("page", "user.address");
-            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));  // thêm để khi cố ý đổi link thì tự động vô login
+            model.addAttribute("addresses", addressService.findAllAddressByAccount(auth.getAccount().getUsername()));
+            model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
             model.addAttribute("title_main", "Fastshop - Địa chỉ mặc định của bạn");
+            model.addAttribute("_", orderService.findAddressByUsername(auth.getAccount()));  // thêm để khi cố ý đổi link thì tự động vô login
             return "index";
         } catch (Exception e) {
             return "redirect:/login";
@@ -194,5 +235,17 @@ public class CustomerController {
             page = (authority.getRole().getId().equals("ADMIN")) ? "admin.home" : "";
         }
         return page;
+    }
+
+    @ModelAttribute("files")
+    public Resource[] files() throws IOException {
+        Resource[] resources_hot = applicationContext.getResources("classpath*:/static/hot/*");
+        return resources_hot;
+    }
+
+    @ModelAttribute("discount")
+    public Resource[] discount() throws IOException {
+        Resource[] resources_dis = applicationContext.getResources("classpath*:/static/dist/img/discount/*");
+        return resources_dis;
     }
 }

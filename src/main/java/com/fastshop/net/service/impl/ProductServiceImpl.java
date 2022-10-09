@@ -1,18 +1,20 @@
 package com.fastshop.net.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fastshop.net.model.Category;
+import com.fastshop.net.model.Comment;
 import com.fastshop.net.model.Product;
 import com.fastshop.net.repository.CategoryDAO;
 import com.fastshop.net.repository.ProductDAO;
-import com.fastshop.net.service.ProductSevice;
+import com.fastshop.net.service.ProductService;
 
 @Service
-public class ProductServiceImpl implements ProductSevice{
+public class ProductServiceImpl implements ProductService{
     @Autowired
     ProductDAO productDAO;
     @Autowired
@@ -42,5 +44,31 @@ public class ProductServiceImpl implements ProductSevice{
     @Override
     public void deleteById(Integer id) {
         productDAO.deleteById(id);
+    }
+
+    @Override
+    public List<Product> findByKeywordName(String kw) {
+        return productDAO.findByKeywordName(kw);
+    }
+
+    @Override
+    public List<Product> findByFilter(Integer rate, String cateId, double priceFrom, double priceTo) {
+        List<Product> list1 = productDAO.findByFilter(cateId, priceFrom, priceTo);
+        if (rate == 0) {
+            return list1;
+        }
+        else {
+            List<Product> list2 = new ArrayList<>();
+            for (Product product : list1) {
+                if (product.getComments().size() > 0) {
+                    for (Comment c : product.getComments()) {
+                        if (c.getRate() <= rate) {
+                            list2.add(product);
+                        }
+                    }
+                }
+            }
+            return list2;
+        }
     }
 }

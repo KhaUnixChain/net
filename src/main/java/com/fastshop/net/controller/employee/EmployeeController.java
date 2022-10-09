@@ -43,14 +43,11 @@ public class EmployeeController {
     }
 
 
-    @RequestMapping("/account/delete/{username}")
+    @RequestMapping("/account/active/{username}")
     public String delete(@PathVariable("username") String username) {
         Account account = accountService.findById(username);
-        Authority authority = authorityService.findByAccount(account);
-        if (authority != null) {
-            authorityService.deleteByAuthority(authority);
-            accountService.deleteById(username);
-        }
+        account.setActive(!account.getActive());
+        accountService.save(account);
         return "redirect:/admin/employee";
     }
 

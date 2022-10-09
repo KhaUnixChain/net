@@ -82,7 +82,14 @@
 
 
       <!-- footer -->
-      <footer th:replace="~{/layout/_footer::footer}"></footer>
+      <th:block th:if="${auth != null}">
+        <th:block th:if="${auth.role.id == 'USER' }">
+          <footer th:replace="~{/layout/_footer::footer}"></footer>
+        </th:block>
+      </th:block>
+      <th:unless th:if="${auth == null}">
+        <footer th:replace="~{/layout/_footer::footer}"></footer>
+      </th:unless>
     </div>
     <script th:src="@{/angular/sumary.js}"></script>
     <script th:src="@{/dist/js/all_feature.js}" type="text/javascript" defer></script>

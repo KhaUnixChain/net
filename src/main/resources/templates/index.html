@@ -88,6 +88,14 @@
       <div th:insert="~{/employee/home::subfragment}"></div>
     </th:block>
 
+    <th:block th:case="'staff.product'">
+      <div th:insert="~{/employee/product::subfragment}"></div>
+    </th:block>
+
+    <th:block th:case="'staff.detail'">
+      <div th:insert="~{/employee/detail::subfragment}"></div>
+    </th:block>
+
     <!-- profile -->
     <th:block th:case="'profile.home'">
       <div th:insert="~{/profile::subfragment}"></div>

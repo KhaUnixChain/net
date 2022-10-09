@@ -19,9 +19,9 @@
     <link th:href="@{/dist/css/demo.min.css}" rel="stylesheet"/>
     <link th:href="@{/dist/css/all_feature.css}" rel="stylesheet"/>
   </head>
-  <body  class="border-top-wide border-primary d-flex flex-column">
+  <body  class="border-top-wide bg-dark border-primary d-flex flex-column">
     <div class="page page-center">
-      <div class="container-tight py-4" style="width: max-content;">
+      <div class="container-tight" style="width: max-content;">
         <form class="card card-md" th:object="${dtoLogin}" th:action="@{/auth/company/login}" method="post">
           <div class="card-body text-center">
             <div class="mb-3">
@@ -34,12 +34,12 @@
               <p class="text-muted fs-5">Hãy điền đầy đủ username và password của bạn thông tin của các bạn luôn được chúng tôi bảo mật an toàn.</p>
             </div>
             <div class="mb-3 text-start">
-              <input type="text" class="form-control" th:field="*{usernameOrEmail}" placeholder="Username&hellip;">
+              <input type="text" class="form-control text-dark" th:field="*{usernameOrEmail}" placeholder="Username&hellip;">
               <!-- this is error username or email  -->
               <i class="error fs-5" th:errors="*{usernameOrEmail}"></i>
             </div>
             <div class="mb-1 text-start">
-              <input type="password" class="form-control" th:field="*{password}" placeholder="Password&hellip;">
+              <input type="password" class="form-control text-dark" th:field="*{password}" placeholder="Password&hellip;">
               <!-- this is error password -->
               <i class="error fs-5" th:errors="*{password}"></i>
             </div>

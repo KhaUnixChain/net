@@ -1,6 +1,6 @@
 <div th:fragment="subfragment" class="page-wrapper">
   <div class="page-body">
-    <div class="container-xl">
+    <div class="container-xl" ng-controller="keyword-ctrl">
 
       <!-- phần lọc -->
       <div class="page-header d-print-none bg-white">
@@ -8,7 +8,7 @@
           <h4 class="text-primary">
             Danh mục nổi bật
           </h4>
-          <div class="page-header d-print-none" ng-controller="keyword-ctrl">
+          <div class="page-header d-print-none">
             <style>
               @media screen and (max-width: 800px) {
                 div#hint-box-search {
@@ -25,21 +25,21 @@
               }
             </style>
             <!-- ở đây phải thêm style position để nó chạy về cuối -->
-            <form class="d-flex justify-content-start" style="position: relative;">
-              <div class="col input-icon me-2" style="z-index: 1;">
-                              <!-- chỗ này để láy value -->
-                <input ng-model = "set_keyword.keysearch" type="text" style="height: 40px;" ng-click="add()"  max="100" class="form-control" onfocus="checkFocus()" placeholder="Tìm kiếm sản phẩm ..." id="search-gallery" autocomplete="off" />
+            <div class="d-flex justify-content-start" style="position: relative;">
+              <div class="col-lg-10 input-icon me-2" style="z-index: 1;">
+                          <!-- chỗ này để lấy value -->
+                <input ng-model = "keysearch" type="text" style="height: 40px;" ng-click="add()"  max="100" class="form-control" onfocus="checkFocus()" placeholder="Tìm kiếm sản phẩm ..." id="search-gallery" autocomplete="off" />
 
                 <!-- cái này phải nằm trên cái kính lúp -->
                 <div class="menu-search pt-1" id="hint-box-search" onclick="checkFocus()">
 
                   <!-- danh sách các từ đã search và gợi ý -->
-                  <div ng-repeat="kw in keywords.slice().reverse() | limitTo:5" class="d-flex justify-content-between align-items-center ps-2 pe-2 show-key">
-                    <a href="#" class="text-muted w-100">
+                  <div ng-repeat="kw in keywords.slice().reverse() | limitTo:8" class="d-flex justify-content-between align-items-center ps-2 pe-2 show-key">
+                    <a href="/user/search?keyword={{kw}}" class="text-muted w-100">
                       <img th:src="@{/dist/img/logo/visited.png}" class="img-visited" alt="">
-                      {{kw.keysearch}}
+                      {{kw}}
                     </a>
-                    <span style="cursor: pointer;" ng-click="delete(kw.id)" class="text-cancel text-end">
+                    <span style="cursor: pointer;" ng-click="delete(kw)" class="text-cancel text-end">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                       </svg>
@@ -92,14 +92,14 @@
               </div>
 
               <!-- mở form filter sản phẩm -->
-              <a href="#" class="col-lg-2 btn btn-outline-primary" style="transition: 0.4s;" data-bs-toggle="modal" data-bs-target="#modal-filter">
+              <a href="#" class="col btn btn-outline-primary" style="transition: 0.4s;" data-bs-toggle="modal" data-bs-target="#modal-filter">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter-square me-2" viewBox="0 0 16 16">
                   <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                   <path d="M6 11.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
                 </svg>
                 Lọc sản phẩm
               </a>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -201,7 +201,7 @@
 
       <!-- carouse -->
       <div class="row d-print-none mb-3">
-        <div class="col-lg-9 h-100">
+        <div class="col-lg-9 h-100 mt-2">
           <div class="card">
             <div id="carousel-captions" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
@@ -232,9 +232,9 @@
             </div>
           </div>
         </div>
-        <div class="col carouse-sales">
+        <div class="col carouse-sales mt-2">
           <a href="/user/sales">
-            <img src="http://localhost:8080/dist/img/sale/sale10.png" class="h-100">
+            <img src="http://localhost:8080/dist/img/sale/sale10.png" class="w-100 h-100">
           </a>
         </div>
       </div>
@@ -259,7 +259,7 @@
 
 
       <!-- danh sach cac san pham chay bang thymeleaf -->
-      <div class="row row-cards" id="gallery-page">
+      <div class="row row-cards" id="gallery-page" th:if="${products != null}">
         <div th:each="item : ${products}" class="col-sm-6 col-lg-3">
           <span class="badge bg-warning fs-5 text-start">-30%</span>
           <a th:href="@{|${'/user/detail/'+{item.id}}|}" class="d-inline">
@@ -299,8 +299,14 @@
       </div>
 
 
+      <div class="row row-cards p-4 justify-content-center" id="gallery-page" style="opacity: 0.7;" th:if="${products == null || products.size() == 0}">
+        <h1 class="text-center">KHÔNG TÌM THẤY SẢN PHẨM</h1>
+        <img th:src="@{/empty-cart.png}" style="width: 36%;" alt="">
+      </div>
+
+
       <!-- modal filter -->
-      <form method="post" th:action="@{/login}" class="modal modal-blur fade" id="modal-filter" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal modal-blur fade" id="modal-filter" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -310,7 +316,7 @@
             <div class="modal-body">
               <div class="row mb-3">
                 <label class="col-ls-12 form-label">Đánh giá</label>
-                <a href="#" class="col text-muted">
+                <a href="#" ng-click="add_item_filter('rate-5')" class="col text-muted">
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
@@ -318,7 +324,7 @@
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                   từ 5 sao
                 </a>
-                <a href="#" class="col text-muted">
+                <a href="#" ng-click="add_item_filter('rate-4')" class="col text-muted">
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
@@ -326,7 +332,7 @@
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#c7c7c7" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(199, 199, 199);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                   từ 4 sao
                 </a>
-                <a href="#" class="col text-muted">
+                <a href="#" ng-click="add_item_filter('rate-3')" class="col text-muted">
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
@@ -334,7 +340,7 @@
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#c7c7c7" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(199, 199, 199);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                   từ 3 sao
                 </a>
-                <a href="#" class="col text-muted">
+                <a href="#" ng-click="add_item_filter('rate-2')" class="col text-muted">
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#fdd836" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(253, 216, 54);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" size="14" color="#c7c7c7" height="14" width="14" xmlns="http://www.w3.org/2000/svg" style="color: rgb(199, 199, 199);"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
@@ -343,6 +349,7 @@
                   từ 2 sao
                 </a>
               </div>
+
               <div class="row">
                 <div class="col-lg-3 me-3 border">
                   <!--  filter city -->
@@ -463,67 +470,31 @@
                     </label>
                   </div>
                 </div>
-
-                <!-- filter price -->
-                <div class="price mt-4">
-                  <a href="#">
-                    <span class="badge">Dưới 500k</span>
-                  </a>
-                  <a href="#">
-                    <span class="badge">Từ 500k - 1000k</span>
-                  </a>
-                  <a href="#">
-                    <span class="badge">Từ 1000k - 3000k</span>
-                  </a>
-                  <a href="#">
-                    <span class="badge">Từ 3000k - 6000k</span>
-                  </a>
-                  <a href="#">
-                    <span class="badge">Từ 6000k - 12tr</span>
-                  </a>
-                  <a href="#">
-                    <span class="badge">Từ 12tr - 16tr</span>
-                  </a>
-                  <a href="#">
-                    <span class="badge">Từ 16tr - 21tr</span>
-                  </a>
-                  <a href="#">
-                    <span class="badge">Trên 21 triệu</span>
-                  </a>
-                  <a href="#">
-                    <span class="badge">Trên 30 triệu</span>
-                  </a>
-                  <a href="#">
-                    <span class="badge">Trên 40 triệu</span>
-                  </a>
-                  <a href="#">
-                    <span class="badge">Trên 50 triệu</span>
-                  </a>
-                </div>
               </div>
+              
 
-              <div class="row">
+              <div class="row mt-4">
                 <!-- filter price theo khoang -->
-                <div class="col-lg-12">
+                <div class="col-lg-12 mb-2">
                   <label class="col-lg-12 form-label">Nhập giá</label>
-                  <input type="number" style="width: 47%;" id="" min="0" placeholder="từ" class="me-2">
-                  <input type="number" style="width: 48%;" id="" min="1" placeholder="đến" class="ms-2">
+                  <input type="number" style="width: 47%; height: 30px;" ng-model="priceFrom" ng-change="add_price_filter()" min="0" placeholder="từ" class="me-2">
+                  <input type="number" style="width: 48%; height: 30px;" ng-model="priceTo" ng-change="add_price_filter()" min="1" placeholder="đến" class="ms-2">
                 </div>
 
                 <!-- filter category -->
                 <div class="col-lg-12 mt-3">
                   <div class="row">
                     <label class="col-lg-12 form-label">Loại hàng</label>
-                    <label class="col-lg-2 form-check" th:each="c : ${cates}">
-                      <input class="form-check-input" type="checkbox">
-                      <span class="form-check-label">[[${c.name}]]</span>
+                    <label class="col-lg-2 form-check" ng-repeat="c in categories">
+                      <input class="form-check-input" ng-click="add_item_filter('cateId-' + c.id)" type="radio" name="filter-category">
+                      <span class="form-check-label">{{c.name}}</span>
                     </label>
                   </div>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-outline-primary ms-auto" type="submit" style="transition: 0.2s;" data-bs-dismiss="modal">
+              <button ng-click="filter_submit()" class="btn btn-outline-primary ms-auto" type="button" style="transition: 0.2s;" data-bs-dismiss="modal">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-activity me-2" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
                 </svg>
@@ -532,7 +503,7 @@
             </div>
           </div>
         </div>
-      </form>
+      </div>
 
     </div>
   </div>
