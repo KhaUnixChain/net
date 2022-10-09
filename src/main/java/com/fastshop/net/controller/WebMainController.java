@@ -18,6 +18,7 @@ import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.DtoLogin;
 import com.fastshop.net.model.History;
 import com.fastshop.net.model.MailInfo;
+import com.fastshop.net.model.dto.AccountDTO;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._MailService;
 import com.fastshop.net.service.AccountService;
@@ -178,9 +179,8 @@ public class WebMainController {
 
 			if (account != null) {
 				cookie.add("email", account.getEmail(),1*24*60);
-				String nameEmail = cookie.getValue("email");
 				mailService.send(email, "Mật khẩu của bạn",
-					 "<a href='http://localhost:8080/ChangeForgot/'+${nameEmail})>ĐỔI MẬT KHẨU MỚI</a>");
+					 "<a href='http://localhost:8080/ChangeForgot')>ĐỔI MẬT KHẨU MỚI</a>");
 				model.addAttribute("message", "Send is seccussful");
 
 			} else {
@@ -189,13 +189,40 @@ public class WebMainController {
 		} catch (Exception e) {
 			return e.getMessage();
 		}
-		return "/forgot";
+		return "redirect:/forgot";
 	}
 
     @RequestMapping("/ChangeForgot")
 	public String ChangeForgot(Model model) {
+        model.addAttribute("account",new AccountDTO());
+        model.addAttribute("cookieEmail",cookie.getValue("email"));
 		return "change-forgot";
 	}
+
+    @RequestMapping("/updateForgot")
+    public String updateForgotPass(@ModelAttribute("account") AccountDTO dto) {
+        System.out.println(dto.getNewPassword());
+        System.out.println(dto.getConfirmPassword());
+        String cookieEmail = cookie.getValue("email");
+        System.out.println(cookieEmail);
+        try {
+        Account account = accountService.findByEmail(cookieEmail);
+        
+            if(dto.getNewPassword().equals(dto.getConfirmPassword())){
+                account.setPassword(dto.getConfirmPassword());
+                accountService.save(account);
+                cookie.remove("email");
+                return "redirect:/login";
+            }else{
+                return "redirect:/ChangeForgot";
+            }
+       }catch(Exception e){
+            e.printStackTrace();
+            return "redirect:/ChangeForgot";
+       }
+       
+           
+   }
 
 
     /**

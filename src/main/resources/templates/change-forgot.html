@@ -24,19 +24,20 @@
         <div class="text-center mb-4">
           <a href="/" class="navbar-brand navbar-brand-autodark"><img th:src="@{Capture.ico}" height="36" alt=""></a>
         </div>
-        <form class="card card-md" >
+        <form class="card card-md" th:action="@{/updateForgot}" method="post" th:object="${account}">
           <div class="card-body text-center">
             <div class="mb-4">
               <h2 class="card-title">Change Password</h2>
-              <p class="text-muted">Vui long nhap password moi</p>
+              <p class="text-muted">Vui lòng nhập password mới!</p>
+            </div>
+            <div class="mb-4" >
+              <input type="email" th:value="${cookieEmail}" class="form-control"readonly>
             </div>
             <div class="mb-4">
+              <input type="password" th:field="*{newPassword}" id="newPassword" name="newPassword" class="form-control" placeholder="Password&hellip;">
             </div>
             <div class="mb-4">
-              <input type="password" id="password" name="password" class="form-control" placeholder="Password&hellip;">
-            </div>
-            <div class="mb-4">
-              <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirm Password&hellip;">
+              <input type="password" th:field="*{confirmPassword}" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password&hellip;">
             </div>
             <div>
               <button class="btn btn-primary w-100">
