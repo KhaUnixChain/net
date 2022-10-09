@@ -9,13 +9,15 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.DtoLogin;
 import com.fastshop.net.model.History;
-import com.fastshop.net.model.Mail;
+import com.fastshop.net.model.MailInfo;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._MailService;
 import com.fastshop.net.service.AccountService;
@@ -163,21 +165,26 @@ public class WebMainController {
      * @param model
      * @return
      */
-    @RequestMapping("/forgot")
-	public String forgot(Model model) {
-        model.addAttribute("mail", new Mail());
-		return "/forgot";
-	}
+	 @RequestMapping("/forgot")
+	 public String forgot(Model model) {
+		 model.addAttribute("accounts", new MailInfo());
+		 return "forgot";
+	 }
 
-    @RequestMapping("/forgot/send")
-	public String sendMail(Model model, @ModelAttribute("mail") Mail email) {
+    @PostMapping("/forgot")
+	 public String sendMail(Model model, @RequestParam("email") String email) {
 		try {
-			Account account = accountService.findByEmail(email.getTo());
+			Account account = accountService.findByEmail(email);
+
 			if (account != null) {
-				sessionService.set("email", account.getEmail());
-                String subject = "Mat khau cua ban";
-                String body = "<a href='http://localhost:8080/ChangeForgot'>Xac nhan tai khoan</a>";
-                mailService.send(email.getTo(), subject, body);
+				cookie.add("email", account.getEmail(),1*24*60);
+				String nameEmail = cookie.getValue("email");
+				mailService.send(email, "Mật khẩu của bạn",
+					 "<a href='http://localhost:8080/ChangeForgot/'+${nameEmail})>ĐỔI MẬT KHẨU MỚI</a>");
+				model.addAttribute("message", "Send is seccussful");
+
+			} else {
+				model.addAttribute("message", "Send is not seccussful");
 			}
 		} catch (Exception e) {
 			return e.getMessage();

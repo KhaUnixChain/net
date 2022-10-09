@@ -2,16 +2,16 @@ package com.fastshop.net.service;
 
 import javax.mail.MessagingException;
 
-import com.fastshop.net.model.Mail;
+import com.fastshop.net.model.MailInfo;
 
 public interface _MailService {
 	void send(String to, String subject, String body) throws MessagingException;
 
-	void send(Mail mail) throws MessagingException;
+	void send(MailInfo mail) throws MessagingException;
 
 	void queue(String to, String subject, String body);
 
-	void queue(Mail mail);
+	void queue(MailInfo mail);
 
 	void run();
 }
