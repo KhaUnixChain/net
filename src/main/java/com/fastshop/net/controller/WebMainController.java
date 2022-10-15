@@ -81,13 +81,7 @@ public class WebMainController {
             // thêm history
             if (auth != null) {
                 if (auth.getRole().getId().equals("ADMIN")) {
-                    History history = new History();
-                    history.setTitle(title_main);
-                    history.setLink("http://localhost:8080/fastshop.com");
-                    history.setSchedual(new Date());
-                    history.setAccount(auth.getAccount());
-                    historyService.save(history);  
-                    return ""; 
+                    return "redirect:/admin/home"; 
                 }
                 else if (auth.getRole().getId().equals("STAFF")) {
                     return "redirect:/staff/home";
