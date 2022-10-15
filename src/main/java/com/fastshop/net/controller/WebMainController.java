@@ -86,8 +86,12 @@ public class WebMainController {
                     history.setLink("http://localhost:8080/fastshop.com");
                     history.setSchedual(new Date());
                     history.setAccount(auth.getAccount());
-                    historyService.save(history);    
-                }  
+                    historyService.save(history);  
+                    return ""; 
+                }
+                else if (auth.getRole().getId().equals("STAFF")) {
+                    return "redirect:/staff/home";
+                }
             }
             return "index";
         } catch (NullPointerException e) {
