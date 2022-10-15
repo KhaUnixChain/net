@@ -12,6 +12,7 @@ var sum_second_100 = 9 * 60 * 60;
 var curent_second_100 = 0;
 var percent_100 = 0;
 
+// this is toast which show when an user click an item in product detail
 function add(status) {
     if (status == true) {
         $(document).ready(function(){
@@ -48,6 +49,7 @@ function checkFocus() {
 };
 
 
+// this is form payment which to pay when user accept buy all product in their card
 $("#payment-2").hide();
 $("#bill-2").hide();
 function payment(number) {
@@ -65,6 +67,31 @@ function payment(number) {
     }
     return number;
 }
+
+
+$("#order-form-account").hide();
+$("#order-form-calendar").hide();
+$("#order-form-price").hide();
+   
+$("#order-search-account").click(function(){
+    $("#order-form-calendar").hide();
+    $("#order-form-price").hide();
+    $("#order-form-account").slideToggle();
+});
+
+
+$("#order-search-calendar").click(function(){
+    $("#order-form-account").hide();
+    $("#order-form-price").hide();
+    $("#order-form-calendar").slideToggle();
+});
+
+$("#order-search-price").click(function(){
+    $("#order-form-account").hide();
+    $("#order-form-calendar").hide();
+    $("#order-form-price").slideToggle();
+});
+
 
 if (document.getElementById("discount_food") != undefined && document.getElementById("discount_100") != undefined) {
     setInterval(function () {
