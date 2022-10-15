@@ -1,5 +1,7 @@
 package com.fastshop.net.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Product;
+import com.fastshop.net.model.ProductDT;
 import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._GetListFile;
@@ -45,6 +48,8 @@ public class StaffController {
     @RequestMapping("/staff/home")
     public String home(Model model, @ModelAttribute("auth") Authority auth) {
         model.addAttribute("page", "staff.home");
+        model.addAttribute("ordertoday", orderService.getAllOfOrderToday(new Date()));
+        model.addAttribute("orderNotToday", orderService.getAllOfOrderToday(new Date()));
         model.addAttribute("title_main", "Trang chủ quản lý hóa đơn hàng ngày ");
         return "index";
     }
@@ -56,6 +61,7 @@ public class StaffController {
             model.addAttribute("page", "staff.product");
             model.addAttribute("title_main", "Thông tin chi tiết các sản phẩm");
             model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
+            model.addAttribute("productDT", new ProductDT());
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";

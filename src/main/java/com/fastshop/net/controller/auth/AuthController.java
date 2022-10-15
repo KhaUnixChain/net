@@ -41,7 +41,7 @@ public class AuthController {
                 Account account = accountService.findByUsernameOrEmailAndPassword(dtoLogin.getUsernameOrEmail().trim(), dtoLogin.getUsernameOrEmail().trim(), dtoLogin.getPassword().trim());
                 Authority auth = authorityService.findByAccount(account);
                 cookie.add("username", auth.getAccount().getUsername(), 30*24*60*60);
-                return "redirect:/fastshop.com";
+                return "redirect:%s".formatted( auth.getRole().getId().equals("ADMIN") ? "/admin/home" : auth.getRole().getId().equals("STAFF") ? "/staff/home" : "/fastshop.com");
             } catch (NullPointerException e) {
                 return "error/error-500";
             } catch (Exception k) {
