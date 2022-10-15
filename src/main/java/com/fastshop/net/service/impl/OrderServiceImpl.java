@@ -1,5 +1,6 @@
 package com.fastshop.net.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,29 @@ public class OrderServiceImpl implements OrderService{
     public Order findById(Long id) {
         return orderDAO.findById(id).get();
     }
-    
+
+    @Override
+    public List<Order> getAllOfOrderToday(Date date) {
+        return orderDAO.findByCreateDate(date);
+    }
+
+    @Override
+    public List<Order> findNotByCreateDate(Date toNow) {
+        return orderDAO.findNotByCreateDate(toNow);
+    }
+
+    @Override
+    public List<Order> findByCreateDateBetween(Date from, Date to) {
+        return orderDAO.findByCreateDateBetween(from, to);
+    }
+
+    @Override
+    public List<Order> findAllByEmailOrPhone(String email, String phone) {
+        return orderDAO.findAllByEmailOrPhone(email, phone);
+    }
+
+    @Override
+    public List<Order> findAllByPriceBetween() {
+        return null;
+    }
 }

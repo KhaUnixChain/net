@@ -1,5 +1,6 @@
 package com.fastshop.net.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fastshop.net.model.Account;
@@ -11,4 +12,9 @@ public interface OrderService {
     Order findById(Long id);
     String findAddressByUsername(Account account);
     List<Order> findAll();
+    List<Order> getAllOfOrderToday(Date date);
+    List<Order> findNotByCreateDate(Date toNow);
+    List<Order> findByCreateDateBetween(Date from, Date to);
+    List<Order> findAllByEmailOrPhone(String email, String phone);
+    List<Order> findAllByPriceBetween();
 }
