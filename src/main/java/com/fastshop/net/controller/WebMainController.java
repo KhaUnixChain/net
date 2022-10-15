@@ -1,7 +1,6 @@
 package com.fastshop.net.controller;
 
 import java.io.IOException;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.DtoLogin;
-import com.fastshop.net.model.History;
 import com.fastshop.net.model.MailInfo;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._MailService;
