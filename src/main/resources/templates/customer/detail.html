@@ -162,8 +162,8 @@
           <!-- Mô tả sản phẩm -->
           <div class="mt-4 bg-white ps-3 row">
             <h2 class="mb-2 text-primary">Mô tả sản phẩm</h2>
-            <p th:if="${product.describe == null}" class="bg-light text-muted p-3" style="letter-spacing: 0.3px;">( Không có nội dung sản phẩm này)</p>
-            <p th:if="${product.describe != null}" class="bg-light text-muted p-3" style="letter-spacing: 0.3px; word-spacing: 0.5px;">[[ ${product.describe} ]]</p>
+            <pre th:if="${product.describe == null}" class="bg-light text-muted p-3" style="font-size: 14px; font-family: Arial, Helvetica, sans-serif;">( Không có nội dung sản phẩm này)</pre>
+            <pre th:if="${product.describe != null}" class="bg-light text-muted p-3" style="font-size: 14px; font-family: Arial, Helvetica, sans-serif;">[[ ${product.describe} ]]</pre>
           </div>
 
 
