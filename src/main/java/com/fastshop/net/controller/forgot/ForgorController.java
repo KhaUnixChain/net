@@ -50,17 +50,13 @@ public class ForgorController {
 				mailService.send(
                     email, 
                     "Xác nhận tài khoản của bạn",
-                    "<a href='http://localhost:8080/ChangeForgot'><button class='btn btn-primary'>Xác nhận</button></a>"
+                    "<a href='http://localhost:8080/ChangeForgot'><button class='btn btn-primary'>Nhấn xác nhận</button></a>"
                 );
-
-				return "success/success";
-			} else {
-                model.addAttribute("error2", "Không tìm thấy email của bạn !");
-				return "redirect:/forgot";
 			}
+            return "success/success";
 		} catch (Exception e) {
-			e.printStackTrace();
-            return "redirect:/forgot";
+			model.addAttribute("error_forgot", e.getMessage());
+            return "forgot";
 		}
 	}
 
