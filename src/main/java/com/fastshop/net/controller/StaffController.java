@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Product;
-import com.fastshop.net.model.ProductDT;
+import com.fastshop.net.model.ProductDetail;
 import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._GetListFile;
@@ -64,7 +64,6 @@ public class StaffController {
             model.addAttribute("page", "staff.product");
             model.addAttribute("title_main", "Thông tin chi tiết các sản phẩm");
             model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
-            model.addAttribute("productDT", new ProductDT());
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
@@ -90,8 +89,9 @@ public class StaffController {
         try {
             Product product = productSevice.findById(id);
             model.addAttribute("product", product);
+            model.addAttribute("productDetail", new ProductDetail());
             model.addAttribute("page", "staff.detail");
-            model.addAttribute("details", categoryDetailService.findByCategory(product.getCategory()));
+            model.addAttribute("categorydetails", categoryDetailService.findByCategory(product.getCategory()));
             model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
             model.addAttribute("title_main", "Form thông tin chi tiết mô tả sản phẩm");
             return "index";
