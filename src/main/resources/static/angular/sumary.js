@@ -214,11 +214,13 @@ app.controller("checkout-ctrl", ($scope, $http) => {
         minus(id_product) {
             var item = this.items.find(item => item.id == id_product);
             item.qty = (item.qty < 2) ? 1 : item.qty - 1;
+            this.saveToLocalStorage();
         },
     
         plus(id_product) {
             var item = this.items.find(item => item.id == id_product);
             item.qty++;
+            this.saveToLocalStorage();
         },
 
 
