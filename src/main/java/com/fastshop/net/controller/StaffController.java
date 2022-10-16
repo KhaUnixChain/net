@@ -50,6 +50,7 @@ public class StaffController {
     public String home(Model model) {
         Date toNow = java.sql.Date.valueOf(LocalDate.now());
         model.addAttribute("page", "staff.home");
+        model.addAttribute("focus", 1);
         model.addAttribute("ordertoday", orderService.getAllOfOrderToday(new Date()));
         model.addAttribute("orderNotToday", orderService.findNotByCreateDate(toNow));
         model.addAttribute("title_main", "Trang chủ quản lý hóa đơn hàng ngày ");

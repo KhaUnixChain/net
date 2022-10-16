@@ -27,4 +27,7 @@ public interface OrderDAO extends JpaRepository<Order, Long>{
 
     @Query("SELECT o FROM Order o WHERE o.createDate BETWEEN ?1 AND ?2")
     List<Order> findByCreateDateBetween(Date from, Date to);
+
+    @Query("SELECT o FROM Order o WHERE o.status.id = ?1")
+    List<Order> findByStatus(Integer id);
 }

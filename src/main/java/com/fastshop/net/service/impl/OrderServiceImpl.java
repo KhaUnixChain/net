@@ -69,4 +69,9 @@ public class OrderServiceImpl implements OrderService{
     public List<Order> findAllByPriceBetween() {
         return null;
     }
+
+    @Override
+    public List<Order> findByStatus(Integer statusId) {
+        return orderDAO.findByStatus(statusId);
+    }
 }

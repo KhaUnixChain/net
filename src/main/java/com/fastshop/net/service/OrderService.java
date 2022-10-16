@@ -17,4 +17,5 @@ public interface OrderService {
     List<Order> findByCreateDateBetween(Date from, Date to);
     List<Order> findAllByEmailOrPhone(String email, String phone);
     List<Order> findAllByPriceBetween();
+    List<Order> findByStatus(Integer statusId);
 }
