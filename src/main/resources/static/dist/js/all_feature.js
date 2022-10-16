@@ -92,7 +92,6 @@ $("#order-search-price").click(function(){
     $("#order-form-price").slideToggle();
 });
 
-
 if (document.getElementById("discount_food") != undefined && document.getElementById("discount_100") != undefined) {
     setInterval(function () {
         if (hours_food == 0 && minute_food == 0 && second_food == 1) {

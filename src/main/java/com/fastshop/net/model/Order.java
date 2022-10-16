@@ -43,10 +43,12 @@ public class Order  implements Serializable{
 	Account account;
 
 	Date dateSubmit;
-
-	Integer status = 0;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")
 	List<OrderDetail> orderDetails;
+
+	@ManyToOne
+	@JoinColumn(name = "statusId")
+	Status status;
 }

@@ -1,3 +1,206 @@
 <div th:fragment="subfragment" class="page-wrapper">
-  adawdw
+  <div class="page-wrapper">
+    <div class="container-xl">
+      <!-- Page title -->
+      <div class="page-header d-print-none">
+        <div class="row g-2 align-items-center">
+          <div class="col">
+            <h2 class="page-title text-primary">
+              Quản lý đơn hàng
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="container-xl">
+        <div class="card border">
+          <div class="card-body">
+            <div class="btn-list">
+              <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-simple">
+                <span class="bg-danger p-1 me-2 text-white">123</span>
+                Đơn hàng hôm nay
+              </a>
+              <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-search-order">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-reply-fill me-2 ms-2 text-primary" viewBox="0 0 16 16">
+                  <path d="M5.921 11.9 1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
+                </svg>
+                Tìm kiếm đơn hàng
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-xl mt-3" th:each="o : ${ordertoday}">
+        <div class="row row-cards">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="row g-2 align-items-center">
+                  <div class="col-12 col-xl-2 font-weight-semibold">Mã đơn hàng</div>
+                  <div class="col d-flex justify-content-between">
+                    <button class="btn text-wrap btn-light mb-2 me-1" disabled>
+                      [[${o.id}]]
+                    </button>
+                    <a href="#" class="text-danger mb-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3 me-2" viewBox="0 0 16 16">
+                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                      </svg>
+                      Hủy đơn
+                    </a>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-12 col-xl-2 font-weight-semibold">Chọn tình trạng</div>
+                  <div class="col-md-2" th:if="${o.status.id == 0}">
+                    <a href="#" class="btn text-wrap btn-outline-secondary w-100">
+                      [[${o.status.kind}]]
+                    </a>
+                  </div>
+                  <div class="col-md-2" th:if="${o.status.id <= 1}">
+                    <a href="#" class="btn text-wrap btn-outline-warning w-100">
+                      [[${o.status.kind}]]
+                    </a>
+                  </div>
+                  <div class="col-md-2" th:if="${o.status.id <= 2}">
+                    <a href="#" class="btn text-wrap btn-outline-primary w-100">
+                      [[${o.status.kind}]]
+                    </a>
+                  </div>
+                  <div class="col-md-2" th:if="${o.status.id <= 3}">
+                    <a href="#" class="btn text-wrap btn-outline-success w-100">
+                      [[${o.status.kind}]]
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- this is modal page which to search any order with a staff do that -->
+    <div class="modal modal-blur fade" id="modal-search-order" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Bảng tìm kiếm hóa đơn</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label text-primary">Tìm kiếm theo</label>
+              <div class="form-selectgroup">
+                <label class="form-selectgroup-item" id="order-search-account">
+                  <input type="checkbox" name="name" class="form-selectgroup-input" checked>
+                  <button class="btn btn-default">
+                    <!-- icon account -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                    </svg>
+                  </button>
+                </label>
+                <label class="form-selectgroup-item" id="order-search-calendar">
+                  <input type="checkbox" name="name" class="form-selectgroup-input">
+                  <button class="btn btn-default">
+                    <!-- icon calendar -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-calendar2-month" viewBox="0 0 16 16">
+                      <path d="m2.56 12.332.54-1.602h1.984l.54 1.602h.718L4.444 7h-.696L1.85 12.332h.71zm1.544-4.527L4.9 10.18H3.284l.8-2.375h.02zm5.746.422h-.676v2.543c0 .652-.414 1.023-1.004 1.023-.539 0-.98-.246-.98-1.012V8.227h-.676v2.746c0 .941.606 1.425 1.453 1.425.656 0 1.043-.28 1.188-.605h.027v.539h.668V8.227zm2.258 5.046c-.563 0-.91-.304-.985-.636h-.687c.094.683.625 1.199 1.668 1.199.93 0 1.746-.527 1.746-1.578V8.227h-.649v.578h-.019c-.191-.348-.637-.64-1.195-.64-.965 0-1.64.679-1.64 1.886v.34c0 1.23.683 1.902 1.64 1.902.558 0 1.008-.293 1.172-.648h.02v.605c0 .645-.423 1.023-1.071 1.023zm.008-4.53c.648 0 1.062.527 1.062 1.359v.253c0 .848-.39 1.364-1.062 1.364-.692 0-1.098-.512-1.098-1.364v-.253c0-.868.406-1.36 1.098-1.36z"/>
+                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+                      <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"/>
+                    </svg>
+                  </button>
+                </label>
+                <label class="form-selectgroup-item" id="order-search-price">
+                  <input type="checkbox" name="name" class="form-selectgroup-input">
+                  <button class="btn btn-default">
+                    <!-- icon price -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
+                      <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
+                    </svg>
+                  </button>
+                </label>
+              </div>
+
+
+              <!-- staff filter for order ACCOUNT -->
+              <form action="/action_page.php" class="mt-2 row" id="order-form-account">
+                <div class="col-lg-10">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="* email hoặc số điện thoại">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary col">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg>
+                </button>
+              </form>
+
+              <!-- staff filter for order CALENDAR -->
+              <form action="/action_page.php" class="mt-2 row" id="order-form-calendar">
+                <div class="col-lg-10">
+                  <div class="form-group mb-1">
+                    <input type="date" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <input type="date" class="form-control">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary col">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg>
+                </button>
+              </form>
+
+              <!-- staff filter for order PRICE -->
+              <form action="/action_page.php" class="mt-2 row" id="order-form-price">
+                <div class="col-lg-10">
+                  <div class="form-group mb-1">
+                    <input type="number" class="form-control" placeholder="* Giá từ">
+                  </div>
+                  <div class="form-group">
+                    <input type="number" class="form-control" placeholder="* Giá đến">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary col-lg-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg>
+                </button>
+              </form>
+            </div>
+
+
+            <!-- this is show all of order before -->
+            <div class="row d-flex justify-content-between align-items-center bg-white p-2 border mb-2" th:each="orderNot : ${orderNotToday}">
+              <div class="col text-muted text-start">
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="currentColor" class="me-2 bi bi-circle-fill text-success" viewBox="0 0 16 16">
+                    <circle cx="8" cy="8" r="8"/>
+                  </svg>
+                  ID: [[${orderNot.id}]] 
+                </span>
+              </div>
+              <div class="col text-muted text-end">
+                <span class="me-3">
+                  [[${orderNot.createDate}]]
+                </span>
+                <a href="#modal-bill-staff" data-bs-toggle="modal">- Chi tiết</a>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            @Copyright 2022
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
