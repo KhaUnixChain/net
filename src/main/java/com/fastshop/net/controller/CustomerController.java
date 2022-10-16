@@ -122,7 +122,7 @@ public class CustomerController {
             model.addAttribute("page", "user.checkout");
             model.addAttribute("now", new Date());
             model.addAttribute("title_main", "Thanh toán sản phẩm của bạn");
-            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));
+            model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
             model.addAttribute("products", productSevice.findAll());
             return "index";
         } catch (Exception e) {
@@ -150,7 +150,7 @@ public class CustomerController {
         try {
             model.addAttribute("page", "user.myorder");
             model.addAttribute("title_main", "Fastshop - Quản lý hóa đơn");
-            model.addAttribute("orders", orderService.findAll());
+            model.addAttribute("orders", orderService.findAllByEmailOrPhone(auth.getAccount().getEmail(), auth.getAccount().getPassword()));
             model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));
             return "index";
         } catch (Exception e) {
