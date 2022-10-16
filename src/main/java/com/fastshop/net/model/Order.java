@@ -41,8 +41,10 @@ public class Order  implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "Username")
 	Account account;
-
-	Date dateSubmit;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateConfirm")
+	Date dateConfirm = new Date();
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")
