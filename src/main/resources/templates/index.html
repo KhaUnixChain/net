@@ -92,6 +92,10 @@
       <div th:insert="~{/employee/product::subfragment}"></div>
     </th:block>
 
+    <th:block th:case="'staff.report'">
+      <div th:insert="~{/employee/report::subfragment}"></div>
+    </th:block>
+
     <th:block th:case="'staff.detail'">
       <div th:insert="~{/employee/detail::subfragment}"></div>
     </th:block>

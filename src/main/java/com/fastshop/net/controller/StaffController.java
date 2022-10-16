@@ -71,6 +71,19 @@ public class StaffController {
         }
     }
 
+    @RequestMapping("/staff/report")
+    public String report(Model model, @ModelAttribute("auth") Authority auth) {
+        try {
+            model.addAttribute("page", "staff.report");
+            model.addAttribute("now", new Date());
+            model.addAttribute("title_main", "Báo cáo hoạch toán hằng ngày");
+            model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
+            return "index";
+        } catch (Exception e) {
+            return "redirect:/login.fastshop.com";
+        }
+    }
+
 
     @RequestMapping("/staff/detail/{id}")
     public String details(Model model, @ModelAttribute("auth") Authority auth, @PathVariable("id") Integer id) {
