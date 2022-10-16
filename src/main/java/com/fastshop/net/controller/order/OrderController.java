@@ -2,19 +2,12 @@ package com.fastshop.net.controller.order;
 
 import org.springframework.stereotype.Controller;
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fastshop.net.model.Account;
-import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Order;
 import com.fastshop.net.model.Status;
 
@@ -65,32 +58,5 @@ public class OrderController {
             e.printStackTrace();
             return "redirect:/login.fastshop.com";
         }
-    }
-
-    @RequestMapping("/staff/status")
-    public String status(Model model, @RequestParam("kind") Integer kindOf) {
-        Date toNow = java.sql.Date.valueOf(LocalDate.now());
-        List<Order> list = (kindOf == 100) ? orderService.getAllOfOrderToday(new Date()): orderService.findByStatus(kindOf);
-        model.addAttribute("page", "staff.home");
-        model.addAttribute("ordertoday", list);
-        model.addAttribute("orderNotToday", orderService.findNotByCreateDate(toNow));
-        model.addAttribute("title_main", "Trang chủ quản lý hóa đơn hàng ngày ");
-        return "redirect:/staff/home";
-    }
-
-
-    /**
-     * this is model of authority
-     * @return
-     */
-    @ModelAttribute("auth")
-    public Authority getAuth() {
-        Authority auth = null;
-        String username = cookie.getValue("username");
-        if (username != null) {
-            Account account = accountService.findByUsernameOrEmail(username, username);
-            auth = authorityService.findByAccount(account);
-        }
-        return auth;
     }
 }
