@@ -2,6 +2,7 @@ package com.fastshop.net.controller.order;
 
 import org.springframework.stereotype.Controller;
 
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,6 +53,7 @@ public class OrderController {
             Order order = orderService.findById(orderId);
             Status status = statusService.findById(kind);
             order.setStatus(status);
+            order.setDateConfirm(new Date());
             orderService.save(order);
             return "redirect:/staff/home";
         } catch (Exception e) {
