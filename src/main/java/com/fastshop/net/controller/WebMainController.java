@@ -166,6 +166,7 @@ public class WebMainController {
 	@RequestMapping("/forgot")
 	public String forgot(Model model) {
 		model.addAttribute("accounts", new MailInfo());
+        model.addAttribute("error_forgot", "");
 		return "forgot";
 	}
 
