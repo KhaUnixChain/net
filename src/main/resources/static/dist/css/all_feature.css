@@ -2,7 +2,7 @@ body {
     min-width: 500px;
 }
 
-.btn {
+.btn, textarea {
     box-shadow: none !important;
 }
 

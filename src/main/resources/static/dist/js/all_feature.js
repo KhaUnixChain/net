@@ -71,26 +71,18 @@ function payment(number) {
 
 $("#order-form-account").hide();
 $("#order-form-calendar").hide();
-$("#order-form-price").hide();
    
 $("#order-search-account").click(function(){
     $("#order-form-calendar").hide();
-    $("#order-form-price").hide();
     $("#order-form-account").slideToggle();
 });
 
 
 $("#order-search-calendar").click(function(){
     $("#order-form-account").hide();
-    $("#order-form-price").hide();
     $("#order-form-calendar").slideToggle();
 });
 
-$("#order-search-price").click(function(){
-    $("#order-form-account").hide();
-    $("#order-form-calendar").hide();
-    $("#order-form-price").slideToggle();
-});
 
 if (document.getElementById("discount_food") != undefined && document.getElementById("discount_100") != undefined) {
     setInterval(function () {
