@@ -1,5 +1,6 @@
 package com.fastshop.net.controller;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +47,11 @@ public class StaffController {
     OrderService orderService;
     
     @RequestMapping("/staff/home")
-    public String home(Model model, @ModelAttribute("auth") Authority auth) {
+    public String home(Model model) {
+        Date toNow = java.sql.Date.valueOf(LocalDate.now());
         model.addAttribute("page", "staff.home");
         model.addAttribute("ordertoday", orderService.getAllOfOrderToday(new Date()));
-        model.addAttribute("orderNotToday", orderService.getAllOfOrderToday(new Date()));
+        model.addAttribute("orderNotToday", orderService.findNotByCreateDate(toNow));
         model.addAttribute("title_main", "Trang chủ quản lý hóa đơn hàng ngày ");
         return "index";
     }
