@@ -109,9 +109,9 @@
       <div class="page-header d-print-none mb-3 p-3 bg-white">
         <div class="row align-items-center">
           <h4 class="text-primary">
-            Danh mục nổi bật
+            Sản phẩm hiện có
           </h4>
-          <div th:each="f : ${files}" class="col-lg-1">
+          <div th:each="f : ${files}" class="col-lg-1 mt-2">
             <div class="d-print-none d-flex justify-content-center">
               <div class="d-print-none text-center">
                 <img th:src="@{${'/hot/' + f.getFilename()}}" width="60" height="60" alt="">
