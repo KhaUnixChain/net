@@ -17,4 +17,5 @@ public interface AccountService {
     Account findByUsernameOrEmail(String username, String email);
     Account findByUsernameOrEmailAndPassword(String username, String email, String password);
     Boolean existsByUsernameOrEmail(String username, String email);
+    
 }

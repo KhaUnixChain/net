@@ -66,7 +66,7 @@ public class AuthController {
                     return "error/error-404";
                 }
                 else {
-                    cookie.add("username", auth.getAccount().getUsername(), 30*24*60*60);
+                    cookie.add("username", auth.getAccount().getUsername(), 1*24*60*60);
                     return auth.getRole().getId().equals("ADMIN") ? "redirect:/admin/home" : "redirect:/staff/home";
                 }
             } catch (Exception e) {
@@ -103,6 +103,7 @@ public class AuthController {
     public String update(@ModelAttribute("item") Account account) {
         accountService.save(account);
         return "redirect:/profile";
+
     }
 
 }
