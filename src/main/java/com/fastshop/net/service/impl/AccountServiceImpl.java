@@ -72,5 +72,5 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public Boolean existsByUsername(String username) {
         return accountDAO.existsByUsername(username);
-    }    
+    }   
 }
