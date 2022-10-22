@@ -45,7 +45,7 @@ public class AuthController {
             } catch (NullPointerException e) {
                 return "error/error-500";
             } catch (Exception k) {
-                return "error/error-400";
+                return "error/error-404";
             }
         }
     }
