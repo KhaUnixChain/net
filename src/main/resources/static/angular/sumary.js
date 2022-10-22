@@ -380,7 +380,7 @@ app.controller("product-ctrl", ($scope, $http) => {
         var url = `${host_}/products`;
         $http.get(url).then((resp) => {
             $scope.items = resp.data;
-            console.log("load items product ok. ");
+            console.log("load items product ok. ", resp);
         }).catch((err) => {
             console.log("Error load items", err);
         });
