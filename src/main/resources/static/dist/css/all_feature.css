@@ -127,7 +127,24 @@ li.nav-item {
 
 
 
+/* star */
+.star-rating {
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+  }
 
+  .star {
+    font-size: 2rem;
+    color: #ff9800;
+    background-color: unset;
+    border: none;
+    line-height: 15px;
+  }
 
+  .star:hover {
+    cursor: pointer;
+
+  }
 
 

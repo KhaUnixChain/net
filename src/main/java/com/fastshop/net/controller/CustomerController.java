@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -110,14 +111,16 @@ public class CustomerController {
         model.addAttribute("title_main", "Fastshop - Chi tiết sản phẩm");
         model.addAttribute("product", product);
         model.addAttribute("comments", product.getComments());
+        model.addAttribute("rates", commentService.getRateByProduct(product).entrySet().stream().map(item -> item.getValue()).collect(Collectors.toList()));
+        model.addAttribute("maxStar", commentService.getMaxStar(product));
+        System.out.println(commentService.getMaxStar(product).toString());
         try {
             model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
-            model.addAttribute("rates", commentService.getRateByProduct(product));
-            return "index";
         } catch (Exception e) {
             model.addAttribute("address", null);
-            return "index";
         }
+        return "index";
+
     }
 
     
