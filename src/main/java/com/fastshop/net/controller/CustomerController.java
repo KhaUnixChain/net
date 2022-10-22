@@ -25,6 +25,7 @@ import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AddressService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryService;
+import com.fastshop.net.service.CommentService;
 import com.fastshop.net.service.OrderService;
 import com.fastshop.net.service.ProductDetailService;
 
@@ -46,6 +47,8 @@ public class CustomerController {
     OrderService orderService;
     @Autowired
     AddressService addressService;
+    @Autowired
+    CommentService commentService;
     @Autowired
     ProductDetailService productDetailService;
     @Autowired
@@ -106,8 +109,10 @@ public class CustomerController {
         model.addAttribute("page", "user.detail");
         model.addAttribute("title_main", "Fastshop - Chi tiết sản phẩm");
         model.addAttribute("product", product);
+        model.addAttribute("comments", product.getComments());
         try {
             model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
+            model.addAttribute("rates", commentService.getRateByProduct(product));
             return "index";
         } catch (Exception e) {
             model.addAttribute("address", null);

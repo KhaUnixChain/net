@@ -1,6 +1,7 @@
 package com.fastshop.net.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
@@ -31,6 +34,10 @@ public class Comment implements Serializable{
 
     @Column(name = "feedback", columnDefinition = "nvarchar(250)")
     String feedback;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "datePost")
+    Date datePost = new Date();
 
     @ManyToOne
 	@JoinColumn(name = "Productid")
