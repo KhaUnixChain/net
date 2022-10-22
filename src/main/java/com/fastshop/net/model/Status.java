@@ -1,5 +1,6 @@
 package com.fastshop.net.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "status")
-public class Status {
+public class Status implements Serializable{
     @Id
     Integer id;
 
