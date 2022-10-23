@@ -97,9 +97,7 @@ public class StaffController {
             model.addAttribute("product", product);
             model.addAttribute("productDetail", new ProductDetail());
             model.addAttribute("page", "staff.detail");
-            model.addAttribute("productdetails", productDetailService.getByProductId(id).size() != 0 ? 
-                                                 productDetailService.getByProductId(id) : 
-                                                 categoryDetailService.findByCategory(product.getCategory()));
+            model.addAttribute("productdetails", productDetailService.getByProductId(id));
             model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
             model.addAttribute("title_main", "Form thông tin chi tiết mô tả sản phẩm");
             return "index";
