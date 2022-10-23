@@ -47,14 +47,20 @@ public class StaffController {
     OrderService orderService;
     
     @RequestMapping("/staff/home")
-    public String home(Model model) {
-        Date toNow = java.sql.Date.valueOf(LocalDate.now());
-        model.addAttribute("page", "staff.home");
-        model.addAttribute("focus", 1);
-        model.addAttribute("ordertoday", orderService.getAllOfOrderToday(new Date()));
-        model.addAttribute("orderNotToday", orderService.findNotByCreateDate(toNow));
-        model.addAttribute("title_main", "Trang chủ quản lý hóa đơn hàng ngày ");
-        return "index";
+    public String home(Model model, @ModelAttribute("auth") Authority auth) {
+        try {
+            Date toNow = java.sql.Date.valueOf(LocalDate.now());
+            model.addAttribute("page", "staff.home");
+            model.addAttribute("focus", 1);
+            model.addAttribute("ordertoday", orderService.getAllOfOrderToday(new Date()));
+            model.addAttribute("orderNotToday", orderService.findNotByCreateDate(toNow));
+            model.addAttribute("title_main", "Trang chủ quản lý hóa đơn hàng ngày ");
+            model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
+            return "index";
+        } catch (Exception e) {
+            return "redirect:/login.fastshop.com";
+        }
+        
     }
 
     @RequestMapping("/staff/product")
@@ -91,7 +97,9 @@ public class StaffController {
             model.addAttribute("product", product);
             model.addAttribute("productDetail", new ProductDetail());
             model.addAttribute("page", "staff.detail");
-            model.addAttribute("categorydetails", categoryDetailService.findByCategory(product.getCategory()));
+            model.addAttribute("productdetails", productDetailService.getByProductId(id).size() != 0 ? 
+                                                 productDetailService.getByProductId(id) : 
+                                                 categoryDetailService.findByCategory(product.getCategory()));
             model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
             model.addAttribute("title_main", "Form thông tin chi tiết mô tả sản phẩm");
             return "index";
