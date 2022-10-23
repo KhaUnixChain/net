@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -25,11 +23,9 @@ public class ProductDetail implements Serializable {
     @Column(name = "info", columnDefinition = "nvarchar(200)", nullable = false)
     String info;
 
-    @ManyToOne
-    @JoinColumn(name = "Categorydetailid")
-    CategoryDetail categoryDetail;
+    @Column(name = "categoryDetailId", columnDefinition = "varchar(5)", nullable = false)
+    String categoryDetailId;
 
-    @ManyToOne
-    @JoinColumn(name = "productId")
-    Product product;
+    @Column(name = "productId", columnDefinition = "int", nullable = false)
+    Integer productId;
 }

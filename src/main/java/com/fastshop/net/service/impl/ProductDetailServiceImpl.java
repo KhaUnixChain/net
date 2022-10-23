@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fastshop.net.model.Product;
 import com.fastshop.net.model.ProductDetail;
 import com.fastshop.net.repository.ProductDetailDAO;
 import com.fastshop.net.service.ProductDetailService;
@@ -16,7 +15,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     ProductDetailDAO productDetailDAO;
 
     @Override
-    public List<ProductDetail> findByProduct(Product product) {
-        return productDetailDAO.findByProduct(product);
+    public List<ProductDetail> findByProductIdAndCategoryId(Integer productId, String categoryDetailId) {
+        return productDetailDAO.findByProductIdAndCategoryId(productId, categoryDetailId);
     }
 }

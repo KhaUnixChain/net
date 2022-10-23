@@ -149,18 +149,3 @@ if (document.getElementById("discount_food") != undefined && document.getElement
         };
     }, 1000);
 }
-
-const allStars = document.querySelectorAll(".star");
-
-allStars.forEach((star, i) => {
-    star.onclick = function () {
-    let currentStar = i + 1;
-    allStars.forEach((star, j) => {
-        if (currentStar >= j + 1) {
-            star.innerHTML = '&#9733'
-        } else {
-            star.innerHTML = '&#9734'
-        }
-    })
-    }
-})

@@ -40,32 +40,39 @@ public class CommentServiceImpl implements CommentService{
     public Map<Integer, List<Integer>> getRateByProduct(Product product) {
         List<Comment> comments = product.getComments();
         Map<Integer, List<Integer>> rates = new HashMap<>();
-        for (Comment comment : comments) {
-            List<Integer> number = new ArrayList<>();
-            int rate = comment.getRate();
-            if (rate == 5) {
-                for (int i = 0; i < 5; i++) {
-                    number.add(1);
+        if (comments.size() > 0) {
+            for (Comment comment : comments) {
+                List<Integer> number = new ArrayList<>();
+                int rate = comment.getRate();
+                if (rate == 5) {
+                    for (int i = 0; i < 5; i++) {
+                        number.add(1);
+                    }
                 }
-            }
-            else {
-                for (int i = 0; i < rate; i++) {
-                    number.add(1);
+                else {
+                    for (int i = 0; i < rate; i++) {
+                        number.add(1);
+                    }
+    
+                    for (int i = 0; i < 5 - rate; i++) {
+                        number.add(0);
+                    }
                 }
-
-                for (int i = 0; i < 5 - rate; i++) {
-                    number.add(0);
-                }
-            }
-
-            rates.put(comment.getId(), number);
+    
+                rates.put(comment.getId(), number);
+            }   
         }
         return rates;
     }
 
     @Override
     public List<Integer> getMaxStar(Product product) {
-        int max = commentDAO.getMaxStar(product);
+        int max;
+        try {
+            max = commentDAO.getMaxStar(product);
+        } catch (Exception e) {
+            max = 1;
+        }
         List<Integer> number = new ArrayList<>();
         if (max == 5) {
             for (int i = 0; i < 5; i++) {
