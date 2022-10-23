@@ -29,5 +29,9 @@ public class CategoryDetailServiceImpl implements CategoryDetailService{
     public List<String> getPropertyByCategory(Category category) {
         return categoryDetailDAO.getPropertyByCategory(category);
     }
-    
+
+    @Override
+    public CategoryDetail findById(String id) {
+        return categoryDetailDAO.findById(id).get();
+    }
 }

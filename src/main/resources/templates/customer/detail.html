@@ -187,13 +187,13 @@
           <!-- thông tin chi tiết -->
           <div class="mt-4 bg-white ps-3 row">
             <h2 class="mb-2 text-primary">Thông tin chi tiết</h2>
-            <div class="tab-pane fade show active" id="tab-pane-2">
+            <div class="tab-pane" id="tab-pane-2">
               <div class="row">
                 <ul class="list-group list-group-flush">
-                  <!-- <li class="list-group-item" th:each="d : ${product.productDetails}">
-                    <span class="col-lg-2">[[${d.categoryDetail.property}]] : </span>
+                  <li class="list-group-item" th:each="d : ${productDetails}">
+                    <span class="col">[[ ${d.property} ]] : </span>
                     <span class="col-lg-9">[[${d.info}]]</span>
-                  </li> -->
+                  </li>
                 </ul> 
               </div>
             </div>

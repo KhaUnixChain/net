@@ -110,10 +110,10 @@ public class CustomerController {
         model.addAttribute("page", "user.detail");
         model.addAttribute("title_main", "Fastshop - Chi tiết sản phẩm");
         model.addAttribute("product", product);
+        model.addAttribute("productDetails", productDetailService.getByProductId(id));
         model.addAttribute("comments", product.getComments());
         model.addAttribute("rates", commentService.getRateByProduct(product).entrySet().stream().map(item -> item.getValue()).collect(Collectors.toList()));
         model.addAttribute("maxStar", commentService.getMaxStar(product));
-        System.out.println(commentService.getMaxStar(product).toString());
         try {
             model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
         } catch (Exception e) {
