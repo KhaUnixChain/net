@@ -645,10 +645,11 @@ app.controller("comment-ctrl", ($scope, $http) => {
 app.controller("detail-staff", ($scope, $http) => {
     var productId = $("#id_product_staff").val();
 
+    // cái này khá hay... khi bạn quan sát API của nó
+    // khi thông tin có thì nó sẽ có trong API value luôn, ngược lại ko có thông tin thì nó sẵn là ""
+    // cho nên chỉ cần ng-change là nó sẽ tự thay đổi.
     $scope.productdetails = [];
-    $scope.productdetails_map = {};
     var url = `${host_}/product/detail/${productId}`;
-    var map = `${host_}/product/detail/map/${productId}`;
 
     $http.get(url).then((resp) => {
         $scope.productdetails = resp.data;
@@ -657,10 +658,28 @@ app.controller("detail-staff", ($scope, $http) => {
         console.log('load detail off [detail-staff]', err);
     });
 
-    $http.get(map).then((resp) => {
-        $scope.productdetails_map = resp.data;
-        console.log('load detail map ok [detail-staff]', resp);
-    }).catch((err) => {
-        console.log('load detail map off [detail-staff]', err);
-    });
+
+
+    $scope.changeValue = (detail) => {
+        console.log(detail.info);
+    };
+
+    $scope.add = () => {
+        var path = `${host_}/product/detail`;
+        $scope.productdetails.forEach(item => {
+            var productDetail = {};
+            productDetail.categoryDetailId = item.categoryDetailId;
+            productDetail.info = item.info;
+            productDetail.productId = item.productId;
+            productDetail = angular.copy(productDetail);
+
+            $http.post(path, productDetail).then((resp) => {
+                console.log("Add thanh cong", resp);
+            }).catch((err) => {
+                console.log("Add failed", err);
+            });
+        });
+
+        window.location.href = "http://localhost:8080/staff/detail/" + productId; 
+    }
 });
