@@ -48,7 +48,9 @@ public class RestProductDetailController {
     @PutMapping("/rest/product/detail/{id}")
     public void update(@PathVariable("id") Long id) {
         ProductDetail productDetail = productDetailService.findById(id);
-        productDetailService.save(productDetail);
+        if (productDetail != null) {
+            productDetailService.save(productDetail);
+        }
     }
 
     @DeleteMapping("/rest/product/detail/{id}")
