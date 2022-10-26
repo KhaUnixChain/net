@@ -1,7 +1,9 @@
 package com.fastshop.net.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,11 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     ProductService productService;
     @Autowired
     CategoryDetailService categoryDetailService;
+
+    @Override
+    public List<ProductDetail> findAll() {
+        return productDetailDAO.findAll();
+    }
 
     @Override
     public List<ProductDetail> findByProductId(Integer productId) {
@@ -64,4 +71,27 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         return list;
     }
 
+    @Override
+    public Map<String, String> getAllOfCategoryDetailAndInfo(Integer productId) {
+        try {
+            List<ProductDetail> list = productDetailDAO.findByProductId(productId);
+            Map<String, String> map = new HashMap<>();
+            for (ProductDetail productDetail : list) {
+                map.put(productDetail.getCategoryDetailId(), productDetail.getInfo());
+            }
+            return map;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public void save(ProductDetail productDetail) {
+        productDetailDAO.save(productDetail);
+    }
+
+    @Override
+    public void delete(ProductDetail productDetail) {
+        productDetailDAO.delete(productDetail);
+    }
 }

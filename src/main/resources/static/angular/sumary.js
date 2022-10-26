@@ -629,3 +629,15 @@ app.controller("changed-ctrl", ($scope, $http) => {
         });
     };
 });
+
+app.controller("comment-ctrl", ($scope, $http) => {
+    $scope.comment = {};
+    var url = `${host_}/comments`;
+    var item = angular.copy($scope.comment);
+    $http.get(url, item).then((resp) => {
+        console.log("Comment posted !", resp);
+        window.location.href = "http://localhost:8080/user/detail/" +$scope.keysearch; 
+    }).catch((err) => {
+        console.log("Comment failed !", err);
+    });
+});
