@@ -99,4 +99,9 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     public void delete(ProductDetail productDetail) {
         productDetailDAO.delete(productDetail);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        productDetailDAO.deleteById(id);
+    }
 }
