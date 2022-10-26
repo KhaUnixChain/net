@@ -26,22 +26,30 @@ public class RestProductDetailController {
         return productDetailService.findAll();
     }
 
+    // get detail của product id
     @GetMapping("/rest/product/detail/{id}")
     public List<ProductDetailBackup> findByProductId(@PathVariable("id") Integer id) {
         return productDetailService.getByProductId(id);
     }
     
+    // chỉ lấy thuộc tính và catgorydetail id
     @GetMapping("/rest/product/detail/map/{id}")
     public Map<String, String> getAllOfCategoryDetailId(@PathVariable("id") Integer id) {
         return productDetailService.getAllOfCategoryDetailAndInfo(id);
     };
 
+    // thêm product detail
     @PostMapping("/rest/product/detail")
     public void create(@RequestBody ProductDetail productDetail) {
         productDetailService.save(productDetail);
     }
 
-    @PutMapping("/rest/product/detail")
+    // cập nhật thông tin của product id
+    @PutMapping("/rest/product/detail/{id}")
+    public void update(@PathVariable("id") Long id) {
+        ProductDetail productDetail = productDetailService.findById(id);
+        productDetailService.save(productDetail);
+    }
 
     @DeleteMapping("/rest/product/detail/{id}")
     public void deteteByObject(@PathVariable("id") Long id) {

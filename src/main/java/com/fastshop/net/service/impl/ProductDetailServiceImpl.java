@@ -104,4 +104,9 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     public void deleteById(Long id) {
         productDetailDAO.deleteById(id);
     }
+
+    @Override
+    public ProductDetail findById(Long id) {
+        return productDetailDAO.findById(id).get();
+    }
 }
