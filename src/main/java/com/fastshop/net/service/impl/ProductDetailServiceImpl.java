@@ -31,6 +31,8 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     @Autowired
     ProductService productService;
     @Autowired
+    ProductDetailService productDetailService;
+    @Autowired
     CategoryDetailService categoryDetailService;
 
     @Override
@@ -51,6 +53,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             for (ProductDetail productDetail : productDetails) {
                 ProductDetailBackup pdb = new ProductDetailBackup();
                 pdb.setProductId(productId);
+                pdb.setCategoryid(productDetail.getCategoryDetailId());
                 pdb.setInfo(productDetail.getInfo());
                 pdb.setProperty(categoryDetailDAO.findById(productDetail.getCategoryDetailId()).get().getProperty());
                 list.add(pdb);
@@ -63,6 +66,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             for (CategoryDetail cd : l) {
                 ProductDetailBackup pdb = new ProductDetailBackup();
                 pdb.setProductId(productId);
+                pdb.setCategoryid(cd.getId());
                 pdb.setInfo("");
                 pdb.setProperty(cd.getProperty());
                 list.add(pdb);
@@ -74,10 +78,11 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     @Override
     public Map<String, String> getAllOfCategoryDetailAndInfo(Integer productId) {
         try {
-            List<ProductDetail> list = productDetailDAO.findByProductId(productId);
+            List<ProductDetailBackup> list = productDetailService.getByProductId(productId);
             Map<String, String> map = new HashMap<>();
-            for (ProductDetail productDetail : list) {
-                map.put(productDetail.getCategoryDetailId(), productDetail.getInfo());
+            for (ProductDetailBackup productDetailBackup : list) {
+                map.put(productDetailBackup.getProperty(), productDetailBackup.getInfo());
+
             }
             return map;
         } catch (Exception e) {

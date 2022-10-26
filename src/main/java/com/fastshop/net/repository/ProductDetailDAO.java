@@ -10,4 +10,5 @@ import com.fastshop.net.model.ProductDetail;
 @Repository
 public interface ProductDetailDAO extends JpaRepository<ProductDetail, Long> {
     List<ProductDetail> findByProductId(Integer productId);
+    ProductDetail findByCategoryDetailIdAndProductId(String category_detail_id, Integer productId);
 }

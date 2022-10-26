@@ -641,3 +641,26 @@ app.controller("comment-ctrl", ($scope, $http) => {
         console.log("Comment failed !", err);
     });
 });
+
+app.controller("detail-staff", ($scope, $http) => {
+    var productId = $("#id_product_staff").val();
+
+    $scope.productdetails = [];
+    $scope.productdetails_map = {};
+    var url = `${host_}/product/detail/${productId}`;
+    var map = `${host_}/product/detail/map/${productId}`;
+
+    $http.get(url).then((resp) => {
+        $scope.productdetails = resp.data;
+        console.log('load detail ok [detail-staff]', resp);
+    }).catch((err) => {
+        console.log('load detail off [detail-staff]', err);
+    });
+
+    $http.get(map).then((resp) => {
+        $scope.productdetails_map = resp.data;
+        console.log('load detail map ok [detail-staff]', resp);
+    }).catch((err) => {
+        console.log('load detail map off [detail-staff]', err);
+    });
+});
