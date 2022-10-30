@@ -19,10 +19,11 @@ import lombok.Data;
 @Table(name = "Categories")
 public class Category implements Serializable{
 	@Id
+	@Column(name = "id", columnDefinition = "nvarchar(255)", nullable = false, unique = true)
 	String id;
 
 	@NotBlank(message = "Please enter name category.")
-	@Column(name = "name", columnDefinition = "nvarchar(25)", nullable = false)
+	@Column(name = "name", columnDefinition = "nvarchar(25)", nullable = false, unique = true)
 	String name;
 
 	Boolean status;
