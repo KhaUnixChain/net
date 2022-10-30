@@ -38,6 +38,12 @@ public class RestProductDetailController {
         return productDetailService.getAllOfCategoryDetailAndInfo(id);
     };
 
+    // kiểm tra record đó có tồn tại hay ko
+    @GetMapping("/rest/product/detail/exist/{id}")
+    public Boolean existAnyProductDetailByProductId(@PathVariable("id") Integer id) {
+        return productDetailService.existAnyProductDetailByProductId(id);
+    };
+
     // thêm product detail
     @PostMapping("/rest/product/detail")
     public void create(@RequestBody ProductDetail productDetail) {

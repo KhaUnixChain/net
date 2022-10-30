@@ -15,4 +15,5 @@ public interface ProductDetailService {
     List<ProductDetail> findByProductId(Integer productId);
     List<ProductDetailBackup> getByProductId(Integer productId);
     Map<String, String> getAllOfCategoryDetailAndInfo(Integer productId);
+    Boolean existAnyProductDetailByProductId(Integer productId);
 }

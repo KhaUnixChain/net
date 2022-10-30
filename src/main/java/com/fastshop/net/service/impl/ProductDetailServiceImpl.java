@@ -109,4 +109,15 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     public ProductDetail findById(Long id) {
         return productDetailDAO.findById(id).get();
     }
+
+    @Override
+    public Boolean existAnyProductDetailByProductId(Integer productId) {
+        List<ProductDetailBackup> list = productDetailService.getByProductId(productId);
+        for (ProductDetailBackup productDetailBackup : list) {
+            if (!productDetailBackup.getInfo().equals("")) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
