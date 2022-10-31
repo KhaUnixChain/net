@@ -20,7 +20,7 @@ public class ProductDetail implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "info", columnDefinition = "nvarchar(200)", nullable = false)
+    @Column(name = "info", columnDefinition = "nvarchar(max)", nullable = false)
     String info;
 
     @Column(name = "categoryDetailId", columnDefinition = "varchar(5)", nullable = false)
