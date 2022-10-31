@@ -64,22 +64,16 @@ public class RestProductDetailController {
         }
     }
 
-    // cập nhật thông tin của product id
+    // cập nhật thông tin của product detail id
     @PutMapping("/rest/product/detail/update/{id}")
-    public ProductDetail update(@PathVariable("id") Long id) {
-        ProductDetail productDetail = productDetailService.findById(id);
-        if (productDetail != null) {
-            productDetailService.save(productDetail);
-        }
+    public ProductDetail put(@PathVariable("id") Long id, @RequestBody ProductDetail productDetail) {
+        productDetailService.save(productDetail);
         return productDetail;
     }
 
+    // xoa record theo id của product detail
     @DeleteMapping("/rest/product/detail/{id}")
-    public ProductDetail deteteByObject(@PathVariable("id") Long id) {
-        ProductDetail productDetail = productDetailService.findById(id);
-        if (productDetail != null) {
-            productDetailService.delete(productDetail);
-        }
-        return productDetail;
+    public void detete(@PathVariable("id") Long id) {
+        productDetailService.deleteById(id);
     }
 }

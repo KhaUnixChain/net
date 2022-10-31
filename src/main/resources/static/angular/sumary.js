@@ -323,7 +323,8 @@ app.controller("cart-ctrl", ($scope, $http) => {
     // luôn lấy dữ liệu từ trong localStorage để khi bấm F5 ko bị mất
     var id = account_.innerHTML;
     number.innerHTML = (localStorage.getItem(id) == undefined) ? 0 : JSON.parse(localStorage.getItem(id)).length;
-    
+    $scope.letter = [0,1,2,3,4,5,6,7,8,9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+
     $scope.qty = 1;
 
     $scope.minus = () => {
@@ -644,13 +645,20 @@ app.controller("comment-ctrl", ($scope, $http) => {
 
 app.controller("detail-staff", ($scope, $http) => {
     var productId = $("#id_product_staff").val();
-
-    // cái này khá hay... khi bạn quan sát API của nó
-    // khi thông tin có thì nó sẽ có trong API value luôn, ngược lại ko có thông tin thì nó sẵn là ""
-    // cho nên chỉ cần ng-change là nó sẽ tự thay đổi.
     $scope.productdetails = [];
-    var url = `${host_}/product/detail/${productId}`;
 
+    // false là mặc định chưa có gì trong info
+    $scope.confirm = false;
+    $http.get(`${host_}/product/detail/exist/${productId}`).then((resp) => {
+        $scope.confirm = resp.data;
+        console.log($scope.confirm);
+    }).catch((err) => {
+        $scope.confirm = false;
+    });
+
+
+    // add product detail
+    var url = `${host_}/product/detail/${productId}`;
     $http.get(url).then((resp) => {
         $scope.productdetails = resp.data;
         console.log('load detail ok [detail-staff]', resp);
@@ -658,14 +666,7 @@ app.controller("detail-staff", ($scope, $http) => {
         console.log('load detail off [detail-staff]', err);
     });
 
-
-
-    $scope.changeValue = (detail) => {
-        console.log(detail.info);
-    };
-
     $scope.add = () => {
-        var path = `${host_}/product/detail`;
         $scope.productdetails.forEach(item => {
             var productDetail = {};
             productDetail.categoryDetailId = item.categoryDetailId;
@@ -673,13 +674,37 @@ app.controller("detail-staff", ($scope, $http) => {
             productDetail.productId = item.productId;
             productDetail = angular.copy(productDetail);
 
-            $http.post(path, productDetail).then((resp) => {
-                console.log("Add thanh cong", resp);
-            }).catch((err) => {
-                console.log("Add failed", err);
-            });
+            if ($scope.confirm == false) {
+                var path = `${host_}/product/detail`;
+                $http.post(path, productDetail).then((resp) => {
+                    console.log("Add thanh cong", resp);
+                }).catch((err) => {
+                    console.log("Add failed", err);
+                });
+            }
         });
-
         window.location.href = "http://localhost:8080/staff/detail/" + productId; 
-    }
+    };
+
+
+    $scope.update = () => {
+        $scope.productdetails.forEach(item => {
+            var productDetail = {};
+            productDetail.id = item.id;
+            productDetail.categoryDetailId = item.categoryDetailId;
+            productDetail.info = item.info;
+            productDetail.productId = item.productId;
+            productDetail = angular.copy(productDetail);
+
+            if ($scope.confirm == true) {
+                var path = `${host_}/product/detail/update/${item.id}`;
+                $http.put(path, productDetail).then((resp) => {
+                    console.log("Update thanh cong", resp);
+                }).catch((err) => {
+                    console.log("Update failed", err);
+                });
+            }
+        });
+        window.location.href = "http://localhost:8080/staff/detail/" + productId; 
+    };
 });
