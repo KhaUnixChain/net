@@ -31,6 +31,12 @@ public class RestProductDetailController {
     public List<ProductDetailBackup> findByProductId(@PathVariable("id") Integer id) {
         return productDetailService.getByProductId(id);
     }
+
+    // get detail của product detail id
+    @GetMapping("/rest/productdetail/{id}")
+    public ProductDetail findById(@PathVariable("id") Long id) {
+        return productDetailService.findById(id);
+    }
     
     // chỉ lấy thuộc tính và catgorydetail id
     @GetMapping("/rest/product/detail/map/{id}")
@@ -44,23 +50,36 @@ public class RestProductDetailController {
         return productDetailService.existAnyProductDetailByProductId(id);
     };
 
+    // kiểm tra record đó có tồn tại hay ko
+    @GetMapping("/rest/product/detail/{cateId}/{id}")
+    public ProductDetail findByProductDetailByProductId(@PathVariable("cateId") String cateId, @PathVariable("id") Integer id) {
+        return productDetailService.findByCategoryDetailIdAndProductId(cateId, id);
+    };
+
     // thêm product detail
     @PostMapping("/rest/product/detail")
     public void create(@RequestBody ProductDetail productDetail) {
-        productDetailService.save(productDetail);
-    }
-
-    // cập nhật thông tin của product id
-    @PutMapping("/rest/product/detail/{id}")
-    public void update(@PathVariable("id") Long id) {
-        ProductDetail productDetail = productDetailService.findById(id);
-        if (productDetail != null) {
+        if (productDetailService.findAll().contains(productDetail) == false) {
             productDetailService.save(productDetail);
         }
     }
 
+    // cập nhật thông tin của product id
+    @PutMapping("/rest/product/detail/update/{id}")
+    public ProductDetail update(@PathVariable("id") Long id) {
+        ProductDetail productDetail = productDetailService.findById(id);
+        if (productDetail != null) {
+            productDetailService.save(productDetail);
+        }
+        return productDetail;
+    }
+
     @DeleteMapping("/rest/product/detail/{id}")
-    public void deteteByObject(@PathVariable("id") Long id) {
-        productDetailService.deleteById(id);
+    public ProductDetail deteteByObject(@PathVariable("id") Long id) {
+        ProductDetail productDetail = productDetailService.findById(id);
+        if (productDetail != null) {
+            productDetailService.delete(productDetail);
+        }
+        return productDetail;
     }
 }
