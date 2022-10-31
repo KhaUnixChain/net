@@ -432,12 +432,13 @@ app.controller("product-ctrl", ($scope, $http) => {
     };
 
     $scope.delete = (id) => {
+        var item = angular.copy($scope.form);
+        item.available = false;
+        item.number = 0;
         var url = `${host_}/products/${id}`;
-        $http.delete(url).then((result) => {
-            var index = $scope.items.findIndex(item => item.id == $scope.form.id);
-            $scope.items.splice(index, 1);
-            $scope.clear();
-            console.log("delete success", result);
+        $http.put(url, item).then((resp) => {
+            console.log("delete success", resp);
+            $scope.load_product();
         }).catch((err) => {
             console.log("error", err);
         });
