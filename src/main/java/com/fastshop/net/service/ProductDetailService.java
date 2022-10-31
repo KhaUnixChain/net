@@ -7,8 +7,8 @@ import com.fastshop.net.model.ProductDetail;
 import com.fastshop.net.model.ProductDetailBackup;
 
 public interface ProductDetailService {
-    void save(ProductDetail productDetail);
-    void delete(ProductDetail productDetail);
+    ProductDetail save(ProductDetail productDetail);
+    ProductDetail delete(ProductDetail productDetail);
     void deleteById(Long id);
     ProductDetail findById(Long id);
     List<ProductDetail> findAll();
@@ -16,4 +16,5 @@ public interface ProductDetailService {
     List<ProductDetailBackup> getByProductId(Integer productId);
     Map<String, String> getAllOfCategoryDetailAndInfo(Integer productId);
     Boolean existAnyProductDetailByProductId(Integer productId);
+    ProductDetail findByCategoryDetailIdAndProductId(String category_detail_id, Integer productId);
 }

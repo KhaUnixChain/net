@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDetailBackup {
+    Long id;
     String categoryDetailId;
     String property;
     String info;

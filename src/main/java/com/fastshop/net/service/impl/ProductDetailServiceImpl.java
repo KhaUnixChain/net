@@ -52,6 +52,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         if (productDetails.size() > 0) {
             for (ProductDetail productDetail : productDetails) {
                 ProductDetailBackup pdb = new ProductDetailBackup();
+                pdb.setId(productDetail.getId());
                 pdb.setProductId(productId);
                 pdb.setCategoryDetailId(productDetail.getCategoryDetailId());
                 pdb.setInfo(productDetail.getInfo());
@@ -91,13 +92,15 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     }
 
     @Override
-    public void save(ProductDetail productDetail) {
+    public ProductDetail save(ProductDetail productDetail) {
         productDetailDAO.save(productDetail);
+        return productDetail;
     }
 
     @Override
-    public void delete(ProductDetail productDetail) {
+    public ProductDetail delete(ProductDetail productDetail) {
         productDetailDAO.delete(productDetail);
+        return productDetail;
     }
 
     @Override
@@ -119,5 +122,10 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             }
         }
         return false;
+    }
+
+    @Override
+    public ProductDetail findByCategoryDetailIdAndProductId(String category_detail_id, Integer productId) {
+        return productDetailDAO.findByCategoryDetailIdAndProductId(category_detail_id, productId).get();
     }
 }
