@@ -22,6 +22,7 @@ import com.fastshop.net.model.Product;
 import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._GetListFile;
+import com.fastshop.net.service.ATMService;
 import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AddressService;
 import com.fastshop.net.service.AuthorityService;
@@ -50,6 +51,8 @@ public class CustomerController {
     AddressService addressService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    ATMService atmService;
     @Autowired
     ProductDetailService productDetailService;
     @Autowired
@@ -188,7 +191,7 @@ public class CustomerController {
         try {
             model.addAttribute("page", "user.wallet");
             model.addAttribute("title_main", "Fastshop - Thông tin hồ sơ tài khoản thanh toán");
-            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));  // thêm để khi cố ý đổi link thì tự động vô login
+            model.addAttribute("atm", atmService.findByUsername(auth.getAccount().getUsername()));
             return "index";
         } catch (Exception e) {
              return "redirect:/login";

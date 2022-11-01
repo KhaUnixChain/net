@@ -27,6 +27,9 @@ public class ATM implements Serializable {
     @Column(name = "name", columnDefinition = "varchar(150)", nullable = false)
     String name;
 
+    @Column(name = "company", columnDefinition = "varchar(70)", nullable = false)
+    String company;
+
 	@Column(name = "number", columnDefinition = "varchar(30)", nullable = false, unique = true)
     private String number;
 
