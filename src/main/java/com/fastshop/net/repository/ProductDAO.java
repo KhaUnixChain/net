@@ -14,7 +14,7 @@ public interface ProductDAO extends JpaRepository<Product, Integer>{
     List<Product> findByCategory(Category category);
     boolean existsById(Integer id);
 
-    @Query("SELECT o FROM Product o WHERE o.name LIKE %:kw%")
+    @Query("SELECT o FROM Product o WHERE o.name LIKE %?1%")
     List<Product> findByKeywordName(String kw);
 
 
@@ -24,6 +24,6 @@ public interface ProductDAO extends JpaRepository<Product, Integer>{
      *  INNER JOIN comments ON comments.productid = products.id
      *  WHERE rate <= 4 AND categories.id LIKE '%%' AND products.price BETWEEN 0 and 200
      */
-    @Query("SELECT o FROM Product o WHERE o.category.id LIKE %:cateId% AND (o.price BETWEEN :priceFrom AND :priceTo)")
+    @Query("SELECT o FROM Product o WHERE o.category.id LIKE %?1% AND (o.price BETWEEN ?2 AND ?3)")
     List<Product> findByFilter(String cateId, Double priceFrom, Double priceTo);
 }
