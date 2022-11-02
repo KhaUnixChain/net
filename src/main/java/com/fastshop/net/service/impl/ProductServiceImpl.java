@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService{
             for (Product product : list1) {
                 if (product.getComments().size() > 0) {
                     for (Comment c : product.getComments()) {
-                        if (c.getRate() <= rate) {
+                        if (c.getRate() <= rate && list2.contains(product) == false) {
                             list2.add(product);
                         }
                     }
