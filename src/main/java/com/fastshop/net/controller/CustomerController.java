@@ -191,7 +191,7 @@ public class CustomerController {
         try {
             model.addAttribute("page", "user.wallet");
             model.addAttribute("title_main", "Fastshop - Thông tin hồ sơ tài khoản thanh toán");
-            model.addAttribute("atm", atmService.findByUsername(auth.getAccount().getUsername()));
+            model.addAttribute("atm", atmService.findByAccount(auth.getAccount()));
             return "index";
         } catch (Exception e) {
              return "redirect:/login";
