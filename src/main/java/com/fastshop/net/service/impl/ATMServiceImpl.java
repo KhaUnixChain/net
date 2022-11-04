@@ -15,16 +15,28 @@ public class ATMServiceImpl implements ATMService{
 
     @Override
     public ATM findById(Integer id) {
-        return atmdao.findById(id).get();
+        try {
+            return atmdao.findById(id).get();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public ATM findByAccount(Account account) {
-        return atmdao.findByAccount(account);
+        try {
+            return atmdao.findByAccount(account);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public ATM findByNumber(String number) {
-        return atmdao.findByNumber(number);
+        try {
+            return atmdao.findByNumber(number);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
