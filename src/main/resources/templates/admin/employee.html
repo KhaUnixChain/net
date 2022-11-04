@@ -23,13 +23,10 @@
 
             <div class="d-flex justify-content-between">
               <form th:action="@{/account/search}" method="get">
-                <input name="keyword" type="text" style="width: 300px; height: 35px; padding-left: 10px;"
-                  placeholder="Tìm kiếm với username ...">
+                <input name="keyword" type="text" style="width: 300px; height: 35px; padding-left: 10px;" placeholder="Tìm kiếm với username ...">
                 <button type="submit" class="btn btn-light">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                    class="bi bi-search" viewBox="0 0 16 16">
-                    <path
-                      d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                   </svg>
                 </button>
               </form>
@@ -79,8 +76,7 @@
                       th:data-bs-target="${'#modal-delete-' + e.username}" style="border-radius: 50%;">
                       <svg th:if="${e.active}" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                         fill="currentColor" class="bi bi-plug-fill text-danger" viewBox="0 0 16 16">
-                        <path
-                          d="M6 0a.5.5 0 0 1 .5.5V3h3V.5a.5.5 0 0 1 1 0V3h1a.5.5 0 0 1 .5.5v3A3.5 3.5 0 0 1 8.5 10c-.002.434-.01.845-.04 1.22-.041.514-.126 1.003-.317 1.424a2.083 2.083 0 0 1-.97 1.028C6.725 13.9 6.169 14 5.5 14c-.998 0-1.61.33-1.974.718A1.922 1.922 0 0 0 3 16H2c0-.616.232-1.367.797-1.968C3.374 13.42 4.261 13 5.5 13c.581 0 .962-.088 1.218-.219.241-.123.4-.3.514-.55.121-.266.193-.621.23-1.09.027-.34.035-.718.037-1.141A3.5 3.5 0 0 1 4 6.5v-3a.5.5 0 0 1 .5-.5h1V.5A.5.5 0 0 1 6 0z" />
+                        <path d="M6 0a.5.5 0 0 1 .5.5V3h3V.5a.5.5 0 0 1 1 0V3h1a.5.5 0 0 1 .5.5v3A3.5 3.5 0 0 1 8.5 10c-.002.434-.01.845-.04 1.22-.041.514-.126 1.003-.317 1.424a2.083 2.083 0 0 1-.97 1.028C6.725 13.9 6.169 14 5.5 14c-.998 0-1.61.33-1.974.718A1.922 1.922 0 0 0 3 16H2c0-.616.232-1.367.797-1.968C3.374 13.42 4.261 13 5.5 13c.581 0 .962-.088 1.218-.219.241-.123.4-.3.514-.55.121-.266.193-.621.23-1.09.027-.34.035-.718.037-1.141A3.5 3.5 0 0 1 4 6.5v-3a.5.5 0 0 1 .5-.5h1V.5A.5.5 0 0 1 6 0z" />
                       </svg>
 
                       <svg th:if="${!e.active}" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
@@ -155,30 +151,27 @@
             <form method="post" action="/account/add" th:object="${staff}" id="form-1">
               <div class="form-group mb-2">
                 <label for="username"><b class="text-danger">*</b> Username:</label>
-                <input type="text" th:field="*{username}" class="form-control" id="username" name="username"
-                  autocomplete="off">
+                <input type="text" th:field="*{username}" class="form-control" id="username" name="username" autocomplete="off">
                 <span class="form-message"></span>
               </div>
               <div class="form-group mb-2">
                 <label for="email"><b class="text-danger">*</b> Email:</label>
-                <input type="email" th:field="*{email}" class="form-control" id="email" name="email" autocomplete="off">
+                <input type="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" th:field="*{email}" class="form-control" autocomplete="off">
                 <span class="form-message"></span>
               </div>
               <div class="form-group mb-2">
                 <label for="pwd"><b class="text-danger">*</b> Password:</label>
-                <input type="password" th:field="*{password}" class="form-control" id="pwd" name="pwd"
-                  autocomplete="off">
+                <input type="password" pattern="^[a-zA-Z0-9!$%^*.,/\\]{6,}$" th:field="*{password}" class="form-control" autocomplete="off">
                 <span class="form-message"></span>
               </div>
               <div class="form-group mb-2">
                 <label for="fullname"><b class="text-danger">*</b> Fullname:</label>
-                <input type="text" th:field="*{fullname}" class="form-control" id="fullname" name="fullname"
-                  autocomplete="off">
+                <input type="text" th:field="*{fullname}" class="form-control" id="fullname" name="fullname" autocomplete="off">
                 <span class="form-message"></span>
               </div>
               <div class="form-group mb-2">
                 <label for="phone"><b class="text-danger">*</b> Phone:</label>
-                <input type="text" th:field="*{phone}" class="form-control" id="phone" name="phone" autocomplete="off">
+                <input type="text" pattern="" th:field="*{phone}" class="form-control" autocomplete="off">
                 <span class="form-message"></span>
               </div>
               <div class="form-group mb-2">

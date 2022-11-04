@@ -39,4 +39,9 @@ public class ATMServiceImpl implements ATMService{
             return null;
         }
     }
+
+    @Override
+    public void save(ATM atm) {
+        atmdao.save(atm);
+    }
 }

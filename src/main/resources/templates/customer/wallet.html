@@ -91,13 +91,13 @@
                                     <h3 class="me-2">Tài khoản của bạn</h3>
                                 </div>
                             </div>
-                            <div class="mt-2 p-3 d-flex justify-content-between align-items-center" style="border: 1px dashed lightgray;">
+                            <div th:if="${atm != null}" class="mt-2 p-3 d-flex justify-content-between align-items-center" style="border: 1px dashed lightgray;">
                               <span>
                                 <img th:src="@{/dist/img/wallet/icon-visa.png}" style="width: 40px; height: 30px;" class="border p-1 me-1" alt="">
-                                VISA ** [[${atm}]]
+                                [[${atm.company}]] *** [[${#strings.substring(atm.number,atm.number.length()-3,atm.number.length())}]]
                               </span>
-                              <span>
-                                <button class="btn btn-default" style="vertical-align: middle;">
+                              <form method="post" action="/user/wallet/remove" th:if="${atm.valid}">
+                                <button type="submit" class="btn btn-default" style="vertical-align: middle;">
                                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="4" y1="7" x2="20" y2="7"></line>
@@ -108,7 +108,21 @@
                                   </svg>
                                   <span>Xoá</span>
                                 </button>
+                              </form>
+                            </div>
+
+                            <div th:if="${atm == null}" class="mt-2 p-3 d-flex justify-content-between align-items-center" style="border: 1px dashed lightgray;">
+                              <span class="text-danger">
+                                Không có tài khoản thẻ
                               </span>
+                              <form method="post" action="/user/wallet/remove">
+                                <button type="submit" class="btn btn-default" style="vertical-align: middle;">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-2" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                                  </svg>
+                                  <span>Thêm tài khoản</span>
+                                </button>
+                              </form>
                             </div>
                         </div>
                     </div>
