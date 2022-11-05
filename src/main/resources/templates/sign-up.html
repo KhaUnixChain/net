@@ -75,12 +75,12 @@
 
             <div class="mb-3">
               <label class="form-check">
-                <input type="checkbox" class="form-check-input" checked/>
+                <input type="checkbox" id="draft" class="form-check-input" checked/>
                 <span class="form-check-label">Agree the <a href="./terms-of-service.html" tabindex="-1">terms and policy</a>.</span>
               </label>
             </div>
             <div class="form-footer">
-              <button type="submit" class="btn btn-primary w-100">Create new account</button>
+              <button type="submit" id="btnApprovepo" class="btn btn-primary w-100">Create new account</button>
             </div>
           </div>
         </form>
@@ -104,6 +104,16 @@
         $('#eye').show();
         $('#eye-slash').hide();
         $('#password').attr('type','password');
+      });
+
+      $(document).ready(function () {
+        $('#draft').click(function () {
+          if ($("#draft").is(':checked')) {
+            $('#btnApprovepo').removeAttr('disabled')
+          } else {
+            $('#btnApprovepo').attr('disabled', 'disabled')
+          }
+        });
       });
     </script>
     <script th:src="@{/dist/js/tabler.min.js}" defer></script>
