@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -33,9 +32,8 @@ public class WalletController {
     HttpServletRequest request;
 
     @RequestMapping("/user/wallet/remove")
-    public String save(Model model, @ModelAttribute("auth") Authority auth) {
+    public String save(@ModelAttribute("auth") Authority auth) {
         ATM atm = atmService.findByAccount(auth.getAccount());
-        atm.setValid(false);
         atmService.save(atm);
         return "redirect:/user/wallet";
     }

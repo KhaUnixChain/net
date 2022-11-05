@@ -3,7 +3,7 @@
         <hr class="mt-0 mb-3">
         <form method="post" enctype="multipart/form-data" th:object="${item}">
             <div class="row">
-              <div class="col-xl-2 mb-4 me-2 bg-light border">
+              <div class="col-xl-2 mb-4 me-2 bg-white">
                 <ul class="list-profile mt-2">
                   <li class="list-item mb-2">
                     <a href="/user/myorder" class="text-muted fs-5">
@@ -91,13 +91,13 @@
                                     <h3 class="me-2">Tài khoản của bạn</h3>
                                 </div>
                             </div>
-                            <div th:if="${atm != null}" class="mt-2 p-3 d-flex justify-content-between align-items-center" style="border: 1px dashed lightgray;">
-                              <span>
-                                <img th:src="@{/dist/img/wallet/icon-visa.png}" style="width: 40px; height: 30px;" class="border p-1 me-1" alt="">
-                                [[${atm.company}]] *** [[${#strings.substring(atm.number,atm.number.length()-3,atm.number.length())}]]
-                              </span>
-                              <form method="post" action="/user/wallet/remove" th:if="${atm.valid}">
-                                <button type="submit" class="btn btn-default" style="vertical-align: middle;">
+                            <th:block th:if="${atm != null && atm.valid == true}">
+                              <div class="mt-2 p-3 d-flex justify-content-between align-items-center" style="border: 1px dashed lightgray;">
+                                <span style="vertical-align: middle;">
+                                  <img th:src="@{/dist/img/bank/sacombank.png}" style="width: auto; height: 30px;" class="border p-1 me-1" alt="">
+                                  *** [[${#strings.substring(atm.number,atm.number.length()-4,atm.number.length())}]]
+                                </span>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal-atm" class="btn btn-default">
                                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="4" y1="7" x2="20" y2="7"></line>
@@ -105,31 +105,94 @@
                                     <line x1="14" y1="11" x2="14" y2="17"></line>
                                     <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
                                     <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-                                  </svg>
-                                  <span>Xoá</span>
-                                </button>
-                              </form>
-                            </div>
-
-                            <div th:if="${atm == null}" class="mt-2 p-3 d-flex justify-content-between align-items-center" style="border: 1px dashed lightgray;">
-                              <span class="text-danger">
-                                Không có tài khoản thẻ
-                              </span>
-                              <form method="post" action="/user/wallet/remove">
-                                <button type="submit" class="btn btn-default" style="vertical-align: middle;">
+                                  </svg> Xoá
+                                </a>
+                              </div>
+                            </th:block>
+                            <th:unless th:if="${atm.valid == false}">
+                              <div class="mt-2 p-3 d-flex justify-content-between align-items-center" style="border: 1px dashed lightgray;">
+                                <span class="text-danger">
+                                  (*) Không có tài khoản thẻ
+                                </span>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal-atm-add" class="btn btn-default" style="vertical-align: middle;">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-2" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                                   </svg>
                                   <span>Thêm tài khoản</span>
-                                </button>
-                              </form>
-                            </div>
+                                </a>
+                              </div>
+                            </th:unless>
                         </div>
                     </div>
                 </div>
               </div>
             </div>
         </form>
+    </div>
+    <div class="modal modal-blur fade" id="modal-atm" tabindex="-1" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="modal-title">Bạn có chắc muốn xóa tài khoản thẻ ?</div>
+            <div>Nếu xóa tài khoản thì bạn sẽ không thẻ thanh toán bất cứ mặc hàng nào về sau</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Hủy bỏ</button>
+            <a href="/user/wallet/remove"><button type="button" class="btn btn-danger" data-bs-dismiss="modal">Chấp nhận</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal modal-blur fade" id="modal-atm-add" tabindex="-1" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Thêm tài khoản</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-3 align-items-end">
+              <div class="col-auto">
+                <a href="#" class="avatar avatar-upload rounded" id="avatar-bank">
+                  <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  <span class="avatar-upload-text" onclick="bank()">Bank</span>
+                </a>
+              </div>
+              <div class="col">
+                <label class="form-label">Số tài khoản</label>
+                <input type="number" class="form-control" pattern="^[0-9]{4,}$">
+              </div>
+            </div>
+            <div class="mb-3" id="choose-bank">
+              <div class="row mt-3">
+                <input type="text" value="NGUYEN NGOC KHA" class="form-control bg-white border-primary" readonly>
+              </div>
+              <div class="row d-flex mt-3">
+                <button class="col btn btn-default me-1">
+                  <img th:src="@{/dist/img/bank/sacombank.png}" style="height: 27px; width: 100px;" class="p-1" alt="">
+                </button>
+                <button class="col btn btn-default me-1">
+                  <img th:src="@{/dist/img/bank/agribank.png}" style="height: 27px; width: 100px;" class="p-1" alt="">
+                </button>
+                <button class="col btn btn-default me-1">
+                  <img th:src="@{/dist/img/bank/tpbank.jpg}" style="height: 27px; width: 100px;" class="p-1" alt="">
+                </button>
+                <button class="col btn btn-default">
+                  <img th:src="@{/dist/img/bank/vietcombank.jpg}" style="height: 27px; width: 100px;" class="p-1" alt="">
+                </button>
+              </div>
+              
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Hủy bỏ</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Thêm ngay</button>
+          </div>
+        </div>
+      </div>
     </div>
     <link th:href="@{/dist/css/profile.css}" rel="stylesheet"/>
 </div>
