@@ -37,7 +37,7 @@ public class Account  implements Serializable{
 	@Column(name = "username", columnDefinition = "varchar(30)", nullable = false)
 	private String username;
 
-	@Pattern(regexp = "^[a-zA-Z0-9]{6,}$", message = "(*) Password's not enough to private and blank.")
+	@Pattern(regexp = "^[a-zA-Z0-9!@#$%^&*()_+=.,/\\`~*-]{6,}$", message = "(*) Password's not enough to private and blank.")
 	@Column(name = "password", columnDefinition = "nvarchar(15)", nullable = false)
 	private String password;
 
@@ -47,6 +47,7 @@ public class Account  implements Serializable{
 
 	@Email(message = "(*) Email not valid.")
 	@NotBlank(message = "(*) Email cannot blank.")
+	@Pattern(regexp = "^[a-zA-Z0-9._-]{1,}+@[a-zA-Z0-9-]{3,}+\\.[a-zA-Z0-9-]{1,}$", message = "(*) Email's have to match format internal.")
 	@Column(name = "email", columnDefinition = "varchar(30)", nullable = false, unique = true)
 	private String email;
 
