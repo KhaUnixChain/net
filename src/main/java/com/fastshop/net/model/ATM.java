@@ -33,7 +33,7 @@ public class ATM implements Serializable {
 	@Column(name = "number", columnDefinition = "varchar(30)", nullable = false, unique = true)
     private String number;
 
-    @ManyToOne @JoinColumn(name = "username", nullable = false, unique = true)
+    @ManyToOne @JoinColumn(name = "username", nullable = false)
 	private Account account;
 
     Boolean valid;
