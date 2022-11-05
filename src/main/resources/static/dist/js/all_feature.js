@@ -65,7 +65,7 @@ function payment(number) {
         $("#payment-1").hide();
         $("#bill-2").show();
         $("#bill-1").hide();
-        $("#btn-order-show").show();
+        $("#btn-order-show").hide();
     }
     return number;
 }
