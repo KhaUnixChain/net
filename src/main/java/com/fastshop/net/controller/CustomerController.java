@@ -135,6 +135,7 @@ public class CustomerController {
             model.addAttribute("title_main", "Thanh toán sản phẩm của bạn");
             model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
             model.addAttribute("products", productSevice.findAll());
+            model.addAttribute("atm", atmService.findByAccount(auth.getAccount()));
             return "index";
         } catch (Exception e) {
             return "redirect:/login";
@@ -167,7 +168,6 @@ public class CustomerController {
         } catch (Exception e) {
             return "redirect:/login";
         }
-        
     }
 
 
