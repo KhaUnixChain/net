@@ -1,4 +1,16 @@
 <div th:fragment="subfragment" class="page-wrapper">
+
+  <style>
+    .form-group.invalid .form-message {
+      transition: 0.8s ease;
+      color: #f33a58;
+    }
+
+    .form-message {
+      font-size: 12px;
+      padding: 4px 0 0;
+    }
+  </style>
   <div class="page-wrapper">
     <hr class="mt-0 mb-3">
     <div>
@@ -201,7 +213,7 @@
     <!-- modal add -->
     <div class="modal modal-blur fade" id="modal-address-add" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-md modal-dialog-centered" role="document">
-        <form class="modal-content" method="post" action="/user/address/add">
+        <form class="modal-content" method="post" action="/user/address/add" id="form-2">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           <div class="modal-status bg-success"></div>
           <div class="modal-body text-center py-4">
@@ -210,7 +222,8 @@
             <h3>Thêm địa chỉ giao hàng</h3>
             
             <div class="form-group">
-              <textarea class="form-control" rows="2" name="place" placeholder="Nhập địa chỉ giao hàng ..."></textarea>
+              <textarea class="form-control" rows="1" name="place" id="place" placeholder="Nhập địa chỉ giao hàng ..."></textarea>
+              <div class="form-message text-start text-danger"></div>
             </div>
 
           </div>
@@ -234,5 +247,15 @@
       </div>
     </div>
   </div>
+  <script th:src="@{/dist/js/validate.js}"></script>
+  <script>
+    Validator({
+      form: '#form-2',
+      errorElement: '.form-message',
+      rules: [
+        Validator.isRequired('#place', 'Mời bạn nhập trường này'),
+      ]
+    })
+  </script>
   <link th:href="@{/dist/css/profile.css}" rel="stylesheet" />
 </div>
