@@ -58,12 +58,14 @@ function payment(number) {
         $("#payment-2").hide();
         $("#bill-1").show();
         $("#bill-2").hide();
+        $("#btn-order-show").show();
     }
     else {
         $("#payment-2").show();
         $("#payment-1").hide();
         $("#bill-2").show();
         $("#bill-1").hide();
+        $("#btn-order-show").show();
     }
     return number;
 }
