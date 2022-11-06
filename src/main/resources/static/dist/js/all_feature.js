@@ -93,13 +93,6 @@ $("#order-search-calendar").click(function(){
 });
 
 
-$("#choose-bank").hide();
-$("#avatar-bank").click(function(){
-    $("#choose-bank").slideToggle();
-});
-
-
-
 if (document.getElementById("discount_food") != undefined && document.getElementById("discount_100") != undefined) {
     setInterval(function () {
         if (hours_food == 0 && minute_food == 0 && second_food == 1) {

@@ -16,6 +16,26 @@ function getDateNow() {
     return new Date(strDate);
 };
 
+function convert_vi_to_en(str) {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+    str = str.replace(/Đ/g, "D");
+    str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
+    str = str.replace(/  +/g, ' ');
+    return str;
+};
+
 app.controller("history-ctrl", ($scope, $http) => {
     $scope.histories = [];
     $scope.selectId = [];
@@ -79,7 +99,6 @@ app.controller("history-ctrl", ($scope, $http) => {
     $scope.load_histories();
 });
 
-
 app.controller('chart-ctrl', ($scope, $http) => {
 	$scope.titles = [];
 	$scope.load_title = () => {
@@ -126,7 +145,6 @@ app.controller('chart-ctrl', ($scope, $http) => {
 	$scope.load_title();
 });
 
-
 app.controller('chart2-ctrl', ($scope, $http) => {
 	$scope.titles = [];
 	$scope.load_title = () => {
@@ -170,7 +188,6 @@ app.controller('chart2-ctrl', ($scope, $http) => {
 	$scope.load_title();
 });
 
-
 app.controller("category-ctrl", ($scope, $http) => {
     $scope.categories = [];
     $scope.index = 0;
@@ -201,6 +218,60 @@ app.controller("category-ctrl", ($scope, $http) => {
     $scope.load_categories();
 });
 
+app.controller("atm-ctrl", ($scope, $http) => {
+    $scope.atm = {
+        "name":"",
+        "company": "",
+        "number": "",
+        "account":{},
+        "valid":false
+    };
+
+    $http.get(`${host_}/accounts/${id}`).then((resp) => {
+        $scope.atm.account = resp.data;
+        $scope.atm.name = convert_vi_to_en(String($scope.atm.account.fullname).toUpperCase());
+    }).catch((err) => {
+        console.log("ATM cannot account", err);
+    });
+
+
+    $scope.them = () => {
+        if ($scope.atm.number == "") {
+            $scope.errorNumber = "(*) Vui lòng nhập số tài khoản";
+        }
+        else {
+            $scope.errorNumber = "";
+        }
+
+        if ($scope.atm.company == "None") {
+            $scope.errorSelect = "(*) Vui lòng chọn ngân hàng";
+        } 
+        else {
+            $scope.errorSelect = "";
+        }
+
+
+        // if($scope.atm.number != "" && $scope.atm.company != "None") {
+        //     var url_u = `${host_}/atm/${id}`;
+        //     var url_c = `${host_}/atm`;
+        //     $scope.atm.company = new String($("#sel1").val());
+        //     $scope.atm.number  = new String($("#bank-number").val());
+        //     var item = angular.copy($scope.atm);
+
+        //     console.log(item);
+
+        //     $http.post(url_c, item).then((resp) => {
+        //         console.log("ATM create ok", resp);
+        //     }).catch((err) => {
+        //         console.log("ATM failed", err);
+        //     });
+
+        //     window.location.href = "http://localhost:8080/user/wallet";
+        // }
+    };
+
+});
+
 
 // cái này là để hiển thị danh sách sản phẩm và thanh toán luôn
 app.controller("checkout-ctrl", ($scope, $http) => {
@@ -208,29 +279,6 @@ app.controller("checkout-ctrl", ($scope, $http) => {
     var date = new Date().toLocaleDateString("en-CA").toString();
 
     $scope.qty = 1;
-    $scope.form = {
-        "address": document.getElementById("order-address-buy").innerHTML,
-        "account": {},
-        "createDate": date,
-        "dateConfirm":null,
-        "status": {}
-    };
-
-    $http.get(`${host_}/accounts/${id}`).then((resp) => {
-        $scope.form.account = resp.data;
-        console.log("acc ok", resp);
-    }).catch((err) => {
-        console.log("Order cannot account", err);
-    });
-
-    $http.get(`${host_}/status/0`).then((resp) => {
-        $scope.form.status = resp.data;
-        console.log("status ok", resp);
-    }).catch((err) => {
-        console.log("Order cannot account", err);
-    });
-
-
 
     $scope.cart = {
         items: [],
@@ -312,17 +360,65 @@ app.controller("checkout-ctrl", ($scope, $http) => {
     }
     $scope.cart.loadFromLocalStorage();
 
+
+
+    // ---------------------------------------------------------
+    $scope.form = {
+        "address": document.getElementById("order-address-buy").innerHTML,
+        "account": {},
+        "createDate": date,
+        "dateConfirm":null,
+        "status": {}
+    };
+
+    $http.get(`${host_}/accounts/${id}`).then((resp) => {
+        $scope.form.account = resp.data;
+    }).catch((err) => {
+        console.log("Order cannot account", err);
+    });
+
+    $http.get(`${host_}/status/0`).then((resp) => {
+        $scope.form.status = resp.data;
+    }).catch((err) => {
+        console.log("Order cannot account", err);
+    });
+
     $scope.order = {
         purchase(){
-            var items = $scope.cart.items;
             var url = `${host_}/orders`;
             var data = angular.copy($scope.form);
-            console.log(data);
+
+            // add order api
             $http.post(url, data).then((resp) => {
                 console.log("Order ok", resp);
             }).catch((err) => {
                 console.log("Order failed", err);
             });
+
+            
+            for (var item of $scope.cart.items) {
+                var path = `${host_}/products/${item.id}`;
+                $scope.detail = {
+                    "product": {},
+                    "order": $scope.form,
+                    "quantity": item.qty
+                };
+
+                $http.get(path).then((resp) => {
+                    $scope.detail.product = resp.data;
+                    console.log("product ok", resp);
+                }).catch((err) => {
+                    console.log("product ok", err); 
+                });
+
+                var url_orderdetails = `${host_}/orderdetails`;
+                var record = angular.copy($scope.detail);
+                $http.post(url_orderdetails, record).then((resp) => {
+                    console.log("- "+ item.id + " ok", resp);
+                }).catch((err) => {
+                    console.log(item.id + " failed", err);
+                });
+            };
         }
     }
 });
@@ -381,7 +477,6 @@ app.controller("cart-ctrl", ($scope, $http) => {
 
     $scope.cart.loadFromLocalStorage();
 });
-
 
 app.controller("product-ctrl", ($scope, $http) => {
     $scope.form = {};
@@ -468,7 +563,6 @@ app.controller("product-ctrl", ($scope, $http) => {
     $scope.load_product();
 });
 
-
 app.controller("order-ctrl", ($scope, $http) => {
     $scope.orders = [];
     $scope.orderdetails = [];
@@ -517,7 +611,6 @@ app.controller("order-ctrl", ($scope, $http) => {
     $scope.load_orders();
     $scope.load_orderdetails();
 });
-
 
 app.controller("keyword-ctrl", ($scope, $http) => {
     $scope.keysearch = "";
@@ -602,11 +695,9 @@ app.controller("keyword-ctrl", ($scope, $http) => {
         var priceTo = Number($scope.map_filter["priceTo"]);
         var url = `http://localhost:8080/user/filter?rate=${rate}&cateId=${cateId}&priceFrom=${priceFrom}&priceTo=${priceTo}`;
         window.location.href = url;
-        console.log(url);
     };
 
 });
-
 
 app.controller("changed-ctrl", ($scope, $http) => {
     $scope.pass1 = "";
