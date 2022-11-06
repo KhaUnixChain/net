@@ -59,12 +59,14 @@ function payment(number) {
         $("#bill-1").show();
         $("#bill-2").hide();
         $("#btn-order-show").show();
+        localStorage.setItem("payment", JSON.stringify("bill-1"));
     }
     else {
         $("#payment-2").show();
         $("#payment-1").hide();
         $("#bill-2").show();
         $("#bill-1").hide();
+        localStorage.setItem("payment", JSON.stringify("bill-2"));
         if ($("#yes-no-show-atm").val() == "yes") {
             $("#btn-order-show").show();
         }
