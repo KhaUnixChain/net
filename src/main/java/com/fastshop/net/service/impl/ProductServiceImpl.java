@@ -2,6 +2,7 @@ package com.fastshop.net.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class ProductServiceImpl implements ProductService{
     public List<Product> findByFilter(Integer rate, String cateId, double priceFrom, double priceTo) {
         List<Product> list1 = productDAO.findByFilter(cateId, priceFrom, priceTo);
         if (rate == 0) {
-            return list1;
+            return list1.stream().filter(item -> item.getCategory().getId().equals(cateId)).collect(Collectors.toList());
         }
         else {
             List<Product> list2 = new ArrayList<>();
