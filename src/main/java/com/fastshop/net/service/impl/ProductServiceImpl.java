@@ -56,7 +56,14 @@ public class ProductServiceImpl implements ProductService{
     public List<Product> findByFilter(Integer rate, String cateId, double priceFrom, double priceTo) {
         List<Product> list1 = productDAO.findByFilter(cateId, priceFrom, priceTo);
         if (rate == 0) {
-            return list1.stream().filter(item -> item.getCategory().getId().equals(cateId)).collect(Collectors.toList());
+            if (cateId.isEmpty()) {
+                return productDAO.findAll()
+                                 .stream()
+                                 .filter(p -> p.getPrice() >= priceFrom && p.getPrice() <= priceTo)
+                                 .collect(Collectors.toList());
+            }
+            return list1.stream().filter(item -> item.getCategory().getId().equals(cateId))
+                                 .collect(Collectors.toList());
         }
         else {
             List<Product> list2 = new ArrayList<>();
