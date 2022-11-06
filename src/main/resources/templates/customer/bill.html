@@ -26,7 +26,6 @@
 </head>
 <body ng-app="bill-app">
   <div class="container pb-2" ng-controller="bill-ctrl">
-    <!-- modal hóa đơn -->
     <div th:text="${auth.account.username}" id="username_" hidden></div>
     <div id="modal-bill" tabindex="-1" role="dialog" aria-hidden="true" style="transition: 0.2s;">
       <div class="modal-dialog modal-lg" style="border: 1px dashed rgb(0, 114, 228);" role="document">
@@ -136,6 +135,7 @@
     <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
     <script th:src="@{/lib/easing/easing.min.js}"></script>
     <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script th:src="@{/dist/js/tabler.min.js}" type="text/javascript" defer></script>
     <script th:src="@{/dist/js/demo.min.js}" type="text/javascript" defer></script>

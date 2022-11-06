@@ -287,12 +287,6 @@ app.controller("checkout-ctrl", ($scope, $http) => {
         }
     }
     $scope.cart.loadFromLocalStorage();
-
-    $scope.order = {
-        purchase(){
-            alert("Mua thanh cong");
-        }
-    }
 });
 
 
