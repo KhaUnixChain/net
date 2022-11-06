@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,9 +31,19 @@ public class RestOrderDetailController {
         return orderDetailService.findById(id);
     }
 
+    @PostMapping("/rest/orderdetails")
+    public OrderDetail create(@RequestBody OrderDetail orderDetail) {
+        if (!orderDetailService.findAll().contains(orderDetail)) {
+            orderDetailService.save(orderDetail);
+        }
+        return orderDetail;
+    }
+
     @PutMapping("/rest/orderdetails/{id}")
     public OrderDetail put(@PathVariable("id") Long id, @RequestBody OrderDetail orderDetail) {
-        orderDetailService.save(orderDetail);
+        if (orderDetailService.findAll().contains(orderDetail)) {
+            orderDetailService.save(orderDetail);
+        }
         return orderDetail;
     }
 

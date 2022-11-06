@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,16 +35,25 @@ public class RestOrderController {
         return orderService.findById(id);
     }
 
-    @GetMapping("/rest/details/order/{id}")
+    @GetMapping("/rest/order/details/{id}")
     public List<OrderDetail> gDetailsWithOrder(@PathVariable("id") Long id) {
         Order order = orderService.findById(id);
         return orderDetailDAO.findByOrder(order);
     }
 
+    @PostMapping("/rest/orders")
+    public Order put(@RequestBody Order order) {
+        if (!orderService.findAll().contains(order)) {
+            orderService.save(order);
+        }
+        return order;
+    }
 
     @PutMapping("/rest/orders/{id}")
     public Order put(@PathVariable("id") Long id, @RequestBody Order order) {
-        orderService.save(order);
+        if (orderService.findAll().contains(order)) {
+            orderService.save(order);
+        }
         return order;
     }
 
