@@ -42,7 +42,7 @@ public class RestOrderController {
     }
 
     @PostMapping("/rest/orders")
-    public Order put(@RequestBody Order order) {
+    public Order create(@RequestBody Order order) {
         if (!orderService.findAll().contains(order)) {
             orderService.save(order);
         }
