@@ -140,9 +140,20 @@ public class CustomerController {
         } catch (Exception e) {
             return "redirect:/login";
         }
-        
     }
 
+    @RequestMapping("/user/bill")
+    public String bill(Model model, @ModelAttribute("auth") Authority auth) {
+        try {
+            model.addAttribute("now", new Date());
+            model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
+            model.addAttribute("products", productSevice.findAll());
+            model.addAttribute("atm", atmService.findByAccount(auth.getAccount()));
+            return "customer/bill";
+        } catch (Exception e) {
+            return "redirect:/login";
+        }
+    }
 
     @RequestMapping("/user/history")
     public String history(Model model, @ModelAttribute("auth") Authority auth) {
