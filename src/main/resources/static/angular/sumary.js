@@ -1,7 +1,7 @@
 var host_ = "http://localhost:8080/rest";
-var number = document.getElementById("number");
-var username = document.getElementById("username");
-var account_ = document.getElementById("username_");
+var number = document.getElementById("number");       // _mode_cart.html
+var username = document.getElementById("username");   
+var account_ = document.getElementById("username_");  // _account.html
 
 var id = account_.innerHTML;
 var app = angular.module("app", []);
