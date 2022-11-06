@@ -33,9 +33,7 @@ public class RestOrderDetailController {
 
     @PostMapping("/rest/orderdetails")
     public OrderDetail create(@RequestBody OrderDetail orderDetail) {
-        if (!orderDetailService.findAll().contains(orderDetail)) {
-            orderDetailService.save(orderDetail);
-        }
+        orderDetailService.save(orderDetail);
         return orderDetail;
     }
 
