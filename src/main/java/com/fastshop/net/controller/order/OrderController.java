@@ -78,7 +78,9 @@ public class OrderController {
             String email = auth.getAccount().getEmail();
             String subject = "Hóa đơn Fastshop của " + auth.getAccount().getFullname() + " (" + java.sql.Date.valueOf(LocalDate.now()).toString() +")";
             String body = new ReadFile().readFile("http://localhost:8080/user/bill");
-            mailService.send(email, subject, body);
+            // mailService.send(email, subject, body);
+            System.out.println();
+            System.out.println(body);
             return "redirect:/user/myorder";
         } catch (Exception e) {
             return "redirect:/login";

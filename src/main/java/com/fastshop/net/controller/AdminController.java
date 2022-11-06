@@ -50,13 +50,9 @@ public class AdminController {
             model.addAttribute("page", "admin.home");
             model.addAttribute("title_main", title_main);
             model.addAttribute("_", authority.getAccount());
-            //tổng doanh thu
-            Double totalRevenue = orderDetailService.getTotalRevenue();
-            int totalOrder = orderDetailService.getTotalOrder();
-            List<String> list = orderDetailService.getTop3BestSelling();System.out.println(list);
-            model.addAttribute("totalRevenue", Math.round(totalRevenue));
-            model.addAttribute("totalOrder", totalOrder);
-            model.addAttribute("top3Product", list);
+            model.addAttribute("totalRevenue", Math.round(orderDetailService.getTotalRevenue()));
+            model.addAttribute("totalOrder", orderDetailService.getTotalOrder());
+            model.addAttribute("top3Product", orderDetailService.getTop3BestSelling());
             
             // thêm history
             if (authority != null) {
