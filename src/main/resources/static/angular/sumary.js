@@ -205,8 +205,32 @@ app.controller("category-ctrl", ($scope, $http) => {
 // cái này là để hiển thị danh sách sản phẩm và thanh toán luôn
 app.controller("checkout-ctrl", ($scope, $http) => {
     var id = account_.innerHTML;
+    var date = new Date().toLocaleDateString("en-CA").toString();
 
     $scope.qty = 1;
+    $scope.form = {
+        "address": document.getElementById("order-address-buy").innerHTML,
+        "account": {},
+        "createDate": date,
+        "dateConfirm":null,
+        "status": {}
+    };
+
+    $http.get(`${host_}/accounts/${id}`).then((resp) => {
+        $scope.form.account = resp.data;
+        console.log("acc ok", resp);
+    }).catch((err) => {
+        console.log("Order cannot account", err);
+    });
+
+    $http.get(`${host_}/status/0`).then((resp) => {
+        $scope.form.status = resp.data;
+        console.log("status ok", resp);
+    }).catch((err) => {
+        console.log("Order cannot account", err);
+    });
+
+
 
     $scope.cart = {
         items: [],
@@ -287,6 +311,20 @@ app.controller("checkout-ctrl", ($scope, $http) => {
         }
     }
     $scope.cart.loadFromLocalStorage();
+
+    $scope.order = {
+        purchase(){
+            var items = $scope.cart.items;
+            var url = `${host_}/orders`;
+            var data = angular.copy($scope.form);
+            console.log(data);
+            $http.post(url, data).then((resp) => {
+                console.log("Order ok", resp);
+            }).catch((err) => {
+                console.log("Order failed", err);
+            });
+        }
+    }
 });
 
 

@@ -1,5 +1,6 @@
 package com.fastshop.net.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,18 +37,24 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 
     @Override
     public Double getTotalRevenue() {
-        return orderDetailDAO.getTotalRevenue();
+        try {
+            return orderDetailDAO.getTotalRevenue();
+        } catch (Exception e) {
+            return 0.0;
+        }
     }
 
     @Override
     public int getTotalOrder() {
-        return orderDetailDAO.getTotalOrder();
+        try {
+            return orderDetailDAO.getTotalOrder();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override
     public List<String> getTop3BestSelling() {
         return orderDetailDAO.getTop3BestSelling();
     }
-
-    
 }
