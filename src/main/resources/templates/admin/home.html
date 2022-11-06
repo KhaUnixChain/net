@@ -39,14 +39,14 @@
             <div class="card">
               <div class="card-body">
                 <div class="subheader">Tổng doanh thu trong tháng này</div>
-                <div class="h3 m-0">15,251,111 đ</div>
+                <div class="h3 m-0">[[${totalRevenue}]] VND</div>
                 <div class="mt-3">
                   <div class="d-flex mb-2">
                     <div>Doanh thu dự kiến (10%)</div>
                     <div class="ms-auto">
                       <span class="text-green d-inline-flex align-items-center lh-1">
                         16,776,222 đ
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="14 7 21 7 21 14"></polyline></svg>
+<svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="14 7 21 7 21 14"></polyline></svg>
                       </span>
                     </div>
                   </div>
@@ -62,8 +62,8 @@
           <div class="col-md-4">
             <div class="card">
               <div class="card-body">
-                <div class="subheader">Tổng số hóa đơn đặt hàng hôm nay</div>
-                <div class="h3 m-0">352 đơn</div>
+                <div class="subheader">Tổng số hóa đơn đặt hàng trong tháng này</div>
+                <div class="h3 m-0">[[${totalOrder}]] đơn</div>
                 <div class="mt-3">
                   <div class="d-flex mb-2">
                     <div>Số lượng dự kiến (10%)</div>
@@ -92,21 +92,21 @@
                   <svg xmlns="http://www.w3.org/2000/svg" style="color: orangered;" width="16" height="16" fill="currentColor" class="bi bi-forward-fill me-1" viewBox="0 0 16 16">
                     <path d="m9.77 12.11 4.012-2.953a.647.647 0 0 0 0-1.114L9.771 5.09a.644.644 0 0 0-.971.557V6.65H2v3.9h6.8v1.003c0 .505.545.808.97.557z"/>
                   </svg>
-                  <a href="#" data-bs-toggle="tooltip" title="Bia Laru - Vui cùng miền trung nào" data-bs-placement="bottom" class="text-decoration-none">
+<a href="#" data-bs-toggle="tooltip"  th:title="${top3Product.get(0)}" data-bs-placement="bottom" class="text-decoration-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                       <path d="M12 16v-8l-2 2"></path>
                       <circle cx="12" cy="12" r="9"></circle>
                    </svg>
                   </a>
-                  <a href="#" data-bs-toggle="tooltip" title="Dầu gội Dược liệu Nguyên Xuân dưỡng tóc 450ml" data-bs-placement="bottom" class="text-decoration-none">
+                  <a href="#" data-bs-toggle="tooltip"  th:title="${top3Product.get(1)}" data-bs-placement="bottom" class="text-decoration-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                       <path d="M10 10a2 2 0 1 1 4 0c0 .591 -.417 1.318 -.816 1.858l-3.184 4.143l4 0"></path>
                       <circle cx="12" cy="12" r="9"></circle>
                    </svg>
                   </a>
-                  <a href="#" data-bs-toggle="tooltip" title="Balo da nữ thời trang hàn quốc, tặng móc khóa gấu" data-bs-placement="bottom" class="text-decoration-none">
+                  <a href="#" data-bs-toggle="tooltip" th:title="${top3Product.get(2)}" data-bs-placement="bottom" class="text-decoration-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-3" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                       <path d="M12 12a2 2 0 1 0 -2 -2"></path>
@@ -126,7 +126,7 @@
                     </div>
                   </div>
                   <div class="progress progress-sm">
-                    <div class="progress-bar bg-primary" style="width: 75%" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="75% Complete">
+<div class="progress-bar bg-primary" style="width: 75%" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="75% Complete">
                       <span class="visually-hidden">75% Complete</span>
                     </div>
                   </div>
@@ -210,7 +210,7 @@
                   <td>Last 30 days</td>
                   <td>98.9533%</td>
                   <td>1 minute</td>
-                  <td>1</td>
+<td>1</td>
                   <td>1 minute</td>
                   <td>1 minute</td>
                 </tr>

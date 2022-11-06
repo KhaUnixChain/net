@@ -34,5 +34,20 @@ public class OrderDetailServiceImpl implements OrderDetailService{
         return orderDetailDAO.findAll();
     }
 
+    @Override
+    public Double getTotalRevenue() {
+        return orderDetailDAO.getTotalRevenue();
+    }
+
+    @Override
+    public int getTotalOrder() {
+        return orderDetailDAO.getTotalOrder();
+    }
+
+    @Override
+    public List<String> getTop3BestSelling() {
+        return orderDetailDAO.getTop3BestSelling();
+    }
+
     
 }

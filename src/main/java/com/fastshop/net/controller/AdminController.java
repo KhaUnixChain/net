@@ -1,6 +1,7 @@
 package com.fastshop.net.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryService;
 import com.fastshop.net.service.HistoryService;
+import com.fastshop.net.service.OrderDetailService;
 import com.fastshop.net.service.OrderService;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._SessionService;
@@ -38,6 +40,8 @@ public class AdminController {
     HistoryService historyService;
     @Autowired
     OrderService orderService;
+    @Autowired
+    OrderDetailService orderDetailService;
 
     @RequestMapping("/admin/home")
     public String home(Model model, @ModelAttribute("auth") Authority authority) {
@@ -46,7 +50,14 @@ public class AdminController {
             model.addAttribute("page", "admin.home");
             model.addAttribute("title_main", title_main);
             model.addAttribute("_", authority.getAccount());
-
+            //tổng doanh thu
+            Double totalRevenue = orderDetailService.getTotalRevenue();
+            int totalOrder = orderDetailService.getTotalOrder();
+            List<String> list = orderDetailService.getTop3BestSelling();System.out.println(list);
+            model.addAttribute("totalRevenue", Math.round(totalRevenue));
+            model.addAttribute("totalOrder", totalOrder);
+            model.addAttribute("top3Product", list);
+            
             // thêm history
             if (authority != null) {
                 History history = new History();

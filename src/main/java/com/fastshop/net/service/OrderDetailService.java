@@ -9,4 +9,7 @@ public interface OrderDetailService {
     void deleteById(Long id);
     OrderDetail findById(Long id);
     List<OrderDetail> findAll();
+    Double getTotalRevenue();
+    int getTotalOrder();
+    List<String> getTop3BestSelling();
 }
