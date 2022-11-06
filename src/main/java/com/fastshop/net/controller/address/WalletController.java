@@ -38,7 +38,6 @@ public class WalletController {
         return "redirect:/user/wallet";
     }
 
-
     /**
      * this is model of authority
      * @return

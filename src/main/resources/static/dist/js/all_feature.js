@@ -65,7 +65,12 @@ function payment(number) {
         $("#payment-1").hide();
         $("#bill-2").show();
         $("#bill-1").hide();
-        $("#btn-order-show").hide();
+        if ($("#yes-no-show-atm").val() == "yes") {
+            $("#btn-order-show").show();
+        }
+        else {
+            $("#btn-order-show").hide();
+        }
     }
     return number;
 }
