@@ -14,14 +14,6 @@
       <div th:insert="~{/admin/home::subfragment}"></div>
     </th:block>
 
-    <th:block th:case="'admin.product'">
-      <div th:insert="~{/admin/product::subfragment}"></div>
-    </th:block>
-
-    <th:block th:case="'admin.category'">
-      <div th:insert="~{/admin/category::subfragment}"></div>
-    </th:block>
-
     <th:block th:case="'admin.history'">
       <div th:insert="~{/admin/history::subfragment}"></div>
     </th:block>
@@ -65,6 +57,14 @@
 
     <th:block th:case="'user.myorder'">
       <div th:insert="~{/customer/myorder::subfragment}"></div>
+    </th:block>
+
+    <th:block th:case="'user.product'">
+      <div th:insert="~{/customer/product::subfragment}"></div>
+    </th:block>
+
+    <th:block th:case="'user.category'">
+      <div th:insert="~{/customer/category::subfragment}"></div>
     </th:block>
 
     <th:block th:case="'user.address'">

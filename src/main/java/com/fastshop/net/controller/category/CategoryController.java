@@ -18,12 +18,12 @@ public class CategoryController {
     public String add(Category category) {
         category.setStatus(true);
         categoryService.save(category);
-        return "redirect:/admin/category/stock";
+        return "redirect:/user/category/stock";
     }
 
     @RequestMapping("/category/update/avaiable/{id}")
     public String update(@PathVariable("id") String id, @RequestParam("avaiable") Boolean avaiable, @RequestParam("focus") String focus) {
         categoryService.updateProductAvaiableFromCategory(id, avaiable);
-        return "redirect:/admin/category/" + focus; 
+        return "redirect:/user/category/" + focus; 
     }
 }

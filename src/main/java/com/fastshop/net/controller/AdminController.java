@@ -6,17 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
-import com.fastshop.net.model.Category;
 import com.fastshop.net.model.History;
-import com.fastshop.net.model.Product;
 import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
-import com.fastshop.net.service.CategoryService;
 import com.fastshop.net.service.HistoryService;
 import com.fastshop.net.service.OrderDetailService;
 import com.fastshop.net.service.OrderService;
@@ -33,8 +29,6 @@ public class AdminController {
     AuthorityService authorityService;
     @Autowired
     AccountService accountService;
-    @Autowired
-    CategoryService categoryService;
     @Autowired
     HistoryService historyService;
     @Autowired
@@ -67,79 +61,6 @@ public class AdminController {
             return "redirect:/login.fastshop.com";
         }
     }
-
-
-    @RequestMapping("/admin/product")
-    public String product(Model model, @ModelAttribute("auth") Authority authority) {
-        try {
-            String title_main = "Admin - Thống kê danh sách sản phẩm";
-            model.addAttribute("page", "admin.product");
-            model.addAttribute("product", new Product());
-            model.addAttribute("title_main", title_main);
-            model.addAttribute("categories", categoryService.findAll());
-            model.addAttribute("_", authority.getAccount());
-
-            // thêm history
-            if (authority != null) {
-                History history = new History();
-                history.setTitle(title_main);
-                history.setLink("http://localhost:8080/admin/product");
-                history.setSchedual(new Date());
-                history.setAccount(authority.getAccount());
-                historyService.save(history);   
-            }
-            return "index";
-        } catch (Exception e) {
-            return "redirect:/login.fastshop.com";
-        }
-    }
-
-
-    @RequestMapping("/admin/category/{status}")
-    public String category(Model model, @PathVariable("status") String status, @ModelAttribute("auth") Authority authority) {
-        try {
-            model.addAttribute("page", "admin.category");
-            model.addAttribute("category", new Category());
-            model.addAttribute("_", authority.getAccount());
-            String title_main = "";
-
-            if (status.equals("stock")) {
-                title_main = "Admin - Danh sách phân loại còn bán";
-                model.addAttribute("focus", "stock");
-                model.addAttribute("title", "LOẠI HÀNG CÒN HOẠT ĐỘNG");
-                model.addAttribute("title_main", title_main);
-                model.addAttribute("categories", categoryService.findByStatus(true));
-            }
-            else if (status.equals("out")) {
-                title_main = "Admin - Danh sách phân loại hết hàng";
-                model.addAttribute("focus", "out");
-                model.addAttribute("title", "LOẠI HÀNG ĐÃ TẠM DỪNG");
-                model.addAttribute("title_main", title_main);
-                model.addAttribute("categories", categoryService.findByStatus(false));
-            } 
-            else {
-                title_main = "Admin - Danh sách tất cả phân loại";
-                model.addAttribute("focus", "all");
-                model.addAttribute("title", "TẤT CẢ LOẠI HÀNG");
-                model.addAttribute("title_main", title_main);
-                model.addAttribute("categories", categoryService.findAll());
-            }
-
-            // thêm history
-            if (authority != null) {
-                History history = new History();
-                history.setTitle(title_main);
-                history.setLink("http://localhost:8080/admin/category/" + status);
-                history.setSchedual(new Date());
-                history.setAccount(authority.getAccount());
-                historyService.save(history);            
-            }
-            return "index";
-        } catch (Exception e) {
-            return "redirect:/login.fastshop.com";
-        }
-    }
-
 
     @RequestMapping("/admin/employee")
     public String customer(Model model, @ModelAttribute("auth") Authority authority) {
