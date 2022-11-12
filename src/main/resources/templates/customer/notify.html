@@ -1,16 +1,4 @@
 <div th:fragment="subfragment" class="page-wrapper">
-
-  <style>
-    .form-group.invalid .form-message {
-      transition: 0.8s ease;
-      color: #f33a58;
-    }
-
-    .form-message {
-      font-size: 12px;
-      padding: 4px 0 0;
-    }
-  </style>
   <div class="page-wrapper">
     <hr class="mt-0 mb-3">
     <div>
@@ -112,150 +100,163 @@
         </div>
 
 
-        <!-- this is address -->
-        <div class="col-xl-9 mb-4 bg-white">
-          <!-- Account details card-->
-          <div class="mt-3">
-            <button class="btn btn-lg col-12" data-bs-toggle="modal" data-bs-target="#modal-address-add" style="height:60px; border: 1px dashed lightgray; box-shadow: none;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-plus-circle" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                <path
-                  d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-              </svg>
-              <span class="text-primary ms-2 fs-4">Thêm địa chỉ mới</span>
-            </button>
-          </div>
-          <div class="row">
-            <div class="col border border-light d-flex justify-content-between mt-3">
-              <div class="col-11">
-                <div class="d-flex justify-content-start">
-                  <div class="d-flex justify-content-start align-items-center">
-                    <span class="me-2">[[${#strings.toUpperCase(auth.account.fullname)}]]</span>
-                    <span class="text-success" th:if="${addresses.size() != 0}">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-check-circle me-1" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path
-                          d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
-                      </svg>
-                      Địa chỉ mặc định
-                    </span>
+        <div class="col-xl-9 mb-4 ms-2 bg-white">
+          <div class="row bg-white">
+            <div class="d-flex text-center">
+              <div class="col-1 mt-3">
+                <h5>25/01/2022</h5>
+              </div>
+              <div class="col-8 mt-3">
+                <div class="row">
+                  <div class="col-1">
+                    <svg stroke="" fill="pink" stroke-width="0" viewBox="0 0 24 24" height="50" width="50"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79 2.73 2.71 7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58 3.51-3.47 9.14-3.47 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z">
+                      </path>
+                    </svg>
+                  </div>
+                  <div class="col-11">
+                    <p>Suzume no Tojimari (すずめの戸締まり? "Suzume khóa cửa") là một anime điện
+                      ảnh
+                      Nhật Bản được viết và đạo diễn bởi Shinkai Makoto. Anime được phụ
+                      trách thiết kế nhân vật bởi Tanaka Masayoshi, Tsuchiya Kenichi
+                      phụ
+                      trách phần hoạt họa và Tanji Takumi phụ trách nghệ thuật. và phần
+                      âm
+                      nhạc được phụ trách bởi ban nhạc Radwimps và Kazuma Jinnouchi.
+                      Phim dự
+                      kiến lên sóng vào ngày 11 tháng 11 năm 2022 tại Nhật Bản <a href="">Chi tiết</a></p>
                   </div>
                 </div>
-                <div class="mt-2" style="font-size: 12px; color: black;" th:if="${addresses.size() != 0}">
-                  <span class="text-muted">Địa chỉ mặc định : </span>[[${address}]]
-                </div>
-                <div class="mt-2" style="font-size: 12px; color: black;">
-                  <span class="text-muted">Số điện thoại : </span>[[${auth.account.phone}]]
-                </div>
+              </div>
+              <div class="col-2 mt-3">
+                <a href="" class="text-primary">Đánh dấu đã đọc</a>
+              </div>
+              <div class="col-1 mt-3">
+                <a href="" class="text-danger">Xóa</a>
               </div>
             </div>
-            <div class="col-2 d-flex justify-content-center mt-3">
-              <a href="#" data-bs-toggle="modal" data-bs-target="#modal-addresses" th:if="${addresses.size() > 1}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                  class="bi bi-vector-pen" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd"
-                    d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z" />
-                  <path fill-rule="evenodd" d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z" />
-                </svg>
-                Mặc định
-              </a>
+
+          </div>
+          <div class="row mt-4 bg-white">
+            <div class="d-flex text-center">
+              <div class="col-1 mt-3">
+                <h5>25/01/2022</h5>
+              </div>
+              <div class="col-8 mt-3">
+                <div class="row">
+                  <div class="col-1">
+                    <svg stroke="" fill="pink" stroke-width="0" viewBox="0 0 24 24" height="50" width="50"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79 2.73 2.71 7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58 3.51-3.47 9.14-3.47 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z">
+                      </path>
+                    </svg>
+                  </div>
+                  <div class="col-11">
+                    <p>Suzume no Tojimari (すずめの戸締まり? "Suzume khóa cửa") là một anime điện
+                      ảnh
+                      Nhật Bản được viết và đạo diễn bởi Shinkai Makoto. Anime được phụ
+                      trách thiết kế nhân vật bởi Tanaka Masayoshi, Tsuchiya Kenichi
+                      phụ
+                      trách phần hoạt họa và Tanji Takumi phụ trách nghệ thuật. và phần
+                      âm
+                      nhạc được phụ trách bởi ban nhạc Radwimps và Kazuma Jinnouchi.
+                      Phim dự
+                      kiến lên sóng vào ngày 11 tháng 11 năm 2022 tại Nhật Bản <a href="">Chi tiết</a></p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2 mt-3">
+                <a href="" class="text-primary">Đánh dấu đã đọc</a>
+              </div>
+              <div class="col-1 mt-3">
+                <a href="" class="text-danger">Xóa</a>
+              </div>
             </div>
+
+          </div>
+          <div class="row mt-4 bg-white">
+            <div class="d-flex text-center">
+              <div class="col-1 mt-3">
+                <h5>25/01/2022</h5>
+              </div>
+              <div class="col-8 mt-3">
+                <div class="row">
+                  <div class="col-1">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="50"
+                      width="50" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z">
+                      </path>
+                    </svg>
+                  </div>
+                  <div class="col-11">
+                    <p>Suzume no Tojimari (すずめの戸締まり? "Suzume khóa cửa") là một anime điện
+                      ảnh
+                      Nhật Bản được viết và đạo diễn bởi Shinkai Makoto. Anime được phụ
+                      trách thiết kế nhân vật bởi Tanaka Masayoshi, Tsuchiya Kenichi
+                      phụ
+                      trách phần hoạt họa và Tanji Takumi phụ trách nghệ thuật. và phần
+                      âm
+                      nhạc được phụ trách bởi ban nhạc Radwimps và Kazuma Jinnouchi.
+                      Phim dự
+                      kiến lên sóng vào ngày 11 tháng 11 năm 2022 tại Nhật Bản <a href="">Chi tiết</a></p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2 mt-3">
+                <a href="" class="text-primary">Đánh dấu đã đọc</a>
+              </div>
+              <div class="col-1 mt-3">
+                <a href="" class="text-danger">Xóa</a>
+              </div>
+            </div>
+
+          </div>
+          <div class="row mt-4 bg-white">
+            <div class="d-flex text-center">
+              <div class="col-1 mt-3">
+                <h5>25/01/2022</h5>
+              </div>
+              <div class="col-8 mt-3">
+                <div class="row">
+                  <div class="col-1">
+                    <svg stroke="" fill="pink" stroke-width="0" viewBox="0 0 24 24" height="50" width="50"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79 2.73 2.71 7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58 3.51-3.47 9.14-3.47 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z">
+                      </path>
+                    </svg>
+                  </div>
+                  <div class="col-11">
+                    <p>Suzume no Tojimari (すずめの戸締まり? "Suzume khóa cửa") là một anime điện
+                      ảnh
+                      Nhật Bản được viết và đạo diễn bởi Shinkai Makoto. Anime được phụ
+                      trách thiết kế nhân vật bởi Tanaka Masayoshi, Tsuchiya Kenichi
+                      phụ
+                      trách phần hoạt họa và Tanji Takumi phụ trách nghệ thuật. và phần
+                      âm
+                      nhạc được phụ trách bởi ban nhạc Radwimps và Kazuma Jinnouchi.
+                      Phim dự
+                      kiến lên sóng vào ngày 11 tháng 11 năm 2022 tại Nhật Bản <a href="">Chi tiết</a></p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2 mt-3">
+                <a href="" class="text-primary">Đánh dấu đã đọc</a>
+              </div>
+              <div class="col-1 mt-3">
+                <a href="" class="text-danger">Xóa</a>
+              </div>
+            </div>
+
           </div>
         </div>
+
+
       </div>
     </div>
-    <div class="modal modal-blur fade" id="modal-addresses" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-md modal-dialog-centered" role="document">
-        <form class="modal-content" method="post" action="/user/address/update">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          <div class="modal-status bg-success"></div>
-          <div class="modal-body text-center py-4">
-            <!-- Download SVG icon from http://tabler-icons.io/i/circle-check -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-green icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9" /><path d="M9 12l2 2l4 -4" /></svg>
-            <h3>Đổi địa chỉ mặc định</h3>
-            <div class="ms-4 me-4">
-              <div class="form-group form-check text-start" hidden>
-                <label class="form-check-label">
-                  <input class="form-check-input me-3" name="place" type="radio" value="0" checked> Khong co dia chi
-                </label>
-              </div>
-              <div class="form-group form-check text-start mb-2" th:each="add : ${addresses}">
-                <label class="form-check-label">
-                  <input class="form-check-input me-3" name="place" type="radio" th:value="${add.id}"> [[${add.place}]]
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <div class="w-100">
-              <div class="row">
-                <div class="col">
-                  <a href="#" class="btn w-100" data-bs-dismiss="modal">
-                    Hủy thao tác
-                  </a>
-                </div>
-                <div class="col">
-                  <button type="submit" class="btn btn-success w-100" data-bs-dismiss="modal">
-                    Chọn địa chỉ
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-
-
-
-
-    <!-- modal add -->
-    <div class="modal modal-blur fade" id="modal-address-add" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-md modal-dialog-centered" role="document">
-        <form class="modal-content" method="post" action="/user/address/add" id="form-2">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          <div class="modal-status bg-success"></div>
-          <div class="modal-body text-center py-4">
-            <!-- Download SVG icon from http://tabler-icons.io/i/circle-check -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-green icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9" /><path d="M9 12l2 2l4 -4" /></svg>
-            <h3>Thêm địa chỉ giao hàng</h3>
-            
-            <div class="form-group">
-              <textarea class="form-control" rows="1" name="place" id="place" placeholder="Nhập địa chỉ giao hàng ..."></textarea>
-              <div class="form-message text-start text-danger"></div>
-            </div>
-
-          </div>
-          <div class="modal-footer">
-            <div class="w-100">
-              <div class="row">
-                <div class="col">
-                  <a href="#" class="btn w-100" data-bs-dismiss="modal">
-                    Hủy thao tác
-                  </a>
-                </div>
-                <div class="col">
-                  <button type="submit" class="btn btn-success w-100" data-bs-dismiss="modal">
-                    Thêm địa chỉ
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+    <link th:href="@{/dist/css/profile.css}" rel="stylesheet" />
   </div>
-  <script th:src="@{/dist/js/validate.js}"></script>
-  <script>
-    Validator({
-      form: '#form-2',
-      errorElement: '.form-message',
-      rules: [
-        Validator.isRequired('#place', 'Mời bạn nhập trường này'),
-      ]
-    })
-  </script>
-  <link th:href="@{/dist/css/profile.css}" rel="stylesheet" />
-</div>

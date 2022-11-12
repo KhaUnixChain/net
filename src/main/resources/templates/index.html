@@ -71,6 +71,14 @@
       <div th:insert="~{/customer/wallet::subfragment}"></div>
     </th:block>
 
+    <th:block th:case="'user.feedback'">
+      <div th:insert="~{/customer/feedback::subfragment}"></div>
+    </th:block>
+
+    <th:block th:case="'user.notify'">
+      <div th:insert="~{/customer/notify::subfragment}"></div>
+    </th:block>
+
     <!-- staff -->
     <th:block th:case="'staff.home'">
       <div th:insert="~{/employee/home::subfragment}"></div>

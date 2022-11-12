@@ -208,6 +208,28 @@ public class CustomerController {
         }
     }
 
+    @RequestMapping("/user/feedback")
+    public String feedback(Model model, @ModelAttribute("auth") Authority auth) {
+        try {
+            model.addAttribute("page", "user.feedback");
+            model.addAttribute("title_main", "Fastshop - Thông tin đánh giá sản phẩm");
+            return "index";
+        } catch (Exception e) {
+             return "redirect:/login";
+        }
+    }
+
+    @RequestMapping("/user/notify")
+    public String notify(Model model, @ModelAttribute("auth") Authority auth) {
+        try {
+            model.addAttribute("page", "user.notify");
+            model.addAttribute("title_main", "Fastshop - Thông báo của tôi");
+            return "index";
+        } catch (Exception e) {
+             return "redirect:/login";
+        }
+    }
+
 
     @RequestMapping("/user/discount")
     public String discount(Model model, @ModelAttribute("auth") Authority auth) {
