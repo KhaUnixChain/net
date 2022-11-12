@@ -39,6 +39,8 @@ public class Discount implements Serializable{
     @Column(name = "dolar", columnDefinition = "float")
     Double dolar;
 
+    Integer number;
+
     @JsonIgnore
     @OneToMany(mappedBy = "discount")
     List<Product> products;	
