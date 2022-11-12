@@ -104,6 +104,10 @@
       <div th:insert="~{/employee/category::subfragment}"></div>
     </th:block>
 
+    <th:block th:case="'staff.discount'">
+      <div th:insert="~{/employee/discount::subfragment}"></div>
+    </th:block>
+
     <!-- profile -->
     <th:block th:case="'profile.home'">
       <div th:insert="~{/profile::subfragment}"></div>

@@ -176,6 +176,18 @@ public class StaffController {
         }
     }
 
+    @RequestMapping("/staff/discount")
+    public String dicsount(Model model, @ModelAttribute("auth") Authority auth) {
+        try {
+            model.addAttribute("page", "staff.discount");
+            model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
+            model.addAttribute("title_main", "Fastshop - Giảm giá sản phẩm");
+            return "index";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/login.fastshop.com";
+        }
+    }
 
 /**
  * Làm thế nào để lưu thông tin vô trong product detail

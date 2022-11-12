@@ -1,0 +1,212 @@
+<div th:fragment="subfragment" class="page-wrapper">
+  <div class="container py-4">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Mã giảm giá</h3>
+      </div>
+      <div class="card-body border-bottom py-3">
+        <div class="d-flex">
+          <div class="text-muted">
+            Hiển thị
+            <div class="mx-2 d-inline-block">
+              <input type="text" class="form-control form-control-sm text-center" ng-model="items.length" size="3"
+                aria-label="Invoices count" disabled>
+            </div>
+            mã giảm giá
+          </div>
+
+          <div class="ms-auto text-muted d-flex justify-content-center">
+            <!-- this is filter products -->
+            <input type="text" ng-model="getItems" class="form-control me-3"
+              placeholder="Nhập từ khóa tìm kiếm mã giảm giá!" style="width: 350px;">
+
+            <!-- this is button to open form -->
+            <button class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal"
+              data-bs-target="#modal-product" style="text-decoration: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Thêm mã giảm
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover table-borderless text-center">
+          <thead>
+            <tr>
+              <th class="w-1">STT</th>
+              <th class="w-1">Voucher
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm text-dark icon-thick" width="24" height="24"
+                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <polyline points="6 15 12 9 18 15" />
+                </svg>
+              </th>
+              <th>Giảm theo tiền</th>
+              <th>Giảm theo %</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- this is tr -->
+            <tr>
+              <td>1</td>
+              <td>
+                <p style="font-weight: bold;">NCHD827273</p>
+              </td>
+              <td class="text-reset">200.000d</td>
+              <td>
+                <div class="">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                      value="option1">
+                    <label class="form-check-label" for="inlineRadio1">10%</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                      value="option2">
+                    <label class="form-check-label" for="inlineRadio2">20%</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                      value="option3">
+                    <label class="form-check-label" for="inlineRadio3">30%
+                    </label>
+                  </div>
+                </div>
+              </td>
+
+              <td class="text-end">
+                <!-- this is edit -->
+                <a class="btn btn-default d-none d-sm-inline-block" data-bs-toggle="modal"
+                  data-bs-target="#modal-product" style="text-decoration: none;">
+                  Open Detail
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>
+                <p style="font-weight: bold;">NCHD827273</p>
+              </td>
+              <td class="text-reset">200.000d</td>
+              <td>
+                <div class="">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4"
+                      value="option4">
+                    <label class="form-check-label" for="inlineRadio4">10%</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5"
+                      value="option5">
+                    <label class="form-check-label" for="inlineRadio5">20%</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6"
+                      value="option6">
+                    <label class="form-check-label" for="inlineRadio6">30%
+                    </label>
+                  </div>
+                </div>
+              </td>
+
+              <td class="text-end">
+                <!-- this is edit -->
+                <a class="btn btn-default d-none d-sm-inline-block" data-bs-toggle="modal"
+                  data-bs-target="#modal-product" style="text-decoration: none;">
+                  Open Detail
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- this is modal -->
+    <div class="modal modal-blur fade" id="modal-product" tabindex="-1" role="dialog" aria-hidden="true"
+      style="transition: 0.2s;">
+      <div class="modal-dialog modal-lg" role="document">
+        <form method="post" class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Chi tiết mã giảm giá</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Nhập mã giảm</label>
+
+              <!-- this is model name of form product -->
+              <input type="text" class="form-control text-primary" name="example-text-input"
+                placeholder="Nhập mã giảm ...">
+            </div>
+            <label class="form-label">Nhập số tiền giảm <span class="text-danger"> ( *Nếu có )</span>
+            </label>
+            <div class="form-selectgroup-boxes row mb-3">
+              <div>
+                <input type="number" class="form-control ps-2" autocomplete="off" placeholder="Nhập số tiền giảm ...">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-8">
+                  <div class="mb-3">
+                    <label class="form-label">Ngày bắt đầu</label>
+                    <!-- this is date -->
+                    <input type="date" class="form-control">
+                  </div>
+              </div>
+              <div class="col">
+                <div class="mb-3">
+                  <label class="form-label">Giảm giá %</label>
+
+                  <!-- this is category -->
+                  <select class="form-select">
+                    <option disabled selected>-- Chọn --</option>
+                    <option>10</option>
+                    <option>20</option>
+                    <option>30</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+                  <div class="mb-3">
+                    <label class="form-label">Ngày kết thúc</label>
+                    <!-- this is date -->
+                    <input type="date" class="form-control">
+                  </div>
+            </div>
+          </div>
+
+          <!-- this is for edit to update and delete -->
+          <div class="modal-footer">
+            <a href="#" class="btn btn-success" data-bs-dismiss="modal">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ballpen" width="24"
+                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M14 6l7 7l-4 4"></path>
+                <path
+                  d="M5.828 18.172a2.828 2.828 0 0 0 4 0l10.586 -10.586a2 2 0 0 0 0 -2.829l-1.171 -1.171a2 2 0 0 0 -2.829 0l-10.586 10.586a2.828 2.828 0 0 0 0 4z">
+                </path>
+                <path d="M4 20l1.768 -1.768"></path>
+              </svg>
+              Thêm mã giảm
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
