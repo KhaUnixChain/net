@@ -11,14 +11,18 @@
           <!-- Page title -->
           <div class="page-header d-print-none">
             <div class="row g-2 align-items-center">
-              <div class="col">
-                <h2 class="page-title">
-                  Báo cáo
-                </h2>
-              </div>
+              <div class="col"></div>
+
               <!-- Page title actions -->
               <div class="col-12 col-md-auto ms-auto d-print-none">
-                <button type="button" class="btn btn-primary" onclick="javascript:window.print();">
+                <button class="btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="me-2 bi bi-calendar-month" viewBox="0 0 16 16">
+                    <path d="M2.56 11.332 3.1 9.73h1.984l.54 1.602h.718L4.444 6h-.696L1.85 11.332h.71zm1.544-4.527L4.9 9.18H3.284l.8-2.375h.02zm5.746.422h-.676V9.77c0 .652-.414 1.023-1.004 1.023-.539 0-.98-.246-.98-1.012V7.227h-.676v2.746c0 .941.606 1.425 1.453 1.425.656 0 1.043-.28 1.188-.605h.027v.539h.668V7.227zm2.258 5.046c-.563 0-.91-.304-.985-.636h-.687c.094.683.625 1.199 1.668 1.199.93 0 1.746-.527 1.746-1.578V7.227h-.649v.578h-.019c-.191-.348-.637-.64-1.195-.64-.965 0-1.64.679-1.64 1.886v.34c0 1.23.683 1.902 1.64 1.902.558 0 1.008-.293 1.172-.648h.02v.605c0 .645-.423 1.023-1.071 1.023zm.008-4.53c.648 0 1.062.527 1.062 1.359v.253c0 .848-.39 1.364-1.062 1.364-.692 0-1.098-.512-1.098-1.364v-.253c0-.868.406-1.36 1.098-1.36z"/>
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                  </svg>
+                  Đặt lịch
+                </button>
+                <button type="button" class="btn btn-info" onclick="javascript:window.print();">
                   <!-- Download SVG icon from http://tabler-icons.io/i/printer -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                     stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -29,228 +33,192 @@
                   </svg>
                   In báo cáo
                 </button>
+                <button class="btn btn-primary">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="me-2 bi bi-send" viewBox="0 0 16 16">
+                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                  </svg>
+                  Gửi ngay
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <div class="page-body">
-          <div class="container-xl">
-            <div class="card card-lg">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-12 mb-4">
-                    <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title text-center">Số lượng nhập thêm trong
-                          ngày</h5>
-                        <div class="modal-body">
-                          <div class="mb-3">
-                            <label class="form-label">Tên loại hàng nhập
-                              thêm</label>
-                            <input type="text" class="form-control" name="example-text-input">
-                          </div>
-                          <div class="row">
-                            <div class="col-lg-12">
-                              <div class="mb-3">
-                                <label class="form-label">Số lượng
-                                </label>
-                                <div class="input-group input-group-flat">
-
-                                  <input type="number" class="form-control ps-0 text-center" value="report-01"
-                                    autocomplete="off">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+        <div class="page-body mb-4">
+          <div class="container">
+            <div class="card">
+              <div class="card-body border">
+                <div class="col-sm-12">
+                  <div class="card" style="background-color: rgb(252, 231, 207)">
+                    <div class="card-body">
+                      <h1 class="card-title text-center fs-1 mt-4">BẢNG BÁO CÁO THỐNG KÊ HẰNG TUẦN</h1>
+                      <p class="text-center">............oOo............</p>
+                      <div class="modal-body">
+                        <div class="mb-3">
+                          <p>- Ngày báo cáo hôm nay : [[${now}]]</p>
+                          <p>- Địa điểm trụ sở : 123 Tôn Đức Thắng, Quận Thanh Khê, TP.Đà Nẵng</p>
+                          <p>- Liên hệ thông tin : [[${auth.account.phone}]]</p>
+                          <label class="form-label mt-4">Tên người thực hiện :</label>
+                          <input type="text" class="form-control" name="example-text-input" th:value="${auth.account.fullname}" readonly>
                         </div>
-                        <div class="modal-body">
-                          <div class="row">
-                            <div class="col-lg-6">
-                              <div class="mb-3">
-                                <label class="form-label">Tên nhân viên
-                                </label>
-                                <input type="text" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-lg-6">
-                              <div class="mb-3">
-                                <label class="form-label">Ngày tạo
-                                </label>
-                                <input type="date" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-lg-12">
-                              <div>
-                                <label class="form-label">
-                                  Ghi chú thêm</label>
-                                <textarea class="form-control" rows="3"></textarea>
-                              </div>
-                            </div>
+                        <div class="mb-1">
+                          <label class="form-label">Chọn báo cáo :</label>
+                          <div class="form-group">
+                            <select class="form-control" onchange="reportNumber()" id="select-report">
+                              <option value="1">Báo cáo số lượng</option>
+                              <option value="2">Báo cáo doanh thu</option>
+                              <option value="3">Báo cáo lương nhân viên</option>
+                              <option value="4">Thống kê tồn kho</option>
+                            </select>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="mt100"></div>
-                  <div class="col-sm-12">
-                    <div class="card">
-                      <div class="card-body">
-                        <h2 class="card-title text-center ">Loại hàng đã bán được
-                        </h2>
-                        <div class="modal-body">
-                          <div class="mb-3">
-                            <label class="form-label">Loại hàng đã bán
-                              được</label>
-                            <input type="text" class="form-control" name="example-text-input">
-                          </div>
 
-                          <div class="row">
-                            <div class="col-lg-12">
-                              <div class="mb-3">
-                                <label class="form-label">Số lượng
-                                </label>
-                                <div class="input-group input-group-flat">
-
-                                  <input type="number" class="form-control ps-0 text-center" value="report-01"
-                                    autocomplete="off">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="modal-body">
-                          <div class="row">
-                            <div class="col-lg-6">
-                              <div class="mb-3">
-                                <label class="form-label">
-                                  Người tạo</label>
-                                <input type="text" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-lg-6">
-                              <div class="mb-3">
-                                <label class="form-label">Ngày tạo
-                                </label>
-                                <input type="date" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-lg-12">
-                              <div>
-                                <label class="form-label">Ghi chú
-                                  thêm
-                                </label>
-                                <textarea class="form-control" rows="3"></textarea>
-                              </div>
-                            </div>
-                          </div>
+                      <div class="card" id="report-id-1">
+                        <div class="table-responsive">
+                          <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
+                              <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Đợt bán trước</th>
+                                <th>Đợt bán này</th>
+                                <th>Chênh lệch</th>
+                                <th>Phần trăm</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <input type="text" style="width: 260px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 100px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 100px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 100px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 100px;" disabled>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
-                    </div>
 
-                  </div>
-                </div>
-                <div class="mt100"></div>
 
-                <div class="row">
-                  <div class="col-sm-12 mt-4 mb-4">
-                    <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title text-center">Doanh thu bán được trong
-                          ngày </h5>
-                        <div class="modal-body">
-                          <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Doanh thu" aria-label="Doanh thu"
-                              aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                              <span class="input-group-text" id="basic-addon2">VND</span>
-                            </div>
-                          </div>
-
-                        </div>
-                        <div class="modal-body">
-                          <div class="row">
-                            <div class="col-lg-6">
-                              <div class="mb-3">
-                                <label class="form-label">
-                                  Người tạo</label>
-                                <input type="text" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-lg-6">
-                              <div class="mb-3">
-                                <label class="form-label">Ngày
-                                  tạo</label>
-                                <input type="date" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-lg-12">
-                              <div>
-                                <label class="form-label">Chú
-                                  thích</label>
-                                <textarea class="form-control" rows="3"></textarea>
-                              </div>
-                            </div>
-                          </div>
+                      <div class="card" id="report-id-2">
+                        <div class="table-responsive">
+                          <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
+                              <tr>
+                                <th>Thể loại sản phẩm</th>
+                                <th>Doanh số trước</th>
+                                <th>Doanh thu nay</th>
+                                <th>Tỷ lệ gia tăng</th>
+                                <th>Phần trăm</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <input type="text" style="width: 200px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 130px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 130px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 100px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 100px;" disabled>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
-                    </div>
-                  </div>
 
 
-                  <div class="mt100"></div>
-                  <div class="col-sm-12 mt-4 mb-4">
-                    <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title text-center">Số lượng hàng tồn kho
-                          hàng tồn kho
-                        </h5>
 
-                        <div class="modal-body">
-                          <div class="mb-3">
-                            <label class="form-label">Tên loại hàng
-                            </label>
-                            <input type="text" class="form-control" name="example-text-input">
-                          </div>
-                          <div class="row">
-                            <div class="col-lg-12">
-                              <div class="mb-3">
-                                <label class="form-label">Số lượng
-                                </label>
-                                <div class="input-group input-group-flat">
 
-                                  <input type="number" class="form-control ps-0 text-center" value="report-01"
-                                    autocomplete="off">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="modal-body">
-                          <div class="row">
-                            <div class="col-lg-6">
-                              <div class="mb-3">
-                                <label class="form-label">
-                                  Người tạo</label>
-                                <input type="text" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-lg-6">
-                              <div class="mb-3">
-                                <label class="form-label">Ngày
-                                  tạo</label>
-                                <input type="date" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-lg-12">
-                              <div>
-                                <label class="form-label">Chú
-                                  thích</label>
-                                <textarea class="form-control" rows="3"></textarea>
-                              </div>
-                            </div>
-                          </div>
+                      <div class="card" id="report-id-3">
+                        <div class="table-responsive">
+                          <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
+                              <tr>
+                                <th>ID</th>
+                                <th>Tên nhân viên</th>
+                                <th>Số tiền</th>
+                                <th>Chức vụ</th>
+                                <th>Đã gửi ?</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <input type="text" style="width: 120px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 230px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 140px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 90px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 80px;" disabled>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
+
+
+
+                      <div class="card" id="report-id-4">
+                        <div class="table-responsive">
+                          <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
+                              <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Nơi trụ sở</th>
+                                <th>Số ngày tồn</th>
+                                <th>Số lượng tồn</th>
+                                <th>Ưu đãi ?</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <input type="text" style="width: 250px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 120px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 120px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 90px;">
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 80px;" disabled>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
 
                     </div>
                   </div>
@@ -258,56 +226,12 @@
               </div>
             </div>
           </div>
-          <footer class="footer footer-transparent d-print-none">
-            <div class="container-xl">
-              <div class="row text-center align-items-center flex-row-reverse">
-                <div class="col-lg-auto ms-lg-auto">
-                  <ul class="list-inline list-inline-dots mb-0">
-                    <li class="list-inline-item"><a href="./docs/index.html" class="link-secondary">Documentation</a>
-                    </li>
-                    <li class="list-inline-item"><a href="./license.html" class="link-secondary">License</a></li>
-                    <li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank"
-                        class="link-secondary" rel="noopener">Source
-                        code</a></li>
-                    <li class="list-inline-item">
-                      <a href="https://github.com/sponsors/codecalm" target="_blank" class="link-secondary"
-                        rel="noopener">
-                        <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon text-pink icon-filled icon-inline"
-                          width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                          stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                          <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-                        </svg>
-                        Sponsor
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                  <ul class="list-inline list-inline-dots mb-0">
-                    <li class="list-inline-item">
-                      Copyright &copy; 2022
-                      <a href="." class="link-secondary">Tabler</a>.
-                      All rights reserved.
-                    </li>
-                    <li class="list-inline-item">
-                      <a href="./changelog.html" class="link-secondary" rel="noopener">
-                        v1.0.0-beta11
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </footer>
         </div>
       </div>
       <!-- Libs JS -->
       <!-- Tabler Core -->
       <script src="./dist/js/tabler.min.js" defer></script>
       <script src="./dist/js/demo.min.js" defer></script>
-
     </div>
   </div>
 </div>

@@ -49,6 +49,20 @@ function checkFocus() {
 };
 
 
+$("#report-id-1").show();
+$("#report-id-2").hide();
+$("#report-id-3").hide();
+$("#report-id-4").hide();
+function reportNumber() {
+    var number = $("#select-report").val();
+    $("#report-id-1").hide();
+    $("#report-id-2").hide();
+    $("#report-id-3").hide();
+    $("#report-id-4").hide();
+    $("#report-id-" + number).show();
+}
+
+
 // this is form payment which to pay when user accept buy all product in their card
 $("#payment-2").hide();
 $("#bill-2").hide();

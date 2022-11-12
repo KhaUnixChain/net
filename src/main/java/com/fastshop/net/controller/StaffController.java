@@ -18,6 +18,7 @@ import com.fastshop.net.model.ProductDetail;
 import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._GetListFile;
+import com.fastshop.net.utils.FormatDate;
 import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryDetailService;
@@ -80,7 +81,7 @@ public class StaffController {
     public String report(Model model, @ModelAttribute("auth") Authority auth) {
         try {
             model.addAttribute("page", "staff.report");
-            model.addAttribute("now", new Date());
+            model.addAttribute("now", FormatDate.parse());
             model.addAttribute("title_main", "Báo cáo hoạch toán hằng ngày");
             model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
             return "index";
