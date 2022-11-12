@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
+import com.fastshop.net.model.Category;
 import com.fastshop.net.model.Product;
 import com.fastshop.net.model.ProductDetail;
 import com.fastshop.net.service.ProductService;
@@ -76,6 +77,59 @@ public class StaffController {
             return "redirect:/login.fastshop.com";
         }
     }
+
+
+    @RequestMapping("/staff/products")
+    public String product(Model model, @ModelAttribute("auth") Authority authority) {
+        try {
+            String title_main = "User - Quản lý sản phẩm";
+            model.addAttribute("page", "staff.products");
+            model.addAttribute("product", new Product());
+            model.addAttribute("title_main", title_main);
+            model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("_", authority.getAccount());
+            return "index";
+        } catch (Exception e) {
+            return "redirect:/login.fastshop.com";
+        }
+    }
+
+
+    @RequestMapping("/staff/category/{status}")
+    public String category(Model model, @PathVariable("status") String status, @ModelAttribute("auth") Authority authority) {
+        try {
+            model.addAttribute("page", "staff.category");
+            model.addAttribute("category", new Category());
+            model.addAttribute("_", authority.getAccount());
+            String title_main = "";
+
+            if (status.equals("stock")) {
+                title_main = "Staff - Danh sách phân loại còn bán";
+                model.addAttribute("focus", "stock");
+                model.addAttribute("title", "LOẠI HÀNG CÒN HOẠT ĐỘNG");
+                model.addAttribute("title_main", title_main);
+                model.addAttribute("categories", categoryService.findByStatus(true));
+            }
+            else if (status.equals("out")) {
+                title_main = "Staff - Danh sách phân loại hết hàng";
+                model.addAttribute("focus", "out");
+                model.addAttribute("title", "LOẠI HÀNG ĐÃ TẠM DỪNG");
+                model.addAttribute("title_main", title_main);
+                model.addAttribute("categories", categoryService.findByStatus(false));
+            } 
+            else {
+                title_main = "Staff - Danh sách tất cả phân loại";
+                model.addAttribute("focus", "all");
+                model.addAttribute("title", "TẤT CẢ LOẠI HÀNG");
+                model.addAttribute("title_main", title_main);
+                model.addAttribute("categories", categoryService.findAll());
+            }
+            return "index";
+        } catch (Exception e) {
+            return "redirect:/login.fastshop.com";
+        }
+    }
+
 
     @RequestMapping("/staff/report")
     public String report(Model model, @ModelAttribute("auth") Authority auth) {
