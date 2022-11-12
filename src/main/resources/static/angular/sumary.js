@@ -272,7 +272,6 @@ app.controller("atm-ctrl", ($scope, $http) => {
 
 });
 
-
 // cái này là để hiển thị danh sách sản phẩm và thanh toán luôn
 app.controller("checkout-ctrl", ($scope, $http) => {
     var id = account_.innerHTML;
@@ -423,6 +422,27 @@ app.controller("checkout-ctrl", ($scope, $http) => {
     }
 });
 
+app.controller("report-staff-ctrl", ($scope, $http) => {
+    $scope.items = [];
+    $scope.indexes_1 = [];
+    $scope.indexes_2 = [];
+
+    var url = `${host_}/products`;
+    $http.get(url).then((resp) => {
+        $scope.items = resp.data;
+    }).catch((err) => {});
+    
+    $scope.add_1 = (product) => {
+        if ($("#pro-name-" + product.id).is(":checked")) {
+            $scope.indexes_1.push(product);
+        }
+        else {
+            var index = $scope.indexes_1.findIndex(item => item == product);
+            $scope.indexes_1.splice(index, 1);
+        }
+        console.log($scope.indexes_1);
+    };   
+});
 
 // cart là cái chỉ để thêm sản phẩm vào giỏ hàng
 app.controller("cart-ctrl", ($scope, $http) => {

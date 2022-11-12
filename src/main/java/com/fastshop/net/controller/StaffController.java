@@ -137,6 +137,7 @@ public class StaffController {
             model.addAttribute("page", "staff.report");
             model.addAttribute("now", FormatDate.parse());
             model.addAttribute("title_main", "Báo cáo hoạch toán hằng ngày");
+            model.addAttribute("products", productSevice.findAll());
             model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
             return "index";
         } catch (Exception e) {

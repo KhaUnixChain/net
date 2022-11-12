@@ -49,6 +49,22 @@ function checkFocus() {
 };
 
 
+// this is function which to calculate auto 
+function calculateAuto(keyword) {
+    var key = keyword.split("-")[0];
+    var id  = keyword.split("-")[1];
+    if (key == "dbt" || key == "dbn") {
+        var r = Number($("#dbn-" + id).val()) - Number($("#dbt-" + id).val());
+        var p = Math.round(r * 100 / Number($("#dbt-" + id).val()) );
+        document.getElementById("result-" + id).value = r;
+        document.getElementById("percent-" + id).value = r < 0 ? "-" : p;
+    }
+    else if (key == "" || key == "") {
+        
+    }
+}
+
+
 $("#report-id-1").show();
 $("#report-id-2").hide();
 $("#report-id-3").hide();
