@@ -424,14 +424,21 @@ app.controller("checkout-ctrl", ($scope, $http) => {
 
 app.controller("report-staff-ctrl", ($scope, $http) => {
     $scope.items = [];
+    $scope.stock = [];
+    $scope.categories = [];
+    $scope.authorities = [];
+    $scope.discount = [];
     $scope.indexes_1 = [];
     $scope.indexes_2 = [];
+    $scope.indexes_3 = [];
+    $scope.indexes_4 = [];
 
-    var url = `${host_}/products`;
-    $http.get(url).then((resp) => {
+    var url_product = `${host_}/products`;
+    $http.get(url_product).then((resp) => {
         $scope.items = resp.data;
+        $scope.stocks = resp.data;
     }).catch((err) => {});
-    
+
     $scope.add_1 = (product) => {
         if ($("#pro-name-" + product.id).is(":checked")) {
             $scope.indexes_1.push(product);
@@ -440,8 +447,50 @@ app.controller("report-staff-ctrl", ($scope, $http) => {
             var index = $scope.indexes_1.findIndex(item => item == product);
             $scope.indexes_1.splice(index, 1);
         }
-        console.log($scope.indexes_1);
-    };   
+    };
+
+    // ------------------------------------
+    var url_category = `${host_}/categories`;
+    $http.get(url_category).then((resp) => {
+        $scope.categories = resp.data;
+    }).catch((err) => {});
+
+    $scope.add_2 = (category) => {
+        if ($("#cat-name-" + category.id).is(":checked")) {
+            $scope.indexes_2.push(category);
+        }
+        else {
+            var index = $scope.indexes_2.findIndex(item => item == category);
+            $scope.indexes_2.splice(index, 1);
+        }
+    };
+
+    // --------------------------------------
+    var url_employee = `${host_}/authorities/staff/active`;
+    $http.get(url_employee).then((resp) => {
+        $scope.authorities = resp.data;
+    }).catch((err) => {});
+    
+    $scope.add_3 = (auth) => {
+        if ($("#emp-name-" + auth.account.username).is(":checked")) {
+            $scope.indexes_3.push(auth);
+        }
+        else {
+            var index = $scope.indexes_3.findIndex(item => item == auth);
+            $scope.indexes_3.splice(index, 1);
+        }
+    };  
+
+    // --------------------------------------
+    $scope.add_4 = (product) => {
+        if ($("#stock-name-" + product.id).is(":checked")) {
+            $scope.indexes_4.push(product);
+        }
+        else {
+            var index = $scope.indexes_4.findIndex(item => item == product);
+            $scope.indexes_4.splice(index, 1);
+        }
+    }
 });
 
 // cart là cái chỉ để thêm sản phẩm vào giỏ hàng

@@ -41,6 +41,14 @@ public class RestAuthorityController {
                 .collect(Collectors.toList());
     }
 
+    // lấy tất cả danh sách account có role là staff
+    @GetMapping("/rest/authorities/staff/active")
+    public List<Authority> getAccountStaffActive() {
+        return authorityService.findAll().stream()
+                .filter(auth -> auth.getRole().getId().equals("STAFF") && auth.getAccount().getActive())
+                .collect(Collectors.toList());
+    }
+
     // lấy authorities id từ username của account
     @GetMapping("/rest/authorities/account/{username}")
     public Integer getAuthIdByUsername(@PathVariable("username") String username) {

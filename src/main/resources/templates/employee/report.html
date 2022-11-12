@@ -101,7 +101,7 @@
                                   <input type="number" style="width: 120px;" onchange="calculateAuto(this.id)" id="dbn-{{n.id}}">
                                 </td>
                                 <td>
-                                  <input type="number" style="width: 100px;" id="result-{{n.id}}" disabled />
+                                  <input type="text" style="width: 100px;" id="result-{{n.id}}" disabled />
                                 </td>
                                 <td>
                                   <input type="text" style="width: 100px;" id="percent-{{n.id}}" disabled />
@@ -110,19 +110,19 @@
 
                               <tr ng-if="indexes_1.length == 0">
                                 <td>
-                                  <input type="text" value="..." style="width: 260px;" data-bs-toggle="modal" data-bs-target="#modal-report-id-1" readonly>
+                                  <input type="text" value="-" style="width: 260px; border: 1px solid green;" data-bs-toggle="modal" data-bs-target="#modal-report-id-1" readonly>
                                 </td>
                                 <td>
-                                  <input type="number" value="0" style="width: 120px;" disabled>
+                                  <input type="text" value="-" style="width: 120px;" disabled>
                                 </td>
                                 <td>
-                                  <input type="number" value="0" style="width: 120px;" disabled>
+                                  <input type="text" value="-" style="width: 120px;" disabled>
                                 </td>
                                 <td>
-                                  <input type="number" value="0" style="width: 100px;" disabled>
+                                  <input type="text" value="-" style="width: 100px;" disabled>
                                 </td>
                                 <td>
-                                  <input type="number" value="0" style="width: 100px;" disabled>
+                                  <input type="text" value="-" style="width: 100px;" disabled>
                                 </td>
                               </tr>
                             </tbody>
@@ -166,35 +166,53 @@
 
 
 
-                      <!--  -->
+                      <!-- report báo cáo category -->
                       <div class="card" id="report-id-2">
                         <div class="table-responsive">
                           <table class="table card-table table-vcenter text-nowrap datatable">
                             <thead>
                               <tr>
                                 <th>Thể loại sản phẩm</th>
-                                <th>Doanh số trước</th>
-                                <th>Doanh thu nay</th>
-                                <th>Tỷ lệ gia tăng</th>
-                                <th>Phần trăm</th>
+                                <th>Doanh số trước (VND)</th>
+                                <th>Doanh thu nay (VND)</th>
+                                <th>Tỷ lệ gia tăng (VND)</th>
+                                <th>Lợi nhuận(%)</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
+                              <tr ng-if="indexes_2.length > 0" ng-repeat="c in indexes_2">
                                 <td>
-                                  <input type="text" style="width: 240px;">
+                                  <input type="text" style="width: 140px;" value="{{c.name}}" data-bs-toggle="modal" data-bs-target="#modal-report-id-2" readonly>
                                 </td>
                                 <td>
-                                  <input type="text" style="width: 130px;">
+                                  <input type="number" style="width: 160px;" onchange="calculateAuto(this.id)" id="dst-{{c.id}}">
                                 </td>
                                 <td>
-                                  <input type="text" style="width: 130px;">
+                                  <input type="number" style="width: 160px;" onchange="calculateAuto(this.id)" id="dsn-{{c.id}}">
                                 </td>
                                 <td>
-                                  <input type="text" style="width: 100px;" disabled>
+                                  <input type="text" style="width: 160px;" id="result-{{c.id}}" disabled />
                                 </td>
                                 <td>
-                                  <input type="text" style="width: 100px;" disabled>
+                                  <input type="text" style="width: 80px;" id="percent-{{c.id}}" disabled />
+                                </td>
+                              </tr>
+
+                              <tr ng-if="indexes_2.length == 0">
+                                <td>
+                                  <input type="text" style="width: 140px; border: 1px solid green;" value="-" data-bs-toggle="modal" data-bs-target="#modal-report-id-2" readonly>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 160px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 160px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 160px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 80px;" disabled>
                                 </td>
                               </tr>
                             </tbody>
@@ -203,8 +221,41 @@
                       </div>
 
 
+                      <div class="modal modal-blur fade" id="modal-report-id-2" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">LỰA CHỌN THỂ LOẠI SẢN PHẨM</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <label class="ms-3 mt-2">Tìm kiếm</label>
+                            <div class="row me-3 ms-3 pb-2 border-bottom">
+                              <input type="text" ng-model="getCate" placeholder="Nhập từ khóa ..." class="fs-5 p-2">
+                            </div>
+                            <div class="modal-body">
+                              <!-- this is show all of order before -->
+                              <div class="row d-flex justify-content-between align-items-center bg-white p-2 border mb-2" ng-repeat="category in categories|filter:getCate">
+                                  <span class="text-truncate">
+                                    <input type="checkbox" id="cat-name-{{category.id}}" ng-click="add_2(category)" class="me-2">
+                                    <label for="cat-name-{{category.id}}">{{category.name}}</label>
+                                  </span>
+                              </div>
+                  
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn mt-2" data-bs-dismiss="modal">
+                                Chấp nhận
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--  -->
 
 
+
+                      <!-- report báo cáo lương nhân viên -->
                       <div class="card" id="report-id-3">
                         <div class="table-responsive">
                           <table class="table card-table table-vcenter text-nowrap datatable">
@@ -212,27 +263,45 @@
                               <tr>
                                 <th>ID</th>
                                 <th>Tên nhân viên</th>
-                                <th>Số tiền</th>
+                                <th>Số tiền (VNĐ)</th>
                                 <th>Chức vụ</th>
-                                <th>Đã gửi ?</th>
+                                <th>Đã vắng</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
+                              <tr ng-if="indexes_3.length > 0" ng-repeat="e in indexes_3">
                                 <td>
-                                  <input type="text" style="width: 120px;">
+                                  <input type="text" style="width: 120px;" value="{{e.account.username}}" data-bs-toggle="modal" data-bs-target="#modal-report-id-3" readonly>
                                 </td>
                                 <td>
-                                  <input type="text" style="width: 230px;">
+                                  <input type="text" style="width: 230px;" value="{{e.account.fullname}}" readonly>
                                 </td>
                                 <td>
-                                  <input type="text" style="width: 140px;">
+                                  <input type="number" style="width: 140px;">
                                 </td>
                                 <td>
-                                  <input type="text" style="width: 90px;">
+                                  <input type="text" style="width: 90px;" value="{{e.role.name}}" disabled>
                                 </td>
                                 <td>
-                                  <input type="text" style="width: 80px;" disabled>
+                                  <input type="number" style="width: 120px;" value="0" min="0">
+                                </td>
+                              </tr>
+
+                              <tr ng-if="indexes_3.length == 0">
+                                <td>
+                                  <input type="text" style="width: 120px; border: 1px solid green;" value="-" data-bs-toggle="modal" data-bs-target="#modal-report-id-3" readonly>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 230px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 140px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 90px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 120px;" disabled>
                                 </td>
                               </tr>
                             </tbody>
@@ -240,36 +309,86 @@
                         </div>
                       </div>
 
+                      <div class="modal modal-blur fade" id="modal-report-id-3" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">LỰA CHỌN NHÂN VIÊN</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <label class="ms-3 mt-2">Tìm kiếm</label>
+                            <div class="row me-3 ms-3 pb-2 border-bottom">
+                              <input type="text" ng-model="getEmploy" placeholder="Nhập từ khóa ..." class="fs-5 p-2">
+                            </div>
+                            <div class="modal-body">
+                              <!-- this is show all of order before -->
+                              <div class="row d-flex justify-content-between align-items-center bg-white p-2 border mb-2" ng-repeat="auth in authorities|filter:getEmploy">
+                                  <span class="text-truncate">
+                                    <input type="checkbox" id="emp-name-{{auth.account.username}}" ng-click="add_3(auth)" class="me-2">
+                                    <label for="emp-name-{{auth.account.username}}">{{auth.account.username}} - {{auth.account.fullname}}</label>
+                                  </span>
+                              </div>
+                  
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn mt-2" data-bs-dismiss="modal">
+                                Chấp nhận
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--  -->
 
 
+                      <!-- report báo cáo tồn kho -->
                       <div class="card" id="report-id-4">
                         <div class="table-responsive">
                           <table class="table card-table table-vcenter text-nowrap datatable">
                             <thead>
                               <tr>
                                 <th>Tên sản phẩm</th>
-                                <th>Nơi trụ sở</th>
                                 <th>Số ngày tồn</th>
                                 <th>Số lượng tồn</th>
-                                <th>Ưu đãi ?</th>
+                                <th>Đã bán ra</th>
+                                <th>Đang Ưu đãi ?</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
+                              <tr ng-if="indexes_4.length > 0" ng-repeat="p in indexes_4">
                                 <td>
-                                  <input type="text" style="width: 250px;">
+                                  <input type="text" style="width: 250px;" value="{{p.name}}" data-bs-toggle="modal" data-bs-target="#modal-report-id-4" readonly>
                                 </td>
                                 <td>
-                                  <input type="text" style="width: 120px;">
+                                  <input type="number" style="width: 120px;" placeholder="-">
                                 </td>
                                 <td>
-                                  <input type="text" style="width: 120px;">
+                                  <input type="number" style="width: 120px;" placeholder="-">
                                 </td>
                                 <td>
-                                  <input type="text" style="width: 90px;">
+                                  <input type="number" style="width: 110px;" placeholder="-">
                                 </td>
                                 <td>
-                                  <input type="text" style="width: 80px;" disabled>
+                                  <input type="text" value="-" style="width: 100px;" data-bs-toggle="modal" data-bs-target="#modal-report-discount" readonly>
+                                </td>
+                              </tr>
+
+                              <tr ng-if="indexes_4.length == 0">
+                                <td>
+                                  <input type="text" value="-" style="width: 250px; border: 1px solid green;" data-bs-toggle="modal" data-bs-target="#modal-report-id-4" readonly>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 120px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 120px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 110px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 100px;" disabled>
                                 </td>
                               </tr>
                             </tbody>
@@ -277,7 +396,71 @@
                         </div>
                       </div>
 
+                      
+                      <div class="modal modal-blur fade" id="modal-report-id-4" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">LỰA CHỌN SẢN PHẨM</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
 
+                            <label class="ms-3 mt-2">Tìm kiếm</label>
+                            <div class="row me-3 ms-3 pb-2 border-bottom">
+                              <input type="text" ng-model="getStock" placeholder="Nhập từ khóa ..." class="fs-5 p-2">
+                            </div>
+                            <div class="modal-body">
+                              <div class="row d-flex justify-content-between align-items-center bg-white p-2 border mb-2" ng-repeat="product in stocks|filter:getStock">
+                                  <span class="text-truncate">
+                                    <input type="checkbox" id="stock-name-{{product.id}}" ng-click="add_4(product)" class="me-2">
+                                    <label for="stock-name-{{product.id}}">{{product.name}}</label>
+                                  </span>
+                              </div>
+                  
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn mt-2" data-bs-dismiss="modal">
+                                Chấp nhận
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- modal discount -->
+                      <div class="modal modal-blur fade" id="modal-report-discount" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">LỰA CHỌN ƯU ĐÃI</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <!-- this is show all of order before -->
+                              <div class="row d-flex justify-content-between align-items-center bg-white p-2 border mb-2">
+                                <div class="mb-2">
+                                  <input type="radio" id="discount-1" name="d1" class="me-1"><span class="badge bg-success">Giảm 10%</span>
+                                </div>
+                                <div class="mb-2">
+                                  <input type="radio" id="discount-2" name="d1" class="me-1"><span class="badge bg-warning">Giảm 15%</span>
+                                </div>
+                                <div class="mb-3">
+                                  <input type="radio" id="discount-3" name="d1" class="me-1"><span class="badge bg-danger">Giảm 30%</span>
+                                </div>
+                                <div class="row ms-1 mb-2">
+                                  <input type="number" id="discount-4" style="height: 40px;" placeholder="Nhập số tiền giảm">
+                                </div>
+                              </div>
+                  
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn mt-2" data-bs-dismiss="modal">
+                                Chấp nhận
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

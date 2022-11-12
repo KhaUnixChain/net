@@ -59,8 +59,12 @@ function calculateAuto(keyword) {
         document.getElementById("result-" + id).value = r;
         document.getElementById("percent-" + id).value = r < 0 ? "-" : p;
     }
-    else if (key == "" || key == "") {
-        
+    else if (key == "dst" || key == "dsn") {
+        var r = Number($("#dsn-" + id).val()) - Number($("#dst-" + id).val());
+        var p = Math.round(r * 100 / Number($("#dst-" + id).val()) );
+
+        document.getElementById("result-" + id).value = r.toLocaleString("it-IT", {style: "currency", currency:"VND"});
+        document.getElementById("percent-" + id).value = r < 0 ? "-" : p;
     }
 }
 
