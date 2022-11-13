@@ -16,4 +16,9 @@ public interface CommentService {
     Long countByProduct(Product product);
     Map<Integer, List<Integer>> getRateByProduct(Product product);
     List<Integer> getMaxStar(Product product);
+    List<Comment> findAll();
+    Comment findById(Integer id);
+    List<Comment> findByAccount(Account account);
+    void save(Comment account);
+    void deleteById(Integer id);
 }

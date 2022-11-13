@@ -92,4 +92,29 @@ public class CommentServiceImpl implements CommentService{
         return number;
     }
 
+    @Override
+    public List<Comment> findAll() {
+        return commentDAO.findAll();
+    }
+
+    @Override
+    public Comment findById(Integer id) {
+        return commentDAO.findById(id).get();
+    }
+
+    @Override
+    public List<Comment> findByAccount(Account account) {
+        return commentDAO.findByAccount(account);
+    }
+
+    @Override
+    public void save(Comment account) {
+        commentDAO.save(account);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        commentDAO.deleteById(id);
+    }
+
 }

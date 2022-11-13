@@ -1,5 +1,7 @@
 package com.fastshop.net.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +20,6 @@ public interface CommentDAO extends JpaRepository<Comment, Integer>{
 
     @Query("SELECT MAX(o.rate) FROM Comment o WHERE o.product = ?1")
     Integer getMaxStar(Product product);
+
+    List<Comment> findByAccount(Account account);
 }
