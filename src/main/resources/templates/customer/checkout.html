@@ -124,9 +124,6 @@
             <input type="text" th:value="${atm == null ? 'no': 'yes' }" id="yes-no-show-atm" hidden>
 
             <div th:if="${atm == null}">
-              <div class="input-group mb-2 mt-2">
-                
-              </div>
               <div class="input-group mt-1 p-3 d-flex justify-content-between align-items-center" style="border: 1px dashed lightgray;">
                   <span class="text-warning" style="font-style: italic;">
                     (*) Vui lòng điền thông tin thẻ ...
@@ -161,7 +158,7 @@
           <div class="d-flex justify-content-between">
             <div class="text-start">
               <h3 class="ps-1">Tổng tiền sản phẩm</h3> 
-              <p class="ps-1">Phí vận chuyển <span>( {{cart.items.length}} Sản phẩm )</span></p>
+              <p class="ps-1">Phí vận chuyển</p>
               <h1 class="text-danger mt-3">Tổng chi phí</h1>
             </div>
             <div class="text-end">
