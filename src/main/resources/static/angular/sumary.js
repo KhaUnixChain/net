@@ -427,6 +427,9 @@ app.controller("checkout-ctrl", ($scope, $http) => {
                     console.log(item.id + " failed", err);
                 });
             };
+
+            localStorage.removeItem(id);
+            window.location.href = "http://localhost:8080/fastshop.com";
         }
     }
 });
