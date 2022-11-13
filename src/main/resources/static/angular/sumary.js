@@ -387,6 +387,7 @@ app.controller("checkout-ctrl", ($scope, $http) => {
     $scope.order = {
         thread1(){
             var url = `${host_}/orders`;
+            $("#load-page").css("display", "block");
             setTimeout(() => {
                 $http.post(url, $scope.form).then((resp) => {
                     $scope.orderNow = resp.data;

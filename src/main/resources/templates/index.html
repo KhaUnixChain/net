@@ -118,5 +118,15 @@
     <th:block th:case="*">
       <div th:insert="~{/customer/gallery::subfragment}"></div>
     </th:block>
+
+
+
+
+    <div id="load-page" class="container-fluid d-flex align-items-center justify-content-center" style="background-color: rgba(0, 0, 0, 0.5); height: 800px; position: fixed; top:0; left:0; z-index: 111; display: none !important;">
+      <div class="text-center">
+        <div class="spinner-border text-white" style="width: 30px; height: 30px;"></div>
+        <h2 class="mt-3 text-white">Đang xử lý</h2>
+      </div>
+    </div>
   </body>
 </html>
