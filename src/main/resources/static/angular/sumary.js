@@ -274,7 +274,6 @@ app.controller("atm-ctrl", ($scope, $http) => {
 
 // cái này là để hiển thị danh sách sản phẩm và thanh toán luôn
 app.controller("checkout-ctrl", ($scope, $http) => {
-    var id = account_.innerHTML;
     var date = new Date().toLocaleDateString("en-CA").toString();
 
     $scope.qty = 1;
@@ -382,33 +381,43 @@ app.controller("checkout-ctrl", ($scope, $http) => {
         console.log("Order cannot account", err);
     });
 
+
+    $scope.orderNow = {};
+
     $scope.order = {
-        purchase(){
+        thread1(){
             var url = `${host_}/orders`;
-            var data = angular.copy($scope.form);
+            setTimeout(() => {
+                $http.post(url, $scope.form).then((resp) => {
+                    $scope.orderNow = resp.data;
+                    console.log($scope.orderNow);
+                }).catch((err) => {
+                    console.log("Order failed", err);
+                });
+            }, 3000);
 
-            // add order api
-            $http.post(url, data).then((resp) => {
-                console.log("Order ok", resp);
-            }).catch((err) => {
-                console.log("Order failed", err);
-            });
-
-            
+            setTimeout(() => {
+                this.thread2();
+            }, 6000);
+        },
+        thread2(){     
             for (var item of $scope.cart.items) {
-                var path = `${host_}/products/${item.id}`;
                 $scope.detail = {
-                    "product": {},
-                    "order": $scope.form,
+                    "product": {
+                        "id": item.id,
+                        "name": item.name,
+                        "image": item.image,
+                        "price": item.price,
+                        "createDate": item.createDate,
+                        "available": item.available,
+                        "number": item.number,
+                        "category": item.category,
+                        "describe": item.describe,
+                        "discount": item.discount
+                    },
+                    "order": $scope.orderNow,
                     "quantity": item.qty
                 };
-
-                $http.get(path).then((resp) => {
-                    $scope.detail.product = resp.data;
-                    console.log("product ok", resp);
-                }).catch((err) => {
-                    console.log("product ok", err); 
-                });
 
                 var url_orderdetails = `${host_}/orderdetails`;
                 var record = angular.copy($scope.detail);
