@@ -261,7 +261,15 @@
       <!-- danh sach cac san pham chay bang thymeleaf -->
       <div class="row row-cards" id="gallery-page" th:if="${products != null}">
         <div th:each="item : ${products}" class="col-sm-6 col-lg-3">
-          <span class="badge bg-warning fs-5 text-start">-30%</span>
+          <th:block th:if="${item.discount != null}">
+            <th:block th:if="${item.discount.free != null}">
+              <img src="/dist/img/vourcher/10.png" th:if="${item.discount.free == 10}" class="col-2" alt="">
+              <img src="/dist/img/vourcher/15.png" th:if="${item.discount.free == 15}" class="col-2" alt="">
+              <img src="/dist/img/vourcher/20.png" th:if="${item.discount.free == 20}" class="col-2" alt="">
+              <img src="/dist/img/vourcher/30.png" th:if="${item.discount.free == 30}" class="col-2" alt="">
+              <img src="/dist/img/vourcher/50.png" th:if="${item.discount.free == 50}" class="col-2" alt="">
+            </th:block>
+          </th:block>
           <a th:href="@{|${'/user/detail/'+{item.id}}|}" class="d-inline">
             <div class="card card-sm p-3 d-flex text-center">
               <img th:src="@{${'/dist/img/products/'+{item.image}}}" class="card-img-top">
@@ -282,15 +290,13 @@
                   <b class="text-danger me-4">
                     <span style="text-decoration: underline;">Giá</span> : [[${item.price}]] $
                   </b>
-                  <span class="text-muted text-end ms-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text" viewBox="0 0 16 16">
-                      <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                      <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-                    </svg>
-                    12
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-filled text-red" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
-                    32
-                  </span>
+                  <th:block th:if="${item.discount != null}">
+                    <th:block th:if="${item.discount.dolar != null}">
+                      <span class="text-muted text-end ms-4">
+                        [[${item.discount.dolar}]]
+                      </span>
+                    </th:block>
+                  </th:block>
                 </div>
               </div>
             </div>

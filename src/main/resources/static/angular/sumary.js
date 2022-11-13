@@ -9,11 +9,11 @@ number.innerHTML = (localStorage.getItem(id) == undefined) ? 0 : JSON.parse(loca
 
 function getDateNow() {
     var date = new Date();
-    var year = date.getFullYear();
-    var month = date.getMonth();
-    var day = date.getDay();
+    var year = date.getFullYear().toString();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
     var strDate = year + "-" + month + "-" + day;
-    return new Date(strDate);
+    return strDate;
 };
 
 function convert_vi_to_en(str) {
@@ -879,4 +879,14 @@ app.controller("detail-staff", ($scope, $http) => {
         });
         window.location.href = "http://localhost:8080/staff/detail/" + productId; 
     };
+});
+
+app.controller("discount-ctrl", ($scope, $http) => {
+    $scope.now = getDateNow();
+    $scope.discounts = [];
+    
+    var all = `${host_}/discounts/all`;
+    $http.get(all).then((resp) => {
+        $scope.discounts = resp.data;
+    }).catch((err) => {});
 });

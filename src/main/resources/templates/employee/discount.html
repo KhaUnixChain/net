@@ -1,33 +1,26 @@
 <div th:fragment="subfragment" class="page-wrapper">
-  <div class="container py-4">
+  <div class="container py-4" ng-controller="discount-ctrl">
+    <h1 class="text-primary" style="font-size: 25px;">Mã giảm giá</h1>
     <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">Mã giảm giá</h3>
-      </div>
       <div class="card-body border-bottom py-3">
-        <div class="d-flex">
+        <div class="d-flex align-items-center">
           <div class="text-muted">
             Hiển thị
             <div class="mx-2 d-inline-block">
-              <input type="text" class="form-control form-control-sm text-center" ng-model="items.length" size="3"
-                aria-label="Invoices count" disabled>
+              <input type="text" class="form-control form-control-sm text-center" ng-model="discounts.length" size="3" aria-label="Invoices count" disabled>
             </div>
             mã giảm giá
           </div>
 
           <div class="ms-auto text-muted d-flex justify-content-center">
             <!-- this is filter products -->
-            <input type="text" ng-model="getItems" class="form-control me-3"
+            <input type="text" ng-model="getId" class="form-control me-3"
               placeholder="Nhập từ khóa tìm kiếm mã giảm giá!" style="width: 350px;">
 
             <!-- this is button to open form -->
-            <button class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal"
-              data-bs-target="#modal-product" style="text-decoration: none;">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <line x1="12" y1="5" x2="12" y2="19" />
-                <line x1="5" y1="12" x2="19" y2="12" />
+            <button class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-discount" style="text-decoration: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" /><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
               </svg>
               Thêm mã giảm
             </button>
@@ -35,98 +28,50 @@
         </div>
       </div>
       <div class="table-responsive">
-        <table class="table table-hover table-borderless text-center">
-          <thead>
-            <tr>
-              <th class="w-1">STT</th>
-              <th class="w-1">Voucher
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm text-dark icon-thick" width="24" height="24"
-                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <polyline points="6 15 12 9 18 15" />
-                </svg>
-              </th>
-              <th>Giảm theo tiền</th>
-              <th>Giảm theo %</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table card-table table-borderless table-vcenter text-nowrap datatable">
+              <thead>
+                <tr>
+                  <th>Tên sản phẩm</th>
+                  <th>Ngày ra mắt</th>
+                  <th>Ngày kết thúc</th>
+                  <th>Giá trị %</th>
+                  <th>Giảm giá tiền mặt (VNĐ)</th>
+                  <th>Số lượng vourch</th>
+                  <th>Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="n in discounts|orderBy:'dateEnd':true|filter:getId">
+                  <td>
+                    <input type="text" style="width: 200px;" value="{{n.id}}" disabled/>
+                  </td>
+                  <td>
+                    <input type="text" style="width: 160px;" value="{{n.dateFrom|date:'dd-MM-yyyy'}}" readonly/>
+                  </td>
+                  <td>
+                    <input type="text" style="width: 160px;" value="{{n.dateEnd|date:'dd-MM-yyyy'}}" readonly/>
+                  </td>
+                  <td>
+                    <input type="text" style="width: 140px;" value="{{n.free}}" readonly/>
+                  </td>
+                  <td>
+                    <input type="text" style="width: 160px;" value="{{n.dolar}}" readonly/>
+                  </td>
+                  <td>
+                    <input type="text" style="width: 100px;" value="{{n.number}}" readonly/>
+                  </td>
+                  <td>
+                    <div class="bg-danger" style="width: 60px; height: 10px;">
 
-            <!-- this is tr -->
-            <tr>
-              <td>1</td>
-              <td>
-                <p style="font-weight: bold;">NCHD827273</p>
-              </td>
-              <td class="text-reset">200.000d</td>
-              <td>
-                <div class="">
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                      value="option1">
-                    <label class="form-check-label" for="inlineRadio1">10%</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                      value="option2">
-                    <label class="form-check-label" for="inlineRadio2">20%</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
-                      value="option3">
-                    <label class="form-check-label" for="inlineRadio3">30%
-                    </label>
-                  </div>
-                </div>
-              </td>
-
-              <td class="text-end">
-                <!-- this is edit -->
-                <a class="btn btn-default d-none d-sm-inline-block" data-bs-toggle="modal"
-                  data-bs-target="#modal-product" style="text-decoration: none;">
-                  Open Detail
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>
-                <p style="font-weight: bold;">NCHD827273</p>
-              </td>
-              <td class="text-reset">200.000d</td>
-              <td>
-                <div class="">
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4"
-                      value="option4">
-                    <label class="form-check-label" for="inlineRadio4">10%</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5"
-                      value="option5">
-                    <label class="form-check-label" for="inlineRadio5">20%</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6"
-                      value="option6">
-                    <label class="form-check-label" for="inlineRadio6">30%
-                    </label>
-                  </div>
-                </div>
-              </td>
-
-              <td class="text-end">
-                <!-- this is edit -->
-                <a class="btn btn-default d-none d-sm-inline-block" data-bs-toggle="modal"
-                  data-bs-target="#modal-product" style="text-decoration: none;">
-                  Open Detail
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -135,7 +80,7 @@
 
 
     <!-- this is modal -->
-    <div class="modal modal-blur fade" id="modal-product" tabindex="-1" role="dialog" aria-hidden="true"
+    <div class="modal modal-blur fade" id="modal-discount" tabindex="-1" role="dialog" aria-hidden="true"
       style="transition: 0.2s;">
       <div class="modal-dialog modal-lg" role="document">
         <form method="post" class="modal-content">
