@@ -4,18 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
-import com.fastshop.net.model.Order;
-import com.fastshop.net.model.Status;
 
 import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service.StatusService;
@@ -54,22 +49,6 @@ public class OrderController {
     OrderService orderService;
     @Autowired
     StatusService statusService;
-
-
-    @RequestMapping("/staff/confirm/{id}")
-    public String confirm(@RequestParam("status") Integer kind, @PathVariable("id") Long orderId) {
-        try {
-            Order order = orderService.findById(orderId);
-            Status status = statusService.findById(kind);
-            order.setStatus(status);
-            order.setDateConfirm(new Date());
-            orderService.save(order);
-            return "redirect:/staff/home";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/login.fastshop.com";
-        }
-    }
 
 
     @RequestMapping("/user/order/accept")

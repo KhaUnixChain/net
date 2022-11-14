@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Category;
+import com.fastshop.net.model.Order;
 import com.fastshop.net.model.Product;
 import com.fastshop.net.model.ProductDetail;
+import com.fastshop.net.model.Status;
 import com.fastshop.net.service.ProductService;
+import com.fastshop.net.service.StatusService;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._GetListFile;
 import com.fastshop.net.utils.FormatDate;
@@ -47,13 +50,14 @@ public class StaffController {
     ProductDetailService productDetailService;
     @Autowired
     OrderService orderService;
+    @Autowired
+    StatusService statusService;
     
     @RequestMapping("/staff/home")
     public String home(Model model, @ModelAttribute("auth") Authority auth) {
         try {
             Date toNow = java.sql.Date.valueOf(LocalDate.now());
             model.addAttribute("page", "staff.home");
-            model.addAttribute("focus", 1);
             model.addAttribute("ordertoday", orderService.getAllOfOrderToday(new Date()));
             model.addAttribute("orderNotToday", orderService.findNotByCreateDate(toNow));
             model.addAttribute("title_main", "Trang chủ quản lý hóa đơn hàng ngày ");
@@ -146,6 +150,23 @@ public class StaffController {
     }
 
 
+    // function nhan nut xac nhan
+    @RequestMapping("/staff/confirm/{id}")
+    public String confirm(@RequestParam("status") Integer kind, @PathVariable("id") Long orderId) {
+        try {
+            Order order = orderService.findById(orderId);
+            Status status = statusService.findById(kind);
+            order.setStatus(status);
+            order.setDateConfirm(new Date());
+            orderService.save(order);
+            return "redirect:/staff/home";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/login.fastshop.com";
+        }
+    }
+
+
     @RequestMapping("/staff/detail/{id}")
     public String details(Model model, @ModelAttribute("auth") Authority auth, @PathVariable("id") Integer id) {
         try {
@@ -189,15 +210,7 @@ public class StaffController {
         }
     }
 
-/**
- * Làm thế nào để lưu thông tin vô trong product detail
- * category detail và category là cố định không thay đổi j hết
- * có thể dùng rest để thực thi, mỗi một detail đc in ra từ trang detail.html được coi là 1 product detail nên khó lưu
- * @param model
- * @param describe
- * @param id
- * @return
- */
+    
     @RequestMapping("/staff/redetail/{id}")
     public String redetail(Model model, @RequestParam("describe") String describe, @PathVariable("id") Integer id) {
         try {
@@ -208,17 +221,6 @@ public class StaffController {
             return "redirect:/login.fastshop.com";
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**

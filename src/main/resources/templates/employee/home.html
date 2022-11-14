@@ -1,19 +1,7 @@
 <div th:fragment="subfragment" class="page-wrapper">
   <div class="page-wrapper">
-    <div class="container">
-      <!-- Page title -->
-      <div class="page-header d-print-none">
-        <div class="row g-2 align-items-center">
-          <div class="col">
-            <h2 class="page-title text-primary">
-              Quản lý đơn hàng
-            </h2>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="page-body">
-      <div class="container-xl">
+      <div class="container d-flex justify-content-center">
         <div class="card border">
           <div class="card-body">
             <div class="btn-list">
@@ -59,81 +47,40 @@
         </div>
       </div>
 
-      <div class="container-xl mt-3" th:if="${o.status.id != -1 && index.index <= 10}" th:each="o, index : ${ordertoday}">
-        <div class="row row-cards">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="row g-2 align-items-center">
-                  <div class="col-12 col-xl-2 font-weight-semibold">Mã đơn hàng</div>
-                  <div class="col d-flex justify-content-between">
-                    <button class="btn text-wrap btn-light mb-2 me-1" disabled>
-                      Id: [[${o.id}]]
-                    </button>
-                    <a href="#" data-bs-toggle="modal" th:data-bs-target="${'#modal-cancel-' + o.id}" class="text-danger mb-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3 me-2" viewBox="0 0 16 16">
-                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                      </svg>
-                      Hủy đơn
-                    </a>
-                  </div>
-                </div>
-                <div class="row align-items-center">
-                  <h4 class="col-12 col-xl-2 font-weight-semibold mb-3 text-primary">Chọn tình trạng</h4>
-                  <div class="col-md-2 mb-3" th:if="${o.status.id == 0}">
-                    <button class="btn text-wrap btn-default w-100">
-                      <a th:href="@{${'/staff/confirm/' + o.id + '?status=1' }}" style="text-decoration: none;" class="text-muted">
-                        Đã tiếp nhận
-
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="text-primary bi bi-arrow-down ms-1" viewBox="0 0 16 16">
-                          <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
-                        </svg>
-                      </a>
-                    </button>
-                  </div>
-                  <div class="col-md-2 mb-3" th:if="${o.status.id <= 1}">
-                    <button class="btn text-wrap btn-default w-100" th:disabled="${o.status.id < 1}">
-                      <a th:href="@{${'/staff/confirm/' + o.id + '?status=2' }}" style="text-decoration: none;" class="text-muted">
-                        Đang đóng gói
-
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="ms-2 text-warning bi bi-boxes" viewBox="0 0 16 16">
-                          <path d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434L7.752.066ZM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504ZM7.5 9.933l-2.75 1.571v3.134l2.75-1.571V9.933Zm1 3.134 2.75 1.571v-3.134L8.5 9.933v3.134Zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567-2.742 1.567Zm2.242-2.433V3.504L8.5 5.076V8.21l2.75-1.572ZM7.5 8.21V5.076L4.75 3.504v3.134L7.5 8.21ZM5.258 2.643 8 4.21l2.742-1.567L8 1.076 5.258 2.643ZM15 9.933l-2.75 1.571v3.134L15 13.067V9.933ZM3.75 14.638v-3.134L1 9.933v3.134l2.75 1.571Z"/>
-                        </svg>
-                      </a>
-                    </button>
-                  </div>
-                  <div class="col-md-2 mb-3" th:if="${o.status.id <= 2}">
-                    <button class="btn text-wrap btn-default w-100" th:disabled="${o.status.id < 2}">
-                      <a th:href="@{${'/staff/confirm/' + o.id + '?status=3' }}" style="text-decoration: none;" class="text-muted">
-                        Đang đi giao
-
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="text-black bi bi-car-front ms-2" viewBox="0 0 16 16">
-                          <path d="M4 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm10 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2H6ZM4.862 4.276 3.906 6.19a.51.51 0 0 0 .497.731c.91-.073 2.35-.17 3.597-.17 1.247 0 2.688.097 3.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 10.691 4H5.309a.5.5 0 0 0-.447.276Z"/>
-                          <path fill-rule="evenodd" d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679c.033.161.049.325.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.807.807 0 0 0 .381-.404l.792-1.848ZM4.82 3a1.5 1.5 0 0 0-1.379.91l-.792 1.847a1.8 1.8 0 0 1-.853.904.807.807 0 0 0-.43.564L1.03 8.904a1.5 1.5 0 0 0-.03.294v.413c0 .796.62 1.448 1.408 1.484 1.555.07 3.786.155 5.592.155 1.806 0 4.037-.084 5.592-.155A1.479 1.479 0 0 0 15 9.611v-.413c0-.099-.01-.197-.03-.294l-.335-1.68a.807.807 0 0 0-.43-.563 1.807 1.807 0 0 1-.853-.904l-.792-1.848A1.5 1.5 0 0 0 11.18 3H4.82Z"/>
-                        </svg>
-                      </a>
-                    </button>
-                  </div>
-                  <div class="col-md-2 mb-3" th:if="${o.status.id <= 3}">
-                    <button class="btn text-wrap btn-default w-100" th:disabled="${o.status.id < 3}">
-                      <a th:href="@{${'/staff/confirm/' + o.id + '?status=4' }}" style="text-decoration: none;" class="text-muted">
-                        Đã giao hàng
-
-                        <svg xmlns="http://www.w3.org/2000/svg" style="color: green;" width="16" height="16" fill="currentColor" class="ms-2 bi bi-check-circle-fill" viewBox="0 0 16 16">
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                        </svg>
-                      </a>
-                    </button>
-                  </div>
-                </div>
+      <div class="container mt-3" th:if="${index.index < 5}" th:each="o, index : ${ordertoday}">
+        <div class="card mb-4">
+          <div class="card-body" style="background-color: #AEBDCA;">
+            <div class="col d-flex justify-content-between">
+              <div>
+                <a th:href="@{${'/staff/confirm/' + o.id + '?status=1' }}" class="btn border-primary me-2">
+                  Tiếp nhận
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="text-primary bi bi-arrow-down ms-1" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                  </svg>
+                </a>
+                <span class="text-wrap btn bg-blue">
+                  Id: [[${o.id}]]
+                </span>
+                <span class="text-wrap btn bg-danger">
+                  [[${o.createDate}]]
+                </span>
+                <span class="text-wrap btn bg-info">
+                  [[${o.address}]]
+                </span>
               </div>
+              <a href="#" data-bs-toggle="modal" th:data-bs-target="${'#modal-cancel-' + o.id}" class="text-danger">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                </svg>
+              </a>
             </div>
           </div>
+          <div class="bg-light">
+            <p class="text-muted mb-2 pt-1 ps-3" th:each="od : ${o.orderDetails}">
+              - [[${od.product.name}]]
+            </p>
+          </div>
         </div>
-
-
-
-
 
         <!-- this is modal which to confirm canceled a order -->
         <div class="modal modal-blur fade" th:id="${'modal-cancel-' + o.id}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -186,22 +133,6 @@
           </div>
         </div>
       </div>
-
-
-
-      <div class="container-xl mt-4 mb-4 d-flex justify-content-center">
-        <th:block th:if="${ordertoday.size() > 0}">
-          <a href="/staff/home" class="col-lg-12 mb-4">
-            <button class="w-100 btn btn-primary" style="height: 45px;">
-              Tiếp theo
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class=" ms-2 bi bi-chevron-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            </button>
-          </a>
-        </th:block>
-      </div>
-
     </div>
 
 
