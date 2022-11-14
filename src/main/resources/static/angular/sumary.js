@@ -7,13 +7,25 @@ var id = account_.innerHTML;
 var app = angular.module("app", []);
 number.innerHTML = (localStorage.getItem(id) == undefined) ? 0 : JSON.parse(localStorage.getItem(id)).length;
 
-function getDateNow() {
-    var date = new Date();
-    var year = date.getFullYear().toString();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var strDate = year + "-" + month + "-" + day;
-    return strDate;
+function getDateNow(days) {
+    if (days == null) {
+        var date = new Date();
+        var year = date.getFullYear().toString();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var strDate = year + "-" + month + "-" + day;
+        return strDate;   
+    }
+    else {
+        var date = new Date();
+        var year = date.getFullYear().toString();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var strDate = year + "-" + month + "-" + day;
+        var date1 = new Date(strDate);
+        date1.setDate(date1.getDate() + Number(days));
+        return date.toString();   
+    }
 };
 
 function convert_vi_to_en(str) {
@@ -592,7 +604,7 @@ app.controller("product-ctrl", ($scope, $http) => {
         var item = angular.copy($scope.form);
 
         item.available = (item.number == 0) ? false : true;
-        item.createDate = (item.createDate == null) ? getDateNow(): item.createDate;
+        item.createDate = (item.createDate == null) ? getDateNow(null): item.createDate;
         item.image = document.getElementById("form-image").files[0].name;
         item.describe = NaN;
 
@@ -895,11 +907,61 @@ app.controller("detail-staff", ($scope, $http) => {
 });
 
 app.controller("discount-ctrl", ($scope, $http) => {
-    $scope.now = getDateNow();
+    $scope.now = getDateNow(null);
     $scope.discounts = [];
+    $scope.error = "";
+    $scope.numberDay = 0;
+
     
     var all = `${host_}/discounts/all`;
     $http.get(all).then((resp) => {
         $scope.discounts = resp.data;
     }).catch((err) => {});
+
+    $scope.code = {
+        "id": "",
+        "dateFrom": new Date(getDateNow(null)),
+        "dateEnd": new Date(getDateNow($scope.numberDay)),
+        "free": 0.0,
+        "dolar": null,
+        "number": 0
+    };
+
+    $scope.randomCode = () => {
+        var length = 19;
+        $scope.code_ = "";
+        for (var i = 1; i <= length; i++) {
+            var random = Math.floor((Math.random() * 9) + 1);
+            $scope.code_ += (i%5==0) ? "-" : String(random);
+        }
+        $scope.code.id = $scope.code_;
+    };
+
+    $scope.check = () => {
+        $scope.error = "";
+        if ($scope.code_ == "") {
+            $scope.error = "(*) Chị chưa bấm tạo mã mà thêm thêm cái giề :D";
+        }
+        else if ($scope.code.number <= 0 || $scope.code.number == null) {
+            $scope.error = "(*) Số lượng mà nhập số âm. Khùng hả ?";
+        }
+        else if ($scope.numberDay <= 0 || $scope.numberDay == null) {
+            $scope.error = "(*) Số ngày mà nhập số âm. Da dẻ quá đeeeeee ?";
+        }
+        else if (($scope.code.free == null || $scope.code.free == 0.0) && ($scope.code.dolar <= 0 || $scope.code.dolar == null)) {
+            $scope.error = "(*) Uả ủa rồi giảm nhiêu ? Ơ kìa !";
+        }
+        else {
+            $scope.error = "";
+            var url = `${host_}/discounts`;
+            var item = angular.copy($scope.code);
+            $http.post(url, item).then((resp) => {
+                console.log("Discount ok", resp);
+            }).catch((err) => {
+                console.log("Fail dscount", err);
+            });
+            window.location.href = "http://localhost:8080/staff/discount";
+        }
+    };
+    
 });
