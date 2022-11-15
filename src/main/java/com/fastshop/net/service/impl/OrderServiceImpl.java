@@ -74,4 +74,9 @@ public class OrderServiceImpl implements OrderService{
     public List<Order> findByStatus(Integer statusId) {
         return orderDAO.findByStatus(statusId);
     }
+
+    @Override
+    public List<Order> findByStatusAndAccount(Integer id, Account account) {
+        return orderDAO.findByStatusAndAccount(id, account);
+    }
 }

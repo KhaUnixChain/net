@@ -18,4 +18,5 @@ public interface OrderService {
     List<Order> findAllByEmailOrPhone(String email, String phone);
     List<Order> findAllByPriceBetween();
     List<Order> findByStatus(Integer statusId);
+    List<Order> findByStatusAndAccount(Integer id, Account account);
 }

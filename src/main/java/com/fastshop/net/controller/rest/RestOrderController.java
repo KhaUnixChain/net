@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Order;
 import com.fastshop.net.model.OrderDetail;
 import com.fastshop.net.repository.OrderDetailDAO;
+import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.OrderService;
 
 @CrossOrigin("*")
@@ -22,6 +24,8 @@ import com.fastshop.net.service.OrderService;
 public class RestOrderController {
     @Autowired
     OrderService orderService;
+    @Autowired
+    AccountService accountService;
     @Autowired
     OrderDetailDAO orderDetailDAO;
 
@@ -33,6 +37,17 @@ public class RestOrderController {
     @GetMapping("/rest/orders/{id}")
     public Order getOrderId(@PathVariable("id") Long id) {
         return orderService.findById(id);
+    }
+
+    @GetMapping("/rest/orders/status/{id}")
+    public List<Order> getOrderStatusId(@PathVariable("id") Integer id) {
+        return orderService.findByStatus(id);
+    }
+
+    @GetMapping("/rest/orders/status/{username}/{id}")
+    public List<Order> getOrderStatusId(@PathVariable("id") Integer id, @PathVariable("username") String username) {
+        Account account = accountService.findByUsername(username);
+        return orderService.findByStatusAndAccount(id, account);
     }
 
     @GetMapping("/rest/order/details/{id}")
