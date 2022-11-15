@@ -1,5 +1,5 @@
 <div th:fragment="subfragment" class="page-wrapper">
-  <div class="page-wrapper">
+  <div class="page-wrapper" ng-controller="myorder-ctrl">
     <hr class="mt-0 mb-3">
     <div>
       <div class="row">
@@ -103,224 +103,45 @@
         <div class="col-xl-9 mb-4">
           <!-- Account details card-->
           <div class="card">
-        
-            <ul class="nav nav-tabs d-flex" data-bs-toggle="tabs">
-              <li class="nav-item">
-                <a href="#tabs-wait" class="nav-link" data-bs-toggle="tab">Hóa đơn theo trạng thái</a>
-        
-              </li>
-            </ul>
             <div class="tab-content mb-5">
               <div class="tab-pane fade active show" id="tabs-wait">
                 <div>
-                  <h3 class="text-center text-danger mt-3">Các đơn hàng</h3>
-        
-                  <div class="d-flex justify-content-center">
-                    <div class="">
-                      Process Status:
-                      <select class="form-select" style="color:rgb(26, 100, 26)" aria-label="Disabled select example">
-                        <option selected value="-1">Đã hủy đơn</option>
-                        <option value="0">Đã tiếp nhận</option>
-                        <option value="1">Đang đóng gói</option>
-                        <option value="2">Đang đi giao</option>
-                        <option value="3">Đã giao hàng</option>
-                        <option value="4">Thành công</option>
-                      </select>
-                    </div>
-                    <div class="" style="margin-left: 60px">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-arrow-down-up" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                          d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-                      </svg> Sort by :
-                      <select class="form-select" style="color:rgb(26, 100, 26)" aria-label="Disabled select example">
-                        <option selected>Mã đơn hàng</option>
-                        <option value="-1">Ngày tạo</option>
-                      </select>
-                    </div>
+                  <h1 class="text-center text-danger mt-3 mb-3">Danh sách đơn hàng</h1>
+                  <div class="d-flex justify-content-around ps-3 pe-3">
+                    <a th:href="@{${'/user/order/' + auth.account.username + '/0'}}" class="btn">Đã gửi</a>
+                    <a th:href="@{${'/user/order/' + auth.account.username + '/1'}}" class="btn">Đã tiếp nhận</a>
+                    <a th:href="@{${'/user/order/' + auth.account.username + '/2'}}" class="btn">Đang đóng gói</a>
+                    <a th:href="@{${'/user/order/' + auth.account.username + '/3'}}" class="btn">Đang đi giao</a>
+                    <a th:href="@{${'/user/order/' + auth.account.username + '/4'}}" class="btn">Đã giao hàng</a>
+                    <a th:href="@{${'/user/order/' + auth.account.username + '/5'}}" class="btn">Thành công</a>
+                    <a th:href="@{${'/user/order/' + auth.account.username + '/-1'}}" class="btn">Đã hủy đơn</a>
                   </div>
-                  <hr>
-                  <div class="col-10 offset-md-1">
-                    <div class="card mt-1">
+                  <div class="col-12 ps-4 pe-4" style="margin-top: 60px;">
+                    <div class="card">
                       <div class="table-responsive">
                         <table class="table">
                           <thead>
                             <tr>
-                              <th>Id</th>
-                              <th>Buyer</th>
-                              <th>Shipping Option</th>
-                              <th>Date Create</th>
-                              <th>Date Shipout</th>
-                              <th>Total Money</th>
-                              <th>Details Product</th>
+                              <th>Mã đơn</th>
+                              <th>Ngày đặt</th>
+                              <th>Tên người mua</th>
+                              <th>Địa chỉ</th>
+                              <th>Xem</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <!-- <tr th:each=" order : ${orders}">
-                                      <td th:text="${order.id}"></td>
-                                      <td th:text="${order.account.username}"></td>
-                                      <td th:text="${order.createDate}"></td>
-                                    </tr> -->
-                            <tr>
-                              <td>1</td>
-                              <td>Thornton</td>
-                              <td>J&T Express</td>
-                              <td class="text-primary">20-12-2022</td>
-                              <td class="text-success">Ship in 22-12-2022</td>
-                              <td>100$</td>
+                            <tr th:each=" order : ${orders}">
+                              <td>[[ ${order.id} ]]</td>
+                              <td>[[ ${order.createDate} ]]</td>
+                              <td class="text-primary">[[ ${order.account.fullname} ]]</td>
+                              <td>[[ ${order.address} ]]</td>
                               <td>
-                                <a href="" class="btn rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-large">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
-                                    class="bi bi-exclamation-lg" viewBox="0 0 16 16">
-                                    <path
-                                      d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0L7.005 3.1ZM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" />
+                                <a href="#" class="btn rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-large">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-exclamation-lg" viewBox="0 0 16 16">
+                                    <path d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0L7.005 3.1ZM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" />
                                   </svg>
                                 </a>
                               </td>
-                            </tr>
-                            <tr>
-                              <td>1</td>
-                              <td>Thornton</td>
-                              <td>J&T Express</td>
-                              <td class="text-primary">20-12-2022</td>
-                              <td class="text-success">Ship in 22-12-2022</td>
-                              <td>100$</td>
-                              <td>
-                                <a href="" class="btn rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-large">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
-                                    class="bi bi-exclamation-lg" viewBox="0 0 16 16">
-                                    <path
-                                      d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0L7.005 3.1ZM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" />
-                                  </svg>
-                                </a>
-                              </td>
-                            </tr>
-                            </tr>
-                            <tr>
-                              <td>1</td>
-                              <td>Thornton</td>
-                              <td>J&T Express</td>
-                              <td class="text-primary">20-12-2022</td>
-                              <td class="text-success">Ship in 22-12-2022</td>
-                              <td>100$</td>
-                              <td>
-                                <a href="" class="btn rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-large">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
-                                    class="bi bi-exclamation-lg" viewBox="0 0 16 16">
-                                    <path
-                                      d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0L7.005 3.1ZM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" />
-                                  </svg>
-                                </a>
-                              </td>
-                            </tr>
-                            </tr>
-                            <tr>
-                              <td>1</td>
-                              <td>Thornton</td>
-                              <td>J&T Express</td>
-                              <td class="text-primary">20-12-2022</td>
-                              <td class="text-success">Ship in 22-12-2022</td>
-                              <td>100$</td>
-                              <td>
-                                <a href="" class="btn rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-large">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
-                                    class="bi bi-exclamation-lg" viewBox="0 0 16 16">
-                                    <path
-                                      d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0L7.005 3.1ZM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" />
-                                  </svg>
-                                </a>
-                              </td>
-                            </tr>
-                            </tr>
-                            <tr>
-                              <td>1</td>
-                              <td>Thornton</td>
-                              <td>J&T Express</td>
-                              <td class="text-primary">20-12-2022</td>
-                              <td class="text-success">Ship in 22-12-2022</td>
-                              <td>100$</td>
-                              <td>
-                                <a href="" class="btn rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-large">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
-                                    class="bi bi-exclamation-lg" viewBox="0 0 16 16">
-                                    <path
-                                      d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0L7.005 3.1ZM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" />
-                                  </svg>
-                                </a>
-                              </td>
-                            </tr>
-                            </tr>
-                            <tr>
-                              <td>1</td>
-                              <td>Thornton</td>
-                              <td>J&T Express</td>
-                              <td class="text-primary">20-12-2022</td>
-                              <td class="text-success">Ship in 22-12-2022</td>
-                              <td>100$</td>
-                              <td>
-                                <a href="" class="btn rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-large">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
-                                    class="bi bi-exclamation-lg" viewBox="0 0 16 16">
-                                    <path
-                                      d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0L7.005 3.1ZM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" />
-                                  </svg>
-                                </a>
-                              </td>
-                            </tr>
-                            </tr>
-                            <tr>
-                              <td>1</td>
-                              <td>Thornton</td>
-                              <td>J&T Express</td>
-                              <td class="text-primary">20-12-2022</td>
-                              <td class="text-success">Ship in 22-12-2022</td>
-                              <td>100$</td>
-                              <td>
-                                <a href="" class="btn rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-large">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
-                                    class="bi bi-exclamation-lg" viewBox="0 0 16 16">
-                                    <path
-                                      d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0L7.005 3.1ZM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" />
-                                  </svg>
-                                </a>
-                              </td>
-                            </tr>
-                            </tr>
-                            <tr>
-                              <td>1</td>
-                              <td>Thornton</td>
-                              <td>J&T Express</td>
-                              <td class="text-primary">20-12-2022</td>
-                              <td class="text-success">Ship in 22-12-2022</td>
-                              <td>100$</td>
-                              <td>
-                                <a href="" class="btn rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-large">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
-                                    class="bi bi-exclamation-lg" viewBox="0 0 16 16">
-                                    <path
-                                      d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0L7.005 3.1ZM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" />
-                                  </svg>
-                                </a>
-                              </td>
-                            </tr>
-                            </tr>
-                            <tr>
-                              <td>1</td>
-                              <td>Thornton</td>
-                              <td>J&T Express</td>
-                              <td class="text-primary">20-12-2022</td>
-                              <td class="text-success">Ship in 22-12-2022</td>
-                              <td>100$</td>
-                              <td>
-                                <a href="" class="btn rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-large">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
-                                    class="bi bi-exclamation-lg" viewBox="0 0 16 16">
-                                    <path
-                                      d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0L7.005 3.1ZM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" />
-                                  </svg>
-                                </a>
-                              </td>
-                            </tr>
                             </tr>
                           </tbody>
                         </table>
@@ -423,22 +244,6 @@
                                     </label>
                                   </div>
                                 </div>
-                              </div>
-        
-        
-                              <!-- Create invoice -->
-                              <div class="modal-footer">
-                                <a href="#" class="link" data-bs-dismiss="modal">
-                                  Hủy
-                                </a>
-                                <a href="/user/bill" class="btn btn-primary ms-auto">
-                                  <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 7px;" width="16" height="16"
-                                    fill="currentColor" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
-                                    <path
-                                      d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z" />
-                                  </svg>
-                                  Tôi chấp nhận
-                                </a>
                               </div>
                             </div>
                           </div>

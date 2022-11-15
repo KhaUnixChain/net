@@ -4,14 +4,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
-
+import com.fastshop.net.model.Order;
 import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service.StatusService;
 import com.fastshop.net.service._CookieService;
@@ -61,6 +63,22 @@ public class OrderController {
             System.out.println();
             System.out.println(body);
             return "redirect:/user/myorder";
+        } catch (Exception e) {
+            return "redirect:/login";
+        }
+    }
+
+
+    @RequestMapping("/user/order/{username}/{id}")
+    public String getAll(Model model, @ModelAttribute("auth") Authority auth, @PathVariable("id") Integer id, @PathVariable("username") String username) {
+        Account account = accountService.findByUsername(username);
+        List<Order> orders = orderService.findByStatusAndAccount(id, account);
+        try {
+            model.addAttribute("page", "user.myorder");
+            model.addAttribute("title_main", "Fastshop - Quản lý hóa đơn");
+            model.addAttribute("orders", orders);
+            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));
+            return "index";
         } catch (Exception e) {
             return "redirect:/login";
         }
