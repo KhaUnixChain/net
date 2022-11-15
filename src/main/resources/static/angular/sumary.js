@@ -6,6 +6,9 @@ var account_ = document.getElementById("username_");  // _account.html
 var id = account_.innerHTML;
 var app = angular.module("app", []);
 number.innerHTML = (localStorage.getItem(id) == undefined) ? 0 : JSON.parse(localStorage.getItem(id)).length;
+if (localStorage.getItem("rate") != undefined) {
+    localStorage.removeItem("rate");
+};
 
 function getDateNow(days) {
     if (days == null) {
