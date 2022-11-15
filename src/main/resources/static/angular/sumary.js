@@ -829,15 +829,62 @@ app.controller("changed-ctrl", ($scope, $http) => {
 });
 
 app.controller("comment-ctrl", ($scope, $http) => {
-    $scope.comment = {};
-    var url = `${host_}/comments`;
-    var item = angular.copy($scope.comment);
-    $http.get(url, item).then((resp) => {
-        console.log("Comment posted !", resp);
-        window.location.href = "http://localhost:8080/user/detail/" +$scope.keysearch; 
-    }).catch((err) => {
-        console.log("Comment failed !", err);
-    });
+	let productid;
+	let username;
+
+	$scope.form = {
+		product: {},
+		account: {},
+		datePost: getDateNow(),
+		feedback: '',
+		rate: localStorage.getItem("rate") == undefined ? 1 : Number(localStorage.getItem("rate")),
+	};
+	setTimeout(() => {
+		productid = document.getElementById('productId').value;
+		username = document.getElementById('username').value;
+
+		console.log(productid);
+		console.log(username);
+	}, 2000);
+
+	setTimeout(() => {
+		$http
+			.get(`${host_}/products/${productid}`)
+			.then((resp) => {
+				$scope.form.product = resp.data;
+			})
+			.catch((err) => {
+				console.log('Product cannot account', err);
+			});
+
+		$http
+			.get(`${host_}/accounts/${username}`)
+			.then((resp) => {
+				$scope.form.account = resp.data;
+			})
+			.catch((err) => {
+				console.log('Account cannot account', err);
+			});
+	}, 3000);
+
+	$scope.create = () => {
+        $("#load-page").css("display", "block");
+        setTimeout(() => {
+            var url = `${host_}/comments`;
+            $scope.form.rate = Number(localStorage.getItem("rate"));
+            $scope.form.feedback = document.getElementById('content-evaluate').value;
+            var item = angular.copy($scope.form);
+
+            $http.post(url, item).then((resp) => {
+                    localStorage.removeItem("rate");
+                    window.location.href = 'http://localhost:8080/user/detail/' + productid;
+                })
+                .catch((err) => {
+                    result = false;
+                    console.log('Comment failed !', err);
+                });
+        }, 5000);
+	};
 });
 
 app.controller("detail-staff", ($scope, $http) => {
