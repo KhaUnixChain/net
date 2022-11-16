@@ -11,23 +11,22 @@ if (localStorage.getItem("rate") != undefined) {
 };
 
 function getDateNow(days) {
+    var date = new Date();
+    var year = date.getFullYear().toString();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var strDate = year + "-" + month + "-" + day;
     if (days == null) {
-        var date = new Date();
-        var year = date.getFullYear().toString();
-        var month = date.getMonth() + 1;
-        var day = date.getDate();
-        var strDate = year + "-" + month + "-" + day;
         return strDate;   
     }
     else {
-        var date = new Date();
-        var year = date.getFullYear().toString();
-        var month = date.getMonth() + 1;
-        var day = date.getDate();
-        var strDate = year + "-" + month + "-" + day;
         var date1 = new Date(strDate);
-        date1.setDate(date1.getDate() + Number(days));
-        return date.toString();   
+        date1.setDate(date1.getDate() + days);
+        var year1 = date1.getFullYear().toString();
+        var month1 = date1.getMonth() + 1;
+        var day1 = date1.getDate();
+        var strDate1 = year1 + "-" + month1 + "-" + day1;
+        return strDate1;   
     }
 };
 
@@ -961,6 +960,7 @@ app.controller("discount-ctrl", ($scope, $http) => {
     $scope.discounts = [];
     $scope.error = "";
     $scope.numberDay = 0;
+    $scope.code_ = "";
 
     
     var all = `${host_}/discounts/all`;
@@ -996,7 +996,7 @@ app.controller("discount-ctrl", ($scope, $http) => {
             $scope.error = "(*) Số lượng mà nhập số âm. Khùng hả ?";
         }
         else if ($scope.numberDay <= 0 || $scope.numberDay == null) {
-            $scope.error = "(*) Số ngày mà nhập số âm. Da dẻ quá đeeeeee ?";
+            $scope.error = "(*) Số ngày mà nhập số âm với số 0. Da dẻ quá đeeeeee ?";
         }
         else if (($scope.code.free == null || $scope.code.free == 0.0) && ($scope.code.dolar <= 0 || $scope.code.dolar == null)) {
             $scope.error = "(*) Uả ủa rồi giảm nhiêu ? Ơ kìa !";
