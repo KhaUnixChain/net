@@ -27,6 +27,7 @@ import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryDetailService;
 import com.fastshop.net.service.CategoryService;
+import com.fastshop.net.service.DiscountService;
 import com.fastshop.net.service.OrderService;
 import com.fastshop.net.service.ProductDetailService;
 
@@ -52,6 +53,8 @@ public class StaffController {
     OrderService orderService;
     @Autowired
     StatusService statusService;
+    @Autowired
+    DiscountService discountService;
     
     @RequestMapping("/staff/home")
     public String home(Model model, @ModelAttribute("auth") Authority auth) {

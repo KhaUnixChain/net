@@ -26,6 +26,7 @@ function getDateNow(days) {
         var month1 = date1.getMonth() + 1;
         var day1 = date1.getDate();
         var strDate1 = year1 + "-" + month1 + "-" + day1;
+        console.log(strDate1);
         return strDate1;   
     }
 };
@@ -890,6 +891,12 @@ app.controller("comment-ctrl", ($scope, $http) => {
 });
 
 app.controller("detail-staff", ($scope, $http) => {
+    $scope.discounts = [];
+    var all = `${host_}/discounts/unexpiry`;
+    $http.get(all).then((resp) => {
+        $scope.discounts = resp.data;
+    }).catch((err) => {});
+
     var productId = $("#id_product_staff").val();
     $scope.productdetails = [];
 
@@ -901,6 +908,23 @@ app.controller("detail-staff", ($scope, $http) => {
     }).catch((err) => {
         $scope.confirm = false;
     });
+
+    $scope.product = {};
+    $http.get(`${host_}/products/${productId}`).then((resp) => {
+        $scope.product = resp.data;
+    }).catch((err) => {
+        $scope.confirm = false;
+    });
+
+    // add voucher for product
+    $scope.addvoucher = (id) => {
+        $scope.product.discount = id;
+
+        $http.put(`${host_}/products/${productId}`, angular.copy($scope.product)).then((resp) => {
+            window.location.href = "http://localhost:8080/staff/detail/" + productId; 
+        }).catch((err) => {
+        });
+    };
 
 
     // add product detail
@@ -990,16 +1014,16 @@ app.controller("discount-ctrl", ($scope, $http) => {
     $scope.check = () => {
         $scope.error = "";
         if ($scope.code_ == "") {
-            $scope.error = "(*) Chị chưa bấm tạo mã mà thêm thêm cái giề :D";
+            $scope.error = "(*) Vui lòng tạo mã giảm giá ngay.";
         }
         else if ($scope.code.number <= 0 || $scope.code.number == null) {
-            $scope.error = "(*) Số lượng mà nhập số âm. Khùng hả ?";
+            $scope.error = "(*) Số lượng phải lớn hơn 0.";
         }
         else if ($scope.numberDay <= 0 || $scope.numberDay == null) {
-            $scope.error = "(*) Số ngày mà nhập số âm với số 0. Da dẻ quá đeeeeee ?";
+            $scope.error = "(*) Số ngày không thể nhập số âm.";
         }
         else if (($scope.code.free == null || $scope.code.free == 0.0) && ($scope.code.dolar <= 0 || $scope.code.dolar == null)) {
-            $scope.error = "(*) Uả ủa rồi giảm nhiêu ? Ơ kìa !";
+            $scope.error = "(*) Chưa có giá trị giảm của discount.";
         }
         else {
             $scope.error = "";
