@@ -910,20 +910,29 @@ app.controller("detail-staff", ($scope, $http) => {
     });
 
     $scope.product = {};
+
     $http.get(`${host_}/products/${productId}`).then((resp) => {
         $scope.product = resp.data;
+        console.log($scope.product);
     }).catch((err) => {
         $scope.confirm = false;
     });
 
-    // add voucher for product
-    $scope.addvoucher = (id) => {
-        $scope.product.discount = id;
-
-        $http.put(`${host_}/products/${productId}`, angular.copy($scope.product)).then((resp) => {
-            window.location.href = "http://localhost:8080/staff/detail/" + productId; 
-        }).catch((err) => {
-        });
+    $scope.notDiscount = "";
+    $scope.addvoucher = ()=> {
+        var url = `${host_}/products/${productId}`;
+        var item = angular.copy($scope.product);
+        if (item['discount'] == null) {
+            document.getElementById('notDiscount').innerHTML = "(*) Hãy chọn một discount.";
+        } else {
+            $scope.notDiscount = "";
+            $http.put(url, item).then((resp) => {
+                console.log("add discount ok", resp);
+                window.location.href = "http://localhost:8080/staff/detail/" + productId; 
+            }).catch((err) => {
+                console.log("cannot discount", err);
+            });   
+        }
     };
 
 

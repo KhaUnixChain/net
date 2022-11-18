@@ -4,7 +4,7 @@
       <div class="row pt-4">
         <div class="col-lg-5 mb-30">
           <div id="product-carousel" class="carousel slide" data-ride="carousel"  style="position: relative;">
-            <img src="/dist/img/vourcher/{{discount_c}}.png" class="col-3" alt="" style="position: absolute; z-index: 1; left: 25px">
+            <img src="/dist/img/vourcher/{{product.discount.free}}.png" class="col-3" alt="" style="position: absolute; z-index: 1; left: 25px">
             <div class="carousel-inner">
               <div class="carousel-item d-flex justify-content-center active pt-3 pb-3">
                 <img style="width: 70%; border-radius: 5px;" th:src="@{${'/dist/img/products/'+{product.image}}}" class="bg-white" alt="Image">
@@ -119,30 +119,30 @@
                 <table class="table table-borderless" style="border-bottom: 1px solid #f2f3f4;">
                   <thead>
                     <tr>
+                      <th class="text-center">Chọn</th>
                       <th>Mã voucher</th>
                       <th>Bắt đầu</th>
                       <th>Kết thúc</th>
-                      <th>Phần trăm</th>
+                      <th class="text-center">Phần trăm</th>
                       <th>Tiền mặt</th>
-                      <th>Chọn</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr ng-repeat="d in discounts">
+                      <td class="text-center"><input type="radio" name="free" ng-model="product.discount.free" style="width: 17px; height: 17px;"></td>
                       <td class="text-primary">{{d.id}}</td>
                       <td>{{d.dateFrom}}</td>
                       <td>{{d.dateEnd}}</td>
-                      <td>{{d.free == null ? '-' : d.free}} %</td>
+                      <td class="text-center">{{d.free == null ? '-' : d.free}} %</td>
                       <td>{{d.dolar == null ? '-' : d.dolar}}</td>
-                      <td ng-click="addvoucher({{d.id}})"><button class="btn bg-success" type="button">+</button></td>
                     </tr>
                   </tbody>
                 </table>
                 <br>
-                <div class="d-flex justify-content-between">
-                  <span></span>
-                  <a href="#" class="btn link bg-light text-dark ps-4 pe-4" style="border: 1px solid black;" data-bs-dismiss="modal">
-                    Hủy
+                <div class="d-flex justify-content-end">
+                  <span class="error" ng-model="notDiscount"></span>
+                  <a href="#" class="btn link text-dark ps-4 pe-4" ng-click="addvoucher()" style="border: 1px solid black;">
+                    Thêm ưu đãi
                   </a>
                 </div>
               </div>
@@ -161,7 +161,6 @@
       })
     })
   </script>
-  <script th:src="@{/dist/js/all_feature.js}" type="text/javascript" defer></script>
   <link rel="stylesheet" th:href="@{/dist/css/detail.css}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css"
     integrity="sha512-vEia6TQGr3FqC6h55/NdU3QSM5XR6HSl5fW71QTKrgeER98LIMGwymBVM867C1XHIkYD9nMTfWK2A0xcodKHNA=="
