@@ -965,10 +965,10 @@ app.controller("detail-staff", ($scope, $http) => {
             var item = angular.copy($scope.product);
             $http.put(url_product, item).then((resp) => {
                 console.log("discount for product ok", resp);
-                window.location.href = "http://localhost:8080/staff/detail/" + productId; 
             }).catch((err) => {
                 console.log("cannot discount", err);
             });   
+            window.location.href = "http://localhost:8080/staff/detail/" + productId; 
         }
     };
 
