@@ -1,5 +1,6 @@
 package com.fastshop.net.controller.rest;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,11 @@ public class RestOrderController {
     @GetMapping("/rest/orders/status/{id}")
     public List<Order> getOrderStatusId(@PathVariable("id") Integer id) {
         return orderService.findByStatus(id);
+    }
+
+    @GetMapping("/rest/orders/today")
+    public List<Order> today() {
+        return orderService.getAllOfOrderToday(new Date());
     }
 
     @GetMapping("/rest/orders/status/{username}/{id}")
