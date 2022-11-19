@@ -117,22 +117,22 @@
       <hr>
       <div class="container">
         <th:block th:if="${status == 0}">
-          <h2>Hôm nay</h2>
+          <h1 class="text-primary">Hôm nay</h1>
         </th:block>
         <th:block th:if="${status == 1}">
-          <h2>Tiếp nhận</h2>
+          <h1 class="text-primary">Tiếp nhận</h1>
         </th:block>
         <th:block th:if="${status == 2}">
-          <h2>Đóng gói</h2>
+          <h1 class="text-primary">Đóng gói</h1>
         </th:block>
         <th:block th:if="${status == 3}">
-          <h2>Đang giao hàng</h2>
+          <h1 class="text-primary">Đang giao hàng</h1>
         </th:block>
         <th:block th:if="${status == 4}">
-          <h2>Thành công</h2>
+          <h1 class="text-primary">Thành công</h1>
         </th:block>
         <th:block th:if="${status == -1}">
-          <h2>Đơn hàng bị hủy</h2>
+          <h1 class="text-primary">Đơn hàng bị hủy</h1>
         </th:block>
       </div>
 
@@ -155,7 +155,7 @@
                     <th class="col-2 text-center">Số lượng</th>
                     <th class="col-1">Giá tiền</th>
                     <th class="col">Tổng tiền</th>
-                    <th>Chuyển trạng thái</th>
+                    <th>[[${status == 4 || status == -1 ? 'Có' : 'Chuyển' }]] trạng thái</th>
                   </tr>
                 </thead>
                 <tbody>
