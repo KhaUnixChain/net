@@ -22,6 +22,11 @@ public class RestDiscountController {
         return discountService.findByAll();
     }
 
+    @GetMapping("/rest/discounts/{id}")
+    public Discount findById(@PathVariable("id") String id) {
+        return discountService.findById(id);
+    }
+
     @GetMapping("/rest/discounts/expiry")
     public List<Discount> expiry() {
         return discountService.findByDiscountExpiry();
