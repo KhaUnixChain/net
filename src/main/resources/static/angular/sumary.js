@@ -16,17 +16,15 @@ function getDateNow(days) {
     var month = date.getMonth() + 1;
     var day = date.getDate();
     var strDate = year + "-" + month + "-" + day;
-    if (days == null) {
+    if (days == null && days != 0) {
         return strDate;   
     }
     else {
-        var date1 = new Date(strDate);
-        date1.setDate(date1.getDate() + days);
-        var year1 = date1.getFullYear().toString();
-        var month1 = date1.getMonth() + 1;
-        var day1 = date1.getDate();
+        date.setDate(date.getDate() + days);
+        var year1 = date.getFullYear().toString();
+        var month1 = date.getMonth() + 1;
+        var day1 = date.getDate();
         var strDate1 = year1 + "-" + month1 + "-" + day1;
-        console.log(strDate1);
         return strDate1;   
     }
 };
@@ -1004,7 +1002,7 @@ app.controller("discount-ctrl", ($scope, $http) => {
     $scope.code = {
         "id": "",
         "dateFrom": new Date(getDateNow(null)),
-        "dateEnd": new Date(getDateNow($scope.numberDay)),
+        "dateEnd": new Date(getDateNow(Number($scope.numberDay))),
         "free": 0.0,
         "dolar": null,
         "number": 0
@@ -1018,6 +1016,7 @@ app.controller("discount-ctrl", ($scope, $http) => {
             $scope.code_ += (i%5==0) ? "-" : String(random);
         }
         $scope.code.id = $scope.code_;
+        $scope.code.dateEnd = new Date(getDateNow(Number($scope.numberDay)));
     };
 
     $scope.check = () => {
