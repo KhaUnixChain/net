@@ -50,7 +50,7 @@ public class AuthorityServiceImpl implements AuthorityService{
     @Override
     public List<Account> getListStaff() {
         return authorityDAO.findAll().stream()
-                           .filter(auth -> auth.getRole().getId().equals("STAFF"))
+                           .filter(auth -> auth.getRole().getId().equals("STAFF") && auth.getAccount().getActive())
                            .map(auth -> auth.getAccount())
                            .collect(Collectors.toList());
     }
@@ -59,7 +59,7 @@ public class AuthorityServiceImpl implements AuthorityService{
     public List<Account> findByKeyword(String keyword) {
         return authorityDAO.findAll().stream()
                            .filter(auth -> auth.getAccount().getUsername().equals(keyword.trim()))
-                           .filter(auth -> auth.getRole().getId().equals("STAFF"))
+                           .filter(auth -> auth.getRole().getId().equals("STAFF") && auth.getAccount().getActive())
                            .map(auth -> auth.getAccount())
                            .collect(Collectors.toList());
     }

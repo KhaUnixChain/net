@@ -1,7 +1,5 @@
 package com.fastshop.net.controller;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
-import com.fastshop.net.model.History;
 import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.HistoryService;
@@ -46,16 +43,6 @@ public class AdminController {
             model.addAttribute("totalRevenue", Math.round(orderDetailService.getTotalRevenue()));
             model.addAttribute("totalOrder", orderDetailService.getTotalOrder());
             model.addAttribute("top3Product", orderDetailService.getTop3BestSelling());
-            
-            // thêm history
-            if (authority != null) {
-                History history = new History();
-                history.setTitle(title_main);
-                history.setLink("http://localhost:8080/admin/home");
-                history.setSchedual(new Date());
-                history.setAccount(authority.getAccount());
-                historyService.save(history);   
-            }
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
@@ -71,16 +58,6 @@ public class AdminController {
             model.addAttribute("employees", authorityService.getListStaff());
             model.addAttribute("page", "admin.employee");
             model.addAttribute("_", authority.getAccount());
-
-            // thêm history
-            if (authority != null) {
-                History history = new History();
-                history.setTitle(title_main);
-                history.setLink("http://localhost:8080/admin/employee");
-                history.setSchedual(new Date());
-                history.setAccount(authority.getAccount());
-                historyService.save(history);   
-            }
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
@@ -108,17 +85,6 @@ public class AdminController {
         String title_main = "Tài liệu hỗ trợ phần mềm";
         model.addAttribute("page", "admin.docs");
         model.addAttribute("title_main", title_main);
-
-        // thêm history
-        if (authority != null) {
-            History history = new History();
-            history.setTitle(title_main);
-            history.setLink("http://localhost:8080/admin/help/docs");
-            history.setSchedual(new Date());
-            history.setAccount(authority.getAccount());
-            historyService.save(history);
-        }
-        
         return "index";
     }
 
@@ -128,17 +94,6 @@ public class AdminController {
         String title_main  = "Tài liệu thông tin pháp lý";
         model.addAttribute("page", "admin.license");
         model.addAttribute("title_main", title_main);
-
-        // thêm history
-        if (authority != null) {
-            History history = new History();
-            history.setTitle(title_main);
-            history.setLink("http://localhost:8080/admin/help/license");
-            history.setSchedual(new Date());
-            history.setAccount(authority.getAccount());
-            historyService.save(history);
-        }
-        
         return "index";
     }
 
@@ -148,16 +103,6 @@ public class AdminController {
         String title_main = "Thông tin liên hệ chúng tôi";
         model.addAttribute("page", "admin.contact");
         model.addAttribute("title_main", title_main);
-
-        // thêm history
-        if (authority != null) {
-            History history = new History();
-            history.setTitle(title_main);
-            history.setLink("http://localhost:8080/admin/help/contact");
-            history.setSchedual(new Date());
-            history.setAccount(authority.getAccount());
-            historyService.save(history);   
-        }
         return "index";
     }
 

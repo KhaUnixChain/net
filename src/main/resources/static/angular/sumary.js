@@ -519,6 +519,10 @@ app.controller("report-staff-ctrl", ($scope, $http) => {
     }
 });
 
+app.controller("report-admin-ctrl", ($scope, $http) => {
+    
+});
+
 // cart là cái chỉ để thêm sản phẩm vào giỏ hàng
 app.controller("cart-ctrl", ($scope, $http) => {
 
