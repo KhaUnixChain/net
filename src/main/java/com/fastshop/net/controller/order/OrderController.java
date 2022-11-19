@@ -52,7 +52,7 @@ public class OrderController {
     @Autowired
     StatusService statusService;
 
-
+    // gửi gmail loại html
     @RequestMapping("/user/order/accept")
     public String order(Model model, @ModelAttribute("auth") Authority auth) {
         try {
@@ -69,6 +69,7 @@ public class OrderController {
     }
 
 
+    // xem mục quản lý hóa đơn của user
     @RequestMapping("/user/order/{username}/{id}")
     public String getAll(Model model, @ModelAttribute("auth") Authority auth, @PathVariable("id") Integer id, @PathVariable("username") String username) {
         Account account = accountService.findByUsername(username);
