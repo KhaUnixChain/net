@@ -56,39 +56,19 @@
 
       <div class="container mt-3 mb-4">
         <div class="card">
-          <div class="card-header">
-            <th:block th:if="${status == 0}">
-              <h2>Hôm nay</h2>
-            </th:block>
-            <th:block th:if="${status == 1}">
-              <h2>Tiếp nhận</h2>
-            </th:block>
-            <th:block th:if="${status == 2}">
-              <h2>Đóng gói</h2>
-            </th:block>
-            <th:block th:if="${status == 3}">
-              <h2>Đang giao hàng</h2>
-            </th:block>
-            <th:block th:if="${status == 4}">
-              <h2>Thành công</h2>
-            </th:block>
-            <th:block th:if="${status == -1}">
-              <h2>Đơn hàng bị hủy</h2>
-            </th:block>
-          </div>
           <div class="card-body border-bottom py-3">
             <div class="d-flex">
               <div class="text-muted">
                 Hiển thị
                 <div class="mx-2 d-inline-block">
-                  <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
+                  <input type="number" class="form-control form-control-sm" ng-model="length" min="0" max="100" aria-label="Invoices count">
                 </div>
                 hóa đơn
               </div>
             </div>
           </div>
           <div class="table-responsive">
-            <table class="table card-table table-borderless text-nowrap datatable">
+            <table class="table card-table table-borderless table-hover text-nowrap datatable">
               <thead>
                 <tr>
                   <th class="text-center">ID</th>
@@ -102,27 +82,30 @@
                 </tr>
               </thead>
               <tbody>
-                <tr th:each="o : ${ordertoday}">
+                <tr ng-repeat="o in orders | limitTo:length">
                   <td class="text-center">
-                    <a th:href="${'#order-' + o.id}" class="text-primary" tabindex="-1">[[${o.id}]]</a>
+                    <a href="{{'#order-' + o.id}}" class="text-primary" tabindex="-1">{{o.id}}</a>
                   </td>
                   <td class="text-end">
-                    [[${o.account.username}]]
+                    {{o.account.username}}
                   </td>
                   <td class="text-center">
-                    <span class="badge bg-success me-1"></span>
+                    <span class="badge bg-success me-1" style="width: 20px; height: 20px;" ng-if="o.status.id == 0"></span>
                   </td>
                   <td class="text-center">
-                    <span class="badge bg-success me-1"></span>
+                    <span class="badge bg-success me-1" style="width: 20px; height: 20px;" ng-if="o.status.id == 1"></span>
                   </td>
                   <td class="text-center">
-                    <span class="badge bg-success me-1"></span>
+                    <span class="badge bg-success me-1" style="width: 20px; height: 20px;" ng-if="o.status.id == 2"></span>
                   </td>
                   <td class="text-center">
-                    <span class="badge bg-success me-1"></span>
+                    <span class="badge bg-success me-1" style="width: 20px; height: 20px;" ng-if="o.status.id == 3"></span>
                   </td>
                   <td class="text-center">
-                    <span class="badge bg-success me-1"></span>
+                    <span class="badge bg-success me-1" style="width: 20px; height: 20px;" ng-if="o.status.id == 4"></span>
+                  </td>
+                  <td class="text-center">
+                    <span class="badge bg-danger me-1" style="width: 20px; height: 20px;" ng-if="o.status.id == -1"></span>
                   </td>
                 </tr>
               </tbody>
@@ -132,6 +115,26 @@
       </div>
 
       <hr>
+      <div class="container">
+        <th:block th:if="${status == 0}">
+          <h2>Hôm nay</h2>
+        </th:block>
+        <th:block th:if="${status == 1}">
+          <h2>Tiếp nhận</h2>
+        </th:block>
+        <th:block th:if="${status == 2}">
+          <h2>Đóng gói</h2>
+        </th:block>
+        <th:block th:if="${status == 3}">
+          <h2>Đang giao hàng</h2>
+        </th:block>
+        <th:block th:if="${status == 4}">
+          <h2>Thành công</h2>
+        </th:block>
+        <th:block th:if="${status == -1}">
+          <h2>Đơn hàng bị hủy</h2>
+        </th:block>
+      </div>
 
       <div class="container mt-3" th:id="${'order-' + o.id}" th:each="o, index : ${ordertoday}">
         <div class="card mb-4">

@@ -1085,3 +1085,13 @@ app.controller("discount-ctrl", ($scope, $http) => {
     };
     
 });
+
+app.controller("staffhome-ctrl", ($scope, $http) => {
+    $scope.orders = [];
+    var url = `${host_}/orders`;
+    $http.get(url).then((resp) => {
+        $scope.orders = resp.data;
+    }).catch((err) => {});
+
+    $scope.length = 0;
+});
