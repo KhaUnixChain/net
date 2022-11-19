@@ -56,22 +56,18 @@ public class StaffController {
     @Autowired
     DiscountService discountService;
     
+    // trang chu của order cũng là trang có danh sách là tiếp nhận
     @RequestMapping("/staff/home")
     public String home(Model model, @ModelAttribute("auth") Authority auth) {
         try {
-            Date toNow = java.sql.Date.valueOf(LocalDate.now());
-            model.addAttribute("page", "staff.home");
-            model.addAttribute("ordertoday", orderService.getAllOfOrderToday(new Date()));
-            model.addAttribute("orderNotToday", orderService.findNotByCreateDate(toNow));
-            model.addAttribute("title_main", "Trang chủ quản lý hóa đơn hàng ngày ");
-            model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
-            return "index";
+            return "redirect:/staff/orders/status/0";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
         }
         
     }
 
+    // trang quản lý thông tin chi tiết của product
     @RequestMapping("/staff/product")
     public String products(Model model, @ModelAttribute("auth") Authority auth) {
         try {
@@ -85,7 +81,7 @@ public class StaffController {
         }
     }
 
-
+    // trang thêm sửa xóa dữ liệu product
     @RequestMapping("/staff/products")
     public String product(Model model, @ModelAttribute("auth") Authority authority) {
         try {
@@ -102,6 +98,7 @@ public class StaffController {
     }
 
 
+    // trang của category với 3 trạng thái
     @RequestMapping("/staff/category/{status}")
     public String category(Model model, @PathVariable("status") String status, @ModelAttribute("auth") Authority authority) {
         try {
@@ -138,6 +135,7 @@ public class StaffController {
     }
 
 
+    // trang viết report
     @RequestMapping("/staff/report")
     public String report(Model model, @ModelAttribute("auth") Authority auth) {
         try {
@@ -162,14 +160,14 @@ public class StaffController {
             order.setStatus(status);
             order.setDateConfirm(new Date());
             orderService.save(order);
-            return "redirect:/staff/home";
+            return "redirect:/staff/orders/status/" + (kind-1);
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/login.fastshop.com";
         }
     }
 
-
+    // xử lý thông tin chi tiết cho 1 product trong danh sách products
     @RequestMapping("/staff/detail/{id}")
     public String details(Model model, @ModelAttribute("auth") Authority auth, @PathVariable("id") Integer id) {
         try {
@@ -186,6 +184,7 @@ public class StaffController {
         }
     }
 
+    // thêm mô tả cho 1 product
     @RequestMapping("/staff/describe/{id}")
     public String change(Model model, @RequestParam("describe") String describe, @PathVariable("id") Integer id) {
         try {
@@ -200,6 +199,7 @@ public class StaffController {
         }
     }
 
+    // quản lý discount
     @RequestMapping("/staff/discount")
     public String dicsount(Model model, @ModelAttribute("auth") Authority auth) {
         try {
@@ -213,7 +213,7 @@ public class StaffController {
         }
     }
 
-    
+    // cập nhật lại nội dung của describe
     @RequestMapping("/staff/redetail/{id}")
     public String redetail(Model model, @RequestParam("describe") String describe, @PathVariable("id") Integer id) {
         try {
@@ -221,6 +221,24 @@ public class StaffController {
             return "redirect:/staff/detail/" + id;
         } catch (Exception e) {
             e.printStackTrace();
+            return "redirect:/login.fastshop.com";
+        }
+    }
+
+
+    // lấy danh sách đơn hàng theo 5 trạng thái tiếp nhận, đống gói, đang giao, thành công, hủy
+    @RequestMapping("/staff/orders/status/{id}")
+    public String status(Model model, @ModelAttribute("auth") Authority auth, @PathVariable("id") Integer status) {
+        try {
+            Date toNow = java.sql.Date.valueOf(LocalDate.now());
+            model.addAttribute("page", "staff.home");
+            model.addAttribute("orderNotToday", orderService.findNotByCreateDate(toNow));
+            model.addAttribute("status", status);
+            model.addAttribute("title_main", "Danh sách hóa đơn " + status);
+            model.addAttribute("ordertoday", orderService.findByStatus(status));
+            model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
+            return "index";
+        } catch (Exception e) {
             return "redirect:/login.fastshop.com";
         }
     }
