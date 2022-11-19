@@ -889,6 +889,7 @@ app.controller("comment-ctrl", ($scope, $http) => {
 });
 
 app.controller("detail-staff", ($scope, $http) => {
+    // đây là lấy danh sách discount chưa hết hạn
     $scope.discounts = [];
     var all = `${host_}/discounts/unexpiry`;
     $http.get(all).then((resp) => {
@@ -898,34 +899,72 @@ app.controller("detail-staff", ($scope, $http) => {
     var productId = $("#id_product_staff").val();
     $scope.productdetails = [];
 
+
     // false là mặc định chưa có gì trong info
     $scope.confirm = false;
     $http.get(`${host_}/product/detail/exist/${productId}`).then((resp) => {
         $scope.confirm = resp.data;
-        console.log($scope.confirm);
     }).catch((err) => {
         $scope.confirm = false;
     });
 
-    $scope.product = {};
+
+    // đây là lấy product hiện tại có ID trên
+    $scope.product = {
+        "id":0,
+        "name":"",
+        "image":"",
+        "price": 0.0,
+        "createDate": "",
+        "available":true,
+        "number":0,
+        "category":{},
+        "describe":"",
+        "discount": {}
+    };
+
+    $scope.product_http = {};
 
     $http.get(`${host_}/products/${productId}`).then((resp) => {
-        $scope.product = resp.data;
-        console.log($scope.product);
+        $scope.product_http = resp.data;
     }).catch((err) => {
-        $scope.confirm = false;
+        console.log("Cannot load product", err);
     });
 
+    // tạo 1 scope message to catch error if staff not choose any discount
     $scope.notDiscount = "";
+    // tạo 1 scope discount Id để lấy id discount staff chọn
+    $scope.discountId = null;
+
+    $scope.choosevoucher = (id) => {
+        $scope.discountId = id;
+    };
+
     $scope.addvoucher = ()=> {
-        var url = `${host_}/products/${productId}`;
-        var item = angular.copy($scope.product);
-        if (item['discount'] == null) {
-            document.getElementById('notDiscount').innerHTML = "(*) Hãy chọn một discount.";
+        // load all of fields in product from product_http
+        $scope.product.id = $scope.product_http.id;
+        $scope.product.name = $scope.product_http.name;
+        $scope.product.image = $scope.product_http.image;
+        $scope.product.price = $scope.product_http.price;
+        $scope.product.createDate = $scope.product_http.createDate;
+        $scope.product.available = $scope.product_http.available;
+        $scope.product.number = $scope.product_http.number;
+        $scope.product.category = $scope.product_http.category;
+        $scope.product.describe = $scope.product_http.describe;
+
+        var url_product = `${host_}/products/${productId}`;
+        var url_discount = `${host_}/discounts/${$scope.discountId}`;
+        if ($scope.discountId == null || $scope.discountId == "") {
+            $scope.notDiscount = "(*) Hãy chọn một discount cho sản phẩm.";
         } else {
             $scope.notDiscount = "";
-            $http.put(url, item).then((resp) => {
-                console.log("add discount ok", resp);
+            $http.get(url_discount).then((resp) => {
+                $scope.product.discount = resp.data;
+            }).catch((err) => {});
+
+            var item = angular.copy($scope.product);
+            $http.put(url_product, item).then((resp) => {
+                console.log("discount for product ok", resp);
                 window.location.href = "http://localhost:8080/staff/detail/" + productId; 
             }).catch((err) => {
                 console.log("cannot discount", err);
@@ -938,9 +977,7 @@ app.controller("detail-staff", ($scope, $http) => {
     var url = `${host_}/product/detail/${productId}`;
     $http.get(url).then((resp) => {
         $scope.productdetails = resp.data;
-        console.log('load detail ok [detail-staff]', resp);
     }).catch((err) => {
-        console.log('load detail off [detail-staff]', err);
     });
 
     $scope.add = () => {
@@ -964,6 +1001,7 @@ app.controller("detail-staff", ($scope, $http) => {
     };
 
 
+    // đây là hàm update từng productdetail
     $scope.update = () => {
         $scope.productdetails.forEach(item => {
             var productDetail = {};

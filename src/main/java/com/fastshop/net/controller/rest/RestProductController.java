@@ -40,7 +40,9 @@ public class RestProductController {
 
     @PutMapping("/rest/products/{id}")
     public Product put(@PathVariable("id") Integer id, @RequestBody Product product) {
-        productSevice.save(product);
+        if (productSevice.findAll().contains(product)) {
+            productSevice.save(product);
+        }
         return product;
     }
 
