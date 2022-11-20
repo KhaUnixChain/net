@@ -918,7 +918,7 @@ app.controller("detail-staff", ($scope, $http) => {
 
 
     // đây là lấy product hiện tại có ID trên
-    $scope.product = {
+    $scope.product_api = {
         "id":0,
         "name":"",
         "image":"",
@@ -928,7 +928,7 @@ app.controller("detail-staff", ($scope, $http) => {
         "number":0,
         "category":{},
         "describe":"",
-        "discount": {}
+        "discount": null
     };
 
     $scope.product_http = {};
@@ -950,15 +950,15 @@ app.controller("detail-staff", ($scope, $http) => {
 
     $scope.addvoucher = ()=> {
         // load all of fields in product from product_http
-        $scope.product.id = $scope.product_http.id;
-        $scope.product.name = $scope.product_http.name;
-        $scope.product.image = $scope.product_http.image;
-        $scope.product.price = $scope.product_http.price;
-        $scope.product.createDate = $scope.product_http.createDate;
-        $scope.product.available = $scope.product_http.available;
-        $scope.product.number = $scope.product_http.number;
-        $scope.product.category = $scope.product_http.category;
-        $scope.product.describe = $scope.product_http.describe;
+        $scope.product_api.id = $scope.product_http.id;
+        $scope.product_api.name = $scope.product_http.name;
+        $scope.product_api.image = $scope.product_http.image;
+        $scope.product_api.price = $scope.product_http.price;
+        $scope.product_api.createDate = $scope.product_http.createDate;
+        $scope.product_api.available = $scope.product_http.available;
+        $scope.product_api.number = $scope.product_http.number;
+        $scope.product_api.category = $scope.product_http.category;
+        $scope.product_api.describe = $scope.product_http.describe;
 
         var url_product = `${host_}/products/${productId}`;
         var url_discount = `${host_}/discounts/${$scope.discountId}`;
@@ -967,16 +967,16 @@ app.controller("detail-staff", ($scope, $http) => {
         } else {
             $scope.notDiscount = "";
             $http.get(url_discount).then((resp) => {
-                $scope.product.discount = resp.data;
+                $scope.product_api.discount = resp.data;
             }).catch((err) => {});
 
-            var item = angular.copy($scope.product);
-            $http.put(url_product, item).then((resp) => {
+            console.log($scope.product_api);
+            $http.put(url_product, $scope.product_api).then((resp) => {
                 console.log("discount for product ok", resp);
             }).catch((err) => {
                 console.log("cannot discount", err);
             });   
-            window.location.href = "http://localhost:8080/staff/detail/" + productId; 
+            // window.location.href = "http://localhost:8080/staff/detail/" + productId; 
         }
     };
 

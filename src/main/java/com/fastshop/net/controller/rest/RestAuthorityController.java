@@ -45,7 +45,8 @@ public class RestAuthorityController {
     @GetMapping("/rest/authorities/staff/active")
     public List<Authority> getAccountStaffActive() {
         return authorityService.findAll().stream()
-                .filter(auth -> auth.getRole().getId().equals("STAFF") && auth.getAccount().getActive())
+                .filter(auth -> auth.getRole().getId().equals("STAFF"))
+                .filter(auth -> auth.getAccount().getActive() != null && auth.getAccount().getActive() != false)
                 .collect(Collectors.toList());
     }
 
