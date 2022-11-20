@@ -16,6 +16,7 @@ import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Category;
 import com.fastshop.net.model.Order;
 import com.fastshop.net.model.Product;
+import com.fastshop.net.model.ProductDTO;
 import com.fastshop.net.model.ProductDetail;
 import com.fastshop.net.model.Status;
 import com.fastshop.net.service.ProductService;
@@ -88,6 +89,7 @@ public class StaffController {
             String title_main = "User - Quản lý sản phẩm";
             model.addAttribute("page", "staff.products");
             model.addAttribute("product", new Product());
+            model.addAttribute("productDTO", new ProductDTO());
             model.addAttribute("title_main", title_main);
             model.addAttribute("categories", categoryService.findAll());
             model.addAttribute("_", authority.getAccount());

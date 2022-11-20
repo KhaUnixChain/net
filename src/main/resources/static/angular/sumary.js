@@ -585,16 +585,15 @@ app.controller("product-ctrl", ($scope, $http) => {
     $scope.form = {};
     $scope.items = [];
     $scope.open = 0;
+    $scope.now = getDateNow(null);
 
-    $scope.load_product = () => {
-        var url = `${host_}/products`;
-        $http.get(url).then((resp) => {
-            $scope.items = resp.data;
-            console.log("load items product ok. ", resp);
-        }).catch((err) => {
-            console.log("Error load items", err);
-        });
-    };
+    var url = `${host_}/products`;
+    $http.get(url).then((resp) => {
+        $scope.items = resp.data;
+        console.log("load items product ok. ", resp);
+    }).catch((err) => {
+        console.log("Error load items", err);
+    });
 
 
     $scope.edit = (id) => {
@@ -608,33 +607,11 @@ app.controller("product-ctrl", ($scope, $http) => {
         });
     };
 
-    $scope.create = () => {
-        var url = `${host_}/products`;
-        var item = angular.copy($scope.form);
-
-        item.available = (item.number == 0) ? false : true;
-        item.createDate = (item.createDate == null) ? getDateNow(null): item.createDate;
-        item.image = document.getElementById("form-image").files[0].name;
-        item.describe = NaN;
-
-
-        $http.post(url, item).then((resp) => {
-            $scope.items.push(item);
-            $scope.load_product();
-            console.log("Create success", resp);
-        }).catch((err) => {
-            console.log("error create", err);
-        });
-    };
-
     $scope.update = () => {
         var item = angular.copy($scope.form);
         var url = `${host_}/products/${$scope.form.id}`;
         $http.put(url, item).then((resp) => {
-            var index = $scope.items.findIndex(item => item.id == $scope.form.id);
-            $scope.items[index] = item;
-            $scope.load_product();
-            console.log("update success", resp);
+            window.location.href = "http://localhost:8080/staff/products";
         }).catch((err) => {
             console.log("Error", err);
         });
@@ -647,23 +624,10 @@ app.controller("product-ctrl", ($scope, $http) => {
         var url = `${host_}/products/${id}`;
         $http.put(url, item).then((resp) => {
             console.log("delete success", resp);
-            $scope.load_product();
         }).catch((err) => {
             console.log("error", err);
         });
-    };
-
-    $scope.reset = () => {
-        $scope.form = {"price": 0, "number": 0};
-        $scope.open = 0;
-    };
-
-
-
-    $scope.sum_seconds_food = 48*60*60;
-    
-
-    $scope.load_product();
+    };    
 });
 
 app.controller("order-ctrl", ($scope, $http) => {
