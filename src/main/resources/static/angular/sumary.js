@@ -523,6 +523,10 @@ app.controller("report-admin-ctrl", ($scope, $http) => {
     
 });
 
+app.controller("admin-employee-ctrl", ($scope, $http) => {
+    $scope.role = ["Giám đốc", "Trưởng quản lý", ""];
+});
+
 // cart là cái chỉ để thêm sản phẩm vào giỏ hàng
 app.controller("cart-ctrl", ($scope, $http) => {
 
