@@ -976,7 +976,7 @@ app.controller("detail-staff", ($scope, $http) => {
             }).catch((err) => {
                 console.log("cannot discount", err);
             });   
-            // window.location.href = "http://localhost:8080/staff/detail/" + productId; 
+            window.location.href = "http://localhost:8080/staff/detail/" + productId; 
         }
     };
 
