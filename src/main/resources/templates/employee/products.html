@@ -202,7 +202,7 @@
             <label class="form-label">Nhập thêm số lượng</label>
             <div class="form-selectgroup-boxes row mb-3">
               <div>
-                <input type="number" ng-model="form.number" min="0" th:field="*{number}" class="form-control ps-2" autocomplete="off">
+                <input type="number" ng-model="form.number" min="1" th:field="*{number}" class="form-control ps-2" autocomplete="off" required>
               </div>
             </div>
             <div class="row">
@@ -212,7 +212,7 @@
                   <div class="input-group input-group-flat">
 
                     <!-- this is price of product -->
-                    <input type="number" ng-model="form.price" min="1" th:field="*{price}" class="form-control ps-2" autocomplete="off">
+                    <input type="number" ng-model="form.price" min="1" th:field="*{price}" class="form-control ps-2" autocomplete="off" required>
                   </div>
                 </div>
               </div>
@@ -251,7 +251,7 @@
 
           <!-- this is for edit to update and delete -->
           <div class="modal-footer">
-            <a href="#" ng-click="update()" ng-if="open == 1" class="btn btn-primary">
+            <button type="submit" ng-click="update()" ng-if="open == 1" class="btn btn-primary">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ballpen" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path d="M14 6l7 7l-4 4"></path>
@@ -259,8 +259,8 @@
                 <path d="M4 20l1.768 -1.768"></path>
               </svg>
               Cập nhật
-            </a>
-            <a href="#" ng-click="delete(form.id)" ng-if="open == 1" class="btn btn-danger">
+            </button>
+            <button type="submit" ng-click="delete(form.id)" ng-if="open == 1" class="btn btn-danger">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <rect x="3" y="4" width="18" height="4" rx="2"></rect>
@@ -268,7 +268,26 @@
                 <line x1="10" y1="12" x2="14" y2="12"></line>
               </svg>
               Ngừng bán
-            </a>
+            </button>
+
+            <button type="submit" ng-if="open == 0" class="btn btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ballpen" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M14 6l7 7l-4 4"></path>
+                <path d="M5.828 18.172a2.828 2.828 0 0 0 4 0l10.586 -10.586a2 2 0 0 0 0 -2.829l-1.171 -1.171a2 2 0 0 0 -2.829 0l-10.586 10.586a2.828 2.828 0 0 0 0 4z"></path>
+                <path d="M4 20l1.768 -1.768"></path>
+              </svg>
+              Cập nhật
+            </button>
+            <button type="submit" ng-if="open == 0" class="btn btn-danger">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <rect x="3" y="4" width="18" height="4" rx="2"></rect>
+                <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"></path>
+                <line x1="10" y1="12" x2="14" y2="12"></line>
+              </svg>
+              Ngừng bán
+            </button>
           </div>
         </form>
       </div>

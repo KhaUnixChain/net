@@ -115,7 +115,7 @@
         <!-- this is address -->
         <div class="col-xl-9 mb-4 bg-white">
           <!-- Account details card-->
-          <div class="mt-3">
+          <div class="mt-3" ng-controller="address-ctrl">
             <button class="btn btn-lg col-12" data-bs-toggle="modal" data-bs-target="#modal-address-add" style="height:60px; border: 1px dashed lightgray; box-shadow: none;">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -222,7 +222,7 @@
             <h3>Thêm địa chỉ giao hàng</h3>
             
             <div class="form-group">
-              <textarea class="form-control" rows="1" name="place" id="place" placeholder="Nhập địa chỉ giao hàng ..."></textarea>
+              <textarea class="form-control" rows="4" name="place" id="place" placeholder="Nhập địa chỉ giao hàng ..."></textarea>
               <div class="form-message text-start text-danger"></div>
             </div>
 
@@ -236,7 +236,7 @@
                   </a>
                 </div>
                 <div class="col">
-                  <button type="submit" class="btn btn-success w-100" data-bs-dismiss="modal">
+                  <button type="submit" class="btn btn-success w-100">
                     Thêm địa chỉ
                   </button>
                 </div>
