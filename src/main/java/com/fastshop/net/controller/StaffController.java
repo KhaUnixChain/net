@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Category;
+import com.fastshop.net.model.Notify;
 import com.fastshop.net.model.Order;
 import com.fastshop.net.model.Product;
 import com.fastshop.net.model.ProductDTO;
@@ -29,6 +30,7 @@ import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryDetailService;
 import com.fastshop.net.service.CategoryService;
 import com.fastshop.net.service.DiscountService;
+import com.fastshop.net.service.NotifyService;
 import com.fastshop.net.service.OrderService;
 import com.fastshop.net.service.ProductDetailService;
 
@@ -56,6 +58,8 @@ public class StaffController {
     StatusService statusService;
     @Autowired
     DiscountService discountService;
+    @Autowired
+    NotifyService notifyService;
     
     // trang chu của order cũng là trang có danh sách là tiếp nhận
     @RequestMapping("/staff/home")
@@ -141,11 +145,13 @@ public class StaffController {
     @RequestMapping("/staff/report")
     public String report(Model model, @ModelAttribute("auth") Authority auth) {
         try {
+            Account account = auth.getAccount();
             model.addAttribute("page", "staff.report");
             model.addAttribute("now", FormatDate.parse());
             model.addAttribute("title_main", "Báo cáo hoạch toán hằng ngày");
             model.addAttribute("products", productSevice.findAll());
-            model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
+            model.addAttribute("notify", new Notify());
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(account));
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";

@@ -6,9 +6,12 @@ import org.springframework.ui.Model;
 
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
+import com.fastshop.net.model.Notify;
 import com.fastshop.net.model.Role;
 import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
+import com.fastshop.net.service.NotifyService;
+import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service.RoleService;
 import com.fastshop.net.service._CookieService;
 
@@ -24,6 +27,10 @@ public class EmployeeController {
     AccountService accountService;
     @Autowired
     RoleService roleService;
+    @Autowired
+    ProductService productService;
+    @Autowired
+    NotifyService notifyService;
     @Autowired
     AuthorityService authorityService;
 
@@ -64,7 +71,15 @@ public class EmployeeController {
             model.addAttribute("page", "admin.employee");
             return "index";
         }
-        
+    }
+
+    @RequestMapping("/notify/add")
+    public String sentPDF(Model model, @ModelAttribute("notify") Notify notify, @ModelAttribute("auth") Authority auth) {
+        try {
+            return "redirect:/staff/report";
+        } catch (Exception e) {
+            return "redirect:/login.fastshop.com";
+        }
     }
 
 

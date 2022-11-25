@@ -13,7 +13,7 @@
 
               <!-- Page title actions -->
               <div class="col-12 col-md-auto ms-auto d-print-none">
-                <button class="btn btn-default border-warning">
+                <button class="btn btn-default border-warning" data-bs-toggle="modal" data-bs-target="#modal-sent-docs" >
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="me-2 bi bi-send text-warning" viewBox="0 0 16 16">
                     <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
                   </svg>
@@ -30,6 +30,41 @@
                     In báo cáo
                 </button>
               </div>
+
+              <!-- send document -->
+              <div class="modal modal-blur fade" id="modal-sent-docs" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Gửi gmail phản hồi</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body bg-white">
+                      <div class="row mb-3 align-items-end">
+                        <div class="col">
+                          <label class="form-label text-black">
+                            Tiêu đề: 
+                          </label>
+                          <input type="text" class="form-control" placeholder="nhập tiêu đề ..."/>
+                        </div>
+                      </div>
+                      <div>
+                        <label class="form-label text-black">
+                          Nội dung bài viết: 
+                        </label>
+                        <textarea class="form-control" rows="7"></textarea>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn me-auto" data-bs-dismiss="modal">Đóng</button>
+                      <a href="#">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Gửi thông báo</button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
