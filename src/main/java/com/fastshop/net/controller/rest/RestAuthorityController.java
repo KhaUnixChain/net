@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
@@ -24,8 +23,6 @@ import com.fastshop.net.service.AuthorityService;
 public class RestAuthorityController {
     @Autowired
     AuthorityService authorityService;
-
-    RestTemplate rest = new RestTemplate();
 
     @GetMapping("/rest/authorities")
     public List<Authority> getAll(Model model) {

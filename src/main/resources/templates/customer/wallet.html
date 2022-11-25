@@ -113,7 +113,18 @@
                         <th:block th:if="${atm != null && atm.valid == true}">
                           <div class="mt-2 p-3 d-flex justify-content-between align-items-center" style="border: 1px dashed lightgray;">
                             <span style="vertical-align: middle;">
-                              <img th:src="@{/dist/img/bank/sacombank.png}" style="width: auto; height: 30px;" class="border p-1 me-1" alt="">
+                              <th:block th:if="${atm != null && atm.company == 'Sacombank'}">
+                                <img th:src="@{/dist/img/bank/sacombank.png}" style="width: auto; height: 30px;" class="border p-1 me-1" alt="">
+                              </th:block>
+                              <th:block th:if="${atm != null && atm.company == 'Agribank'}">
+                                <img th:src="@{/dist/img/bank/agribank.png}" style="width: auto; height: 30px;" class="border p-1 me-1" alt="">
+                              </th:block>
+                              <th:block th:if="${atm != null && atm.company == 'Vietcombank'}">
+                                <img th:src="@{/dist/img/bank/vietcombank.jpg}" style="width: auto; height: 30px;" class="border p-1 me-1" alt="">
+                              </th:block>
+                              <th:block th:if="${atm != null && atm.company == 'TPBank'}">
+                                <img th:src="@{/dist/img/bank/tpbank.jpg}" style="width: auto; height: 30px;" class="border p-1 me-1" alt="">
+                              </th:block>
                               *** [[${#strings.substring(atm.number,atm.number.length()-4,atm.number.length())}]]
                             </span>
                             <a href="#" data-bs-toggle="modal" data-bs-target="#modal-atm" class="btn btn-default">
@@ -175,19 +186,19 @@
           <div class="row mb-3 align-items-end">
             <div class="col">
               <label class="form-label">Số tài khoản</label>
-              <input type="text" class="form-control" id="bank-number" pattern="^[0-9]{4,}$" required>
+              <input type="text" class="form-control" id="bank-number" ng-model="atm.number" required>
               <span class="mt-2 error fs-4">{{ errorNumber }}</span>
             </div>
           </div>
           <div class="mb-3" id="choose-bank">
             <div class="form-group">
               <label for="sel1" class="form-label">Select list:</label>
-              <select class="form-control" id="sel1">
-                <option  value="None">-- None --</option>
+              <select class="form-control" id="sel1" ng-model="atm.company">
+                <option  value="" disabled selected>-- None --</option>
                 <option  value="Sacombank">Sacombank</option>
-                <option  value="Argibank">Argibank</option>
+                <option  value="Agribank">Agribank</option>
                 <option  value="Vietcombank">Vietcombank</option>
-                <option  value="Sacombank">TPBank</option>
+                <option  value="TPBank">TPBank</option>
               </select>
               <span class="mt-2 error fs-4">{{ errorSelect }}</span>
             </div>

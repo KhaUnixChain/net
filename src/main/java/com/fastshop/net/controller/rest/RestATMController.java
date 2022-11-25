@@ -29,7 +29,7 @@ public class RestATMController {
 
     @PostMapping("/rest/atm")
     public ATM create(@RequestBody ATM atm) {
-        atmService.save(atm);
+        atmService.create(atm);
         return atm;
     }
 

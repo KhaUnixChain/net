@@ -247,40 +247,30 @@ app.controller("atm-ctrl", ($scope, $http) => {
         console.log("ATM cannot account", err);
     });
 
-
     $scope.them = () => {
-        if ($scope.atm.number == "") {
+        if ($scope.atm.number == "" || $scope.atm.number == undefined) {
             $scope.errorNumber = "(*) Vui lòng nhập số tài khoản";
         }
-        else {
+        else if ($scope.atm.company == "" || $scope.atm.company == undefined) {
             $scope.errorNumber = "";
-        }
-
-        if ($scope.atm.company == "None") {
             $scope.errorSelect = "(*) Vui lòng chọn ngân hàng";
         } 
         else {
+            $scope.errorNumber = "";
             $scope.errorSelect = "";
+            var url_c = `${host_}/atm`;
+            $("#load-page").css("display", "block");
+
+
+            setInterval(() => {
+                $http.post(url_c, $scope.atm).then((resp) => {
+                    console.log("ATM create ok", resp);
+                    window.location.href = "http://localhost:8080/user/wallet";
+                }).catch((err) => {
+                    console.log("ATM failed", err);
+                });
+            }, 3000);
         }
-
-
-        // if($scope.atm.number != "" && $scope.atm.company != "None") {
-        //     var url_u = `${host_}/atm/${id}`;
-        //     var url_c = `${host_}/atm`;
-        //     $scope.atm.company = new String($("#sel1").val());
-        //     $scope.atm.number  = new String($("#bank-number").val());
-        //     var item = angular.copy($scope.atm);
-
-        //     console.log(item);
-
-        //     $http.post(url_c, item).then((resp) => {
-        //         console.log("ATM create ok", resp);
-        //     }).catch((err) => {
-        //         console.log("ATM failed", err);
-        //     });
-
-        //     window.location.href = "http://localhost:8080/user/wallet";
-        // }
     };
 
 });

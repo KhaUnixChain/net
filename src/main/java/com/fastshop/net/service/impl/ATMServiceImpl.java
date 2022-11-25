@@ -42,16 +42,13 @@ public class ATMServiceImpl implements ATMService{
 
     @Override
     public void save(ATM atm) {
-        if (atmdao.findAll().contains(atm)) {
-            atm.setValid(false);
-            atmdao.save(atm);
-        }
+        atm.setValid(false);
+        atmdao.save(atm);
     }
 
     @Override
     public void create(ATM atm) {
-        if (!atmdao.findAll().contains(atm)) {
-            atmdao.save(atm);
-        }
+        atm.setValid(true);
+        atmdao.save(atm);
     }
 }
