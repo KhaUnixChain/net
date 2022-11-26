@@ -18,7 +18,6 @@ import com.fastshop.net.model.Order;
 import com.fastshop.net.model.Product;
 import com.fastshop.net.model.ProductDTO;
 import com.fastshop.net.model.ProductDetail;
-import com.fastshop.net.model.SentReport;
 import com.fastshop.net.model.Status;
 import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service.StatusService;
@@ -151,7 +150,6 @@ public class StaffController {
             model.addAttribute("now", FormatDate.parse());
             model.addAttribute("title_main", "Báo cáo hoạch toán hằng ngày");
             model.addAttribute("products", productSevice.findAll());
-            model.addAttribute("sentReport", new SentReport());
             model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(account));
             return "index";
         } catch (Exception e) {
@@ -243,7 +241,7 @@ public class StaffController {
             model.addAttribute("page", "staff.home");
             model.addAttribute("orderNotToday", orderService.findNotByCreateDate(toNow));
             model.addAttribute("status", status);
-            model.addAttribute("title_main", "Danh sách hóa đơn " + status);
+            model.addAttribute("title_main", "Danh sách hóa đơn theo loại");
             model.addAttribute("ordertoday", orderService.findByStatus(status));
             model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             return "index";

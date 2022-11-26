@@ -13,13 +13,13 @@ import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Notify;
 import com.fastshop.net.model.Role;
-import com.fastshop.net.model.SentReport;
 import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.NotifyService;
 import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service.RoleService;
 import com.fastshop.net.service._CookieService;
+import com.fastshop.net.utils.FormatDate;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -85,8 +85,7 @@ public class EmployeeController {
     }
 
     @RequestMapping("/notify/add")
-    public String sentPDF(Model model, @ModelAttribute("sentReport") SentReport sentReport, 
-                                       @ModelAttribute("auth") Authority auth, 
+    public String sentPDF(Model model, @ModelAttribute("auth") Authority auth, 
                                        @RequestParam("fileNames") MultipartFile multipartFile,
                                        @RequestParam("txtFileList") String txtFileList) {
         try {
@@ -94,7 +93,7 @@ public class EmployeeController {
             notify.setAccount(auth.getAccount());
             notify.setStatus(true);
             notify.setSentDate(new Date());
-            notify.setTitle(sentReport.getTitle());
+            notify.setTitle("Đã gửi báo cáo thành công " + FormatDate.parse());
             String imageUUID = "";
             if(!multipartFile.isEmpty()){
                 imageUUID = multipartFile.getOriginalFilename();

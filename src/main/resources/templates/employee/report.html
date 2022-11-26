@@ -34,7 +34,7 @@
               <!-- send document -->
               <div class="modal modal-blur fade" id="modal-sent-docs" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
-                  <form action="/notify/add" th:object="${sentReport}" method="post" enctype="multipart/form-data" class="modal-content">
+                  <form action="/notify/add" method="post" enctype="multipart/form-data" class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title">Gửi báo cáo - <span class="text-start text-warning">[[${now}]]</span></h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -43,9 +43,9 @@
                       <div class="row mb-3 align-items-end">
                         <div class="col">
                           <label class="form-label text-black">
-                            Tiêu đề: 
+                            Nội dung cần gửi: 
                           </label>
-                          <input type="text" th:field="*{title}" class="form-control" placeholder="Nhập tiêu đề ..." required />
+                          <textarea rows="7" class="form-control" placeholder="Nhập tiêu đề ..." ></textarea>
                         </div>
                       </div>
                       <div>
