@@ -1,8 +1,6 @@
 package com.fastshop.net.service.impl;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +19,7 @@ public class NotifyServiceImpl implements NotifyService {
     @Override
     public List<Notify> findAllByAccAndNowAndStatusOrderBy(Account account) {
         try {
-            Date date = java.sql.Date.valueOf(LocalDate.now());
-            return notifyDAO.findAllByAccAndNowAndStatusOrderBy(account, date);
+            return notifyDAO.findAllByAccAndNowAndStatusOrderBy(account);
         } catch (Exception e) {
             return new ArrayList<>();
         }
