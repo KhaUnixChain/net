@@ -49,8 +49,8 @@
                         </div>
                       </div>
                       <div>
-                        <input type="file" name="fileNames" id="listPDF" multiple required/>
-                        <input type="text" th:field="*{fileName}" name="txtFileList" id="txtFileList"></input>
+                        <input type="file" name="fileNames" id="listPDF" required/>
+                        <input type="hidden" name="txtFileList" />
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -490,11 +490,9 @@
 
     <script>
       $("#listPDF").change(function() {
-        var names = [];
-        for (var i = 0; i < $(this).get(0).files.length; ++i) {
-          names.push($(this).get(0).files[i].name);
-        }
-        document.getElementById("txtFileList").value = String(names);
+        var names = "";
+        names = $(this).val().split("\\").pop();
+        console.log(names);
       });
     </script>
   </div>

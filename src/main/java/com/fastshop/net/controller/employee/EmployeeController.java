@@ -105,12 +105,11 @@ public class EmployeeController {
             }
 
             notify.setFileName(imageUUID);
-            System.out.println(txtFileList);
-            // notifyService.save(notify);
+            notifyService.save(notify);
 
             // nhớ thêm biến count_notify cho tất cả admin và staff
 
-            return "index";
+            return "redirect:/staff/report";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
         }
