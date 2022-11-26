@@ -24,6 +24,7 @@ import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryDetailService;
 import com.fastshop.net.service.CategoryService;
+import com.fastshop.net.service.NotifyService;
 import com.fastshop.net.service.OrderService;
 import com.fastshop.net.service.ProductDetailService;
 
@@ -51,6 +52,8 @@ public class OrderController {
     OrderService orderService;
     @Autowired
     StatusService statusService;
+    @Autowired
+    NotifyService notifyService;
 
     // gửi gmail loại html
     @RequestMapping("/user/order/accept")
@@ -79,6 +82,8 @@ public class OrderController {
             model.addAttribute("title_main", "Fastshop - Quản lý hóa đơn");
             model.addAttribute("orders", orders);
             model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+
             return "index";
         } catch (Exception e) {
             return "redirect:/login";

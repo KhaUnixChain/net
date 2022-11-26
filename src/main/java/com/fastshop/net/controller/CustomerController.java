@@ -28,6 +28,7 @@ import com.fastshop.net.service.AddressService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryService;
 import com.fastshop.net.service.CommentService;
+import com.fastshop.net.service.NotifyService;
 import com.fastshop.net.service.OrderService;
 import com.fastshop.net.service.ProductDetailService;
 
@@ -53,6 +54,9 @@ public class CustomerController {
     CommentService commentService;
     @Autowired
     ATMService atmService;
+
+    @Autowired
+    NotifyService notifyService;
     @Autowired
     ProductDetailService productDetailService;
     @Autowired
@@ -72,11 +76,14 @@ public class CustomerController {
         model.addAttribute("page", "user.home");
         model.addAttribute("title_main", "Fastshop.com - Nơi những mặt hàng được vận chuyển nhanh chóng mặt");
         model.addAttribute("hints", categoryService.getOneProductEachCategories(number_hint_keyword));
+        if (auth != null) {
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+        }
         return "index";
     }
 
     @RequestMapping("/user/search")
-    public String search(Model model, @RequestParam("keyword") String kw) {
+    public String search(Model model, @ModelAttribute("auth") Authority auth, @RequestParam("keyword") String kw) {
         List<Product> list = null;
         list = productSevice.findByKeywordName(kw);
         int number_hint_keyword = 5;
@@ -84,11 +91,15 @@ public class CustomerController {
         model.addAttribute("page", "user.home");
         model.addAttribute("title_main", "Fastshop.com - Nơi những mặt hàng được vận chuyển nhanh chóng mặt");
         model.addAttribute("hints", categoryService.getOneProductEachCategories(number_hint_keyword));
+        if (auth != null) {
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+        }
         return "index";
     }
 
     @RequestMapping("/user/filter")
     public String filter(Model model, 
+                         @ModelAttribute("auth") Authority auth,
                          @RequestParam("rate") Integer rate, 
                          @RequestParam("cateId") String cateId, 
                          @RequestParam("priceFrom") Integer priceFrom, 
@@ -101,7 +112,9 @@ public class CustomerController {
         model.addAttribute("page", "user.home");
         model.addAttribute("title_main", "Fastshop.com - Nơi những mặt hàng được vận chuyển nhanh chóng mặt");
         model.addAttribute("hints", categoryService.getOneProductEachCategories(number_hint_keyword));
-        System.out.println(list.size());
+        if (auth != null) {
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+        }
         return "index";
     }
 
@@ -118,6 +131,7 @@ public class CustomerController {
         model.addAttribute("maxStar", commentService.getMaxStar(product));
         try {
             model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
         } catch (Exception e) {
             model.addAttribute("address", null);
         }
@@ -133,6 +147,7 @@ public class CustomerController {
             model.addAttribute("now", new Date());
             model.addAttribute("title_main", "Thanh toán sản phẩm của bạn");
             model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             model.addAttribute("products", productSevice.findAll());
             model.addAttribute("atm", atmService.findByAccount(auth.getAccount()));
             return "index";
@@ -146,6 +161,7 @@ public class CustomerController {
         try {
             model.addAttribute("now", new Date());
             model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             model.addAttribute("products", productSevice.findAll());
             model.addAttribute("atm", atmService.findByAccount(auth.getAccount()));
             return "customer/bill";
@@ -159,7 +175,7 @@ public class CustomerController {
         try {
             model.addAttribute("page", "user.history");
             model.addAttribute("now", new Date());
-            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));  // thêm để khi cố ý đổi link thì tự động vô login
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             return "index";
         } catch (Exception e) {
             return "redirect:/login";
@@ -174,6 +190,7 @@ public class CustomerController {
             model.addAttribute("title_main", "Fastshop - Quản lý hóa đơn");
             model.addAttribute("orders", orderService.findAllByEmailOrPhone(auth.getAccount().getEmail(), auth.getAccount().getPassword()));
             model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             return "index";
         } catch (Exception e) {
             return "redirect:/login";
@@ -188,7 +205,7 @@ public class CustomerController {
             model.addAttribute("addresses", addressService.findAllAddressByAccount(auth.getAccount().getUsername()));
             model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
             model.addAttribute("title_main", "Fastshop - Địa chỉ mặc định của bạn");
-            model.addAttribute("_", orderService.findAddressByUsername(auth.getAccount()));  // thêm để khi cố ý đổi link thì tự động vô login
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             return "index";
         } catch (Exception e) {
             return "redirect:/login";
@@ -202,6 +219,7 @@ public class CustomerController {
             model.addAttribute("page", "user.wallet");
             model.addAttribute("title_main", "Fastshop - Thông tin hồ sơ tài khoản thanh toán");
             model.addAttribute("atm", atmService.findByAccount(auth.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             return "index";
         } catch (Exception e) {
              return "redirect:/login";
@@ -213,6 +231,7 @@ public class CustomerController {
         try {
             model.addAttribute("page", "user.feedback");
             model.addAttribute("title_main", "Fastshop - Thông tin đánh giá sản phẩm");
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             return "index";
         } catch (Exception e) {
              return "redirect:/login";
@@ -224,6 +243,7 @@ public class CustomerController {
         try {
             model.addAttribute("page", "user.notify");
             model.addAttribute("title_main", "Fastshop - Thông báo của tôi");
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             return "index";
         } catch (Exception e) {
              return "redirect:/login";
@@ -236,7 +256,8 @@ public class CustomerController {
         try {
             model.addAttribute("page", "user.discount");
             model.addAttribute("title_main", "Fastshop - Ưu đãi của bạn ở đây");
-            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));  // thêm để khi cố ý đổi link thì tự động vô login
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+
             return "index";
         } catch (Exception e) {
             return "redirect:/login";
@@ -248,6 +269,9 @@ public class CustomerController {
     public String sales(Model model, @ModelAttribute("auth") Authority auth) {
         model.addAttribute("page", "user.sales");
         model.addAttribute("title_main", "Fastshop - Free mua hàng, nhận quà liền tay");
+        if (auth != null) {
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+        }
         return "index";
     }
 

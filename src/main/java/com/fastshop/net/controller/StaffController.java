@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Category;
-import com.fastshop.net.model.Notify;
 import com.fastshop.net.model.Order;
 import com.fastshop.net.model.Product;
 import com.fastshop.net.model.ProductDTO;
 import com.fastshop.net.model.ProductDetail;
+import com.fastshop.net.model.SentReport;
 import com.fastshop.net.model.Status;
 import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service.StatusService;
@@ -79,7 +79,7 @@ public class StaffController {
             model.addAttribute("items", productSevice.findAll());
             model.addAttribute("page", "staff.product");
             model.addAttribute("title_main", "Thông tin chi tiết các sản phẩm");
-            model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
@@ -96,7 +96,8 @@ public class StaffController {
             model.addAttribute("productDTO", new ProductDTO());
             model.addAttribute("title_main", title_main);
             model.addAttribute("categories", categoryService.findAll());
-            model.addAttribute("_", authority.getAccount());
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
+
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
@@ -110,7 +111,7 @@ public class StaffController {
         try {
             model.addAttribute("page", "staff.category");
             model.addAttribute("category", new Category());
-            model.addAttribute("_", authority.getAccount());
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
             String title_main = "";
 
             if (status.equals("stock")) {
@@ -150,7 +151,7 @@ public class StaffController {
             model.addAttribute("now", FormatDate.parse());
             model.addAttribute("title_main", "Báo cáo hoạch toán hằng ngày");
             model.addAttribute("products", productSevice.findAll());
-            model.addAttribute("notify", new Notify());
+            model.addAttribute("sentReport", new SentReport());
             model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(account));
             return "index";
         } catch (Exception e) {
@@ -184,7 +185,7 @@ public class StaffController {
             model.addAttribute("productDetail", new ProductDetail());
             model.addAttribute("page", "staff.detail");
             model.addAttribute("productdetails", productDetailService.getByProductId(id));
-            model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             model.addAttribute("title_main", "Form thông tin chi tiết mô tả sản phẩm");
             return "index";
         } catch (Exception e) {
@@ -212,7 +213,7 @@ public class StaffController {
     public String dicsount(Model model, @ModelAttribute("auth") Authority auth) {
         try {
             model.addAttribute("page", "staff.discount");
-            model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             model.addAttribute("title_main", "Fastshop - Giảm giá sản phẩm");
             return "index";
         } catch (Exception e) {
@@ -244,7 +245,7 @@ public class StaffController {
             model.addAttribute("status", status);
             model.addAttribute("title_main", "Danh sách hóa đơn " + status);
             model.addAttribute("ordertoday", orderService.findByStatus(status));
-            model.addAttribute("_", auth.getAccount());  // cái này thêm để nó báo lỗi thì chuyển sang login
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";

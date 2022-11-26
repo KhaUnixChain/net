@@ -1,5 +1,10 @@
 package com.fastshop.net.controller.employee;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +13,7 @@ import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Notify;
 import com.fastshop.net.model.Role;
+import com.fastshop.net.model.SentReport;
 import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.NotifyService;
@@ -18,9 +24,13 @@ import com.fastshop.net.service._CookieService;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class EmployeeController {
+    public static String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/files";
+
     @Autowired
     _CookieService cookie;
     @Autowired
@@ -60,7 +70,7 @@ public class EmployeeController {
 
 
     @RequestMapping("/account/search")
-    public String name(Model model, String keyword) {
+    public String name(Model model, @ModelAttribute("auth") Authority auth, String keyword) {
         if (keyword.equalsIgnoreCase("") || keyword == null) {
             return "redirect:/admin/employee";
         }
@@ -69,13 +79,36 @@ public class EmployeeController {
             model.addAttribute("title_main", "Admin - Thống kê danh sách nhân viên");
             model.addAttribute("employees", authorityService.findByKeyword(keyword));
             model.addAttribute("page", "admin.employee");
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             return "index";
         }
     }
 
     @RequestMapping("/notify/add")
-    public String sentPDF(Model model, @ModelAttribute("notify") Notify notify, @ModelAttribute("auth") Authority auth) {
+    public String sentPDF(Model model, @ModelAttribute("sentReport") SentReport sentReport, 
+                                       @ModelAttribute("auth") Authority auth, 
+                                       @RequestParam("fileName") MultipartFile multipartFile,
+                                       @RequestParam("nameReport") String nameReport) {
         try {
+            Notify notify = new Notify();
+            notify.setAccount(auth.getAccount());
+            notify.setStatus(true);
+            notify.setSentDate(new Date());
+            notify.setTitle(sentReport.getTitle());
+            String imageUUID = "";
+            if(!multipartFile.isEmpty()){
+                imageUUID = multipartFile.getOriginalFilename();
+                Path fileNameAndPath = Paths.get(uploadDir, imageUUID);
+                Files.write(fileNameAndPath, multipartFile.getBytes());
+            }else {
+                imageUUID = nameReport;
+            }
+
+            notify.setFileName(imageUUID);
+            notifyService.save(notify);
+
+            // nhớ thêm biến count_notify cho tất cả admin và staff
+
             return "redirect:/staff/report";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";

@@ -34,9 +34,9 @@
               <!-- send document -->
               <div class="modal modal-blur fade" id="modal-sent-docs" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
+                  <form action="/notify/add" th:object="${sentReport}" method="post" enctype="multipart/form-data" class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">Gửi gmail phản hồi</h5>
+                      <h5 class="modal-title">Gửi báo cáo - <span class="text-start text-warning">[[${now}]]</span></h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body bg-white">
@@ -45,23 +45,20 @@
                           <label class="form-label text-black">
                             Tiêu đề: 
                           </label>
-                          <input type="text" class="form-control" placeholder="nhập tiêu đề ..."/>
+                          <input type="text" th:field="*{title}" pattern="^[a-zA-Z0-9]{10,}$" class="form-control" placeholder="Nhập tiêu đề ..." required />
                         </div>
                       </div>
                       <div>
-                        <label class="form-label text-black">
-                          Nội dung bài viết: 
-                        </label>
-                        <textarea class="form-control" rows="7"></textarea>
+                        <input type="file" name="fileName" multiple th:field="*{fileName}" />
+                        <input type="hidden" name="nameReport" th:value="${sentReport.fileName}" />
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn me-auto" data-bs-dismiss="modal">Đóng</button>
                       <a href="#">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Gửi thông báo</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Gửi ngay</button>
                       </a>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
 

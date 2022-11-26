@@ -11,6 +11,7 @@ import com.fastshop.net.model.Authority;
 import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.HistoryService;
+import com.fastshop.net.service.NotifyService;
 import com.fastshop.net.service.OrderDetailService;
 import com.fastshop.net.service.OrderService;
 import com.fastshop.net.service._CookieService;
@@ -32,6 +33,8 @@ public class AdminController {
     OrderService orderService;
     @Autowired
     OrderDetailService orderDetailService;
+    @Autowired
+    NotifyService notifyService;
 
     @RequestMapping("/admin/home")
     public String home(Model model, @ModelAttribute("auth") Authority authority) {
@@ -43,6 +46,7 @@ public class AdminController {
             model.addAttribute("totalRevenue", Math.round(orderDetailService.getTotalRevenue()));
             model.addAttribute("totalOrder", orderDetailService.getTotalOrder());
             model.addAttribute("top3Product", orderDetailService.getTop3BestSelling());
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
@@ -57,7 +61,8 @@ public class AdminController {
             model.addAttribute("title_main", title_main);
             model.addAttribute("employees", authorityService.getListStaff());
             model.addAttribute("page", "admin.employee");
-            model.addAttribute("_", authority.getAccount());
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
+
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
@@ -72,7 +77,8 @@ public class AdminController {
             model.addAttribute("histories", historyService.findAll());
             model.addAttribute("page", "admin.history");
             model.addAttribute("title_main", title_main);
-            model.addAttribute("_", authority.getAccount());
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
+
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
@@ -85,6 +91,7 @@ public class AdminController {
         String title_main = "Tài liệu hỗ trợ phần mềm";
         model.addAttribute("page", "admin.docs");
         model.addAttribute("title_main", title_main);
+        model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
         return "index";
     }
 
@@ -94,6 +101,8 @@ public class AdminController {
         String title_main  = "Tài liệu thông tin pháp lý";
         model.addAttribute("page", "admin.license");
         model.addAttribute("title_main", title_main);
+        model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
+
         return "index";
     }
 
@@ -103,6 +112,8 @@ public class AdminController {
         String title_main = "Thông tin liên hệ chúng tôi";
         model.addAttribute("page", "admin.contact");
         model.addAttribute("title_main", title_main);
+        model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
+
         return "index";
     }
 

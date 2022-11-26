@@ -20,6 +20,7 @@ import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryService;
 import com.fastshop.net.service.HistoryService;
+import com.fastshop.net.service.NotifyService;
 import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service._SessionService;
 
@@ -43,6 +44,8 @@ public class WebMainController {
     HistoryService historyService;
     @Autowired
     ProductService cartSevice;
+    @Autowired
+    NotifyService notifyService;
     @Autowired
     private ApplicationContext applicationContext;
 
@@ -74,7 +77,7 @@ public class WebMainController {
             model.addAttribute("products", cartSevice.findAll());
             model.addAttribute("title_main", title_main);
             model.addAttribute("hints", categoryService.getOneProductEachCategories(number_hint_keyword));
-
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
 
             // thêm history
             if (auth != null) {
@@ -188,6 +191,8 @@ public class WebMainController {
             model.addAttribute("error1", "");
             model.addAttribute("error2", "");
             model.addAttribute("error3", "");
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+
             return "index";
         } catch (Exception e) {
             return "redirect:/login";
