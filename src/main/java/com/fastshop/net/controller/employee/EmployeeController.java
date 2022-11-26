@@ -87,8 +87,8 @@ public class EmployeeController {
     @RequestMapping("/notify/add")
     public String sentPDF(Model model, @ModelAttribute("sentReport") SentReport sentReport, 
                                        @ModelAttribute("auth") Authority auth, 
-                                       @RequestParam("fileName") MultipartFile multipartFile,
-                                       @RequestParam("nameReport") String nameReport) {
+                                       @RequestParam("fileNames") MultipartFile multipartFile,
+                                       @RequestParam("txtFileList") String txtFileList) {
         try {
             Notify notify = new Notify();
             notify.setAccount(auth.getAccount());
@@ -101,15 +101,16 @@ public class EmployeeController {
                 Path fileNameAndPath = Paths.get(uploadDir, imageUUID);
                 Files.write(fileNameAndPath, multipartFile.getBytes());
             }else {
-                imageUUID = nameReport;
+                imageUUID = txtFileList;
             }
 
             notify.setFileName(imageUUID);
-            notifyService.save(notify);
+            System.out.println(txtFileList);
+            // notifyService.save(notify);
 
             // nhớ thêm biến count_notify cho tất cả admin và staff
 
-            return "redirect:/staff/report";
+            return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
         }

@@ -45,18 +45,16 @@
                           <label class="form-label text-black">
                             Tiêu đề: 
                           </label>
-                          <input type="text" th:field="*{title}" pattern="^[a-zA-Z0-9]{10,}$" class="form-control" placeholder="Nhập tiêu đề ..." required />
+                          <input type="text" th:field="*{title}" class="form-control" placeholder="Nhập tiêu đề ..." required />
                         </div>
                       </div>
                       <div>
-                        <input type="file" name="fileName" multiple th:field="*{fileName}" />
-                        <input type="hidden" name="nameReport" th:value="${sentReport.fileName}" />
+                        <input type="file" name="fileNames" id="listPDF" multiple required/>
+                        <input type="text" th:field="*{fileName}" name="txtFileList" id="txtFileList"></input>
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <a href="#">
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Gửi ngay</button>
-                      </a>
+                      <button type="submit" class="btn btn-primary">Gửi ngay</button>
                     </div>
                   </form>
                 </div>
@@ -489,5 +487,15 @@
         </div>
       </div>
     </div>
+
+    <script>
+      $("#listPDF").change(function() {
+        var names = [];
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+          names.push($(this).get(0).files[i].name);
+        }
+        document.getElementById("txtFileList").value = String(names);
+      });
+    </script>
   </div>
 </div>

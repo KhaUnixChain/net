@@ -1,5 +1,6 @@
 package com.fastshop.net.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,11 @@ public class NotifyServiceImpl implements NotifyService {
 
     @Override
     public List<Notify> findAllByAccAndNowAndStatusOrderBy(Account account) {
-        return notifyDAO.findAllByAccAndNowAndStatusOrderBy(account);
+        try {
+            return notifyDAO.findAllByAccAndNowAndStatusOrderBy(account);
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     @Override

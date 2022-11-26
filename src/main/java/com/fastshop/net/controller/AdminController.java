@@ -42,7 +42,6 @@ public class AdminController {
             String title_main = "Admin - Thống kê doanh số bán hàng";
             model.addAttribute("page", "admin.home");
             model.addAttribute("title_main", title_main);
-            model.addAttribute("_", authority.getAccount());
             model.addAttribute("totalRevenue", Math.round(orderDetailService.getTotalRevenue()));
             model.addAttribute("totalOrder", orderDetailService.getTotalOrder());
             model.addAttribute("top3Product", orderDetailService.getTop3BestSelling());

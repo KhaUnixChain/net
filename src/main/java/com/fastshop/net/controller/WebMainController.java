@@ -77,7 +77,6 @@ public class WebMainController {
             model.addAttribute("products", cartSevice.findAll());
             model.addAttribute("title_main", title_main);
             model.addAttribute("hints", categoryService.getOneProductEachCategories(number_hint_keyword));
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
 
             // thêm history
             if (auth != null) {
