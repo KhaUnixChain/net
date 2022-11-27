@@ -794,14 +794,15 @@ app.controller("changed-ctrl", ($scope, $http) => {
 app.controller("comment-ctrl", ($scope, $http) => {
 	let productid;
 	let username;
-
+    localStorage.setItem("rate", 1);
 	$scope.form = {
 		product: {},
 		account: {},
 		datePost: getDateNow(),
 		feedback: '',
-		rate: localStorage.getItem("rate") == undefined ? 1 : Number(localStorage.getItem("rate")),
+		rate: Number(localStorage.getItem("rate"))
 	};
+
 	setTimeout(() => {
 		productid = document.getElementById('productId').value;
 		username = document.getElementById('username').value;
@@ -828,7 +829,7 @@ app.controller("comment-ctrl", ($scope, $http) => {
 			.catch((err) => {
 				console.log('Account cannot account', err);
 			});
-	}, 3000);
+	}, 2000);
 
 	$scope.create = () => {
         $("#load-page").css("display", "block");
@@ -846,7 +847,7 @@ app.controller("comment-ctrl", ($scope, $http) => {
                     result = false;
                     console.log('Comment failed !', err);
                 });
-        }, 5000);
+        }, 3000);
 	};
 });
 

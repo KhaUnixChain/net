@@ -95,6 +95,8 @@ public class StaffController {
             model.addAttribute("productDTO", new ProductDTO());
             model.addAttribute("title_main", title_main);
             model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("productAll", productSevice.findAll());
+            model.addAttribute("voucherAll", discountService.findByAll());
             model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
 
             return "index";
