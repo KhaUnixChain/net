@@ -37,35 +37,6 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Map<Integer, List<Integer>> getRateByProduct(Product product) {
-        List<Comment> comments = product.getComments();
-        Map<Integer, List<Integer>> rates = new HashMap<>();
-        if (comments.size() > 0) {
-            for (Comment comment : comments) {
-                List<Integer> number = new ArrayList<>();
-                int rate = comment.getRate();
-                if (rate == 5) {
-                    for (int i = 0; i < 5; i++) {
-                        number.add(1);
-                    }
-                }
-                else {
-                    for (int i = 0; i < rate; i++) {
-                        number.add(1);
-                    }
-    
-                    for (int i = 0; i < 5 - rate; i++) {
-                        number.add(0);
-                    }
-                }
-    
-                rates.put(comment.getId(), number);
-            }   
-        }
-        return rates;
-    }
-
-    @Override
     public List<Integer> getMaxStar(Product product) {
         int max;
         try {
@@ -117,4 +88,8 @@ public class CommentServiceImpl implements CommentService{
         commentDAO.deleteById(id);
     }
 
+    @Override
+    public List<Comment> listCommentByUser(String username) {
+        return commentDAO.listCommentByUser(username);
+    }
 }

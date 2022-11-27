@@ -22,4 +22,7 @@ public interface CommentDAO extends JpaRepository<Comment, Integer>{
     Integer getMaxStar(Product product);
 
     List<Comment> findByAccount(Account account);
+
+    @Query("SELECT o FROM Comment o WHERE o.account.username = ?1")
+    List<Comment> listCommentByUser(String username);
 }

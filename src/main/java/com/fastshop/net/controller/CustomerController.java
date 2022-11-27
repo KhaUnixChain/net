@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -127,7 +126,6 @@ public class CustomerController {
         model.addAttribute("product", product);
         model.addAttribute("productDetails", productDetailService.getByProductId(id));
         model.addAttribute("comments", product.getComments());
-        model.addAttribute("rates", commentService.getRateByProduct(product).entrySet().stream().map(item -> item.getValue()).collect(Collectors.toList()));
         model.addAttribute("maxStar", commentService.getMaxStar(product));
         try {
             model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
@@ -230,6 +228,7 @@ public class CustomerController {
     public String feedback(Model model, @ModelAttribute("auth") Authority auth) {
         try {
             model.addAttribute("page", "user.feedback");
+            model.addAttribute("commentList", commentService.listCommentByUser(auth.getAccount().getUsername()));
             model.addAttribute("title_main", "Fastshop - Thông tin đánh giá sản phẩm");
             model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             return "index";
