@@ -1057,3 +1057,11 @@ app.controller("staffhome-ctrl", ($scope, $http) => {
 
     $scope.length = 0;
 });
+
+
+// notify
+app.controller("notify-ctrl", ($scope, $http) => {
+    $scope.update = (id) => {
+        console.log(id);
+    }
+});
