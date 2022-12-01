@@ -11,10 +11,12 @@ import org.springframework.ui.Model;
 
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
+import com.fastshop.net.model.History;
 import com.fastshop.net.model.Notify;
 import com.fastshop.net.model.Role;
 import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
+import com.fastshop.net.service.HistoryService;
 import com.fastshop.net.service.NotifyService;
 import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service.RoleService;
@@ -43,6 +45,8 @@ public class EmployeeController {
     NotifyService notifyService;
     @Autowired
     AuthorityService authorityService;
+    @Autowired
+    HistoryService historyService;
 
 
     @RequestMapping("/account/add")
@@ -106,7 +110,12 @@ public class EmployeeController {
             notify.setFileName(imageUUID);
             notifyService.save(notify);
 
-            // nhớ thêm biến count_notify cho tất cả admin và staff
+            History history = new History();
+            history.setAccount(auth.getAccount());
+            history.setTitle("Nhân viên " + auth.getAccount().getFullname() + " đã gửi báo cáo " + FormatDate.parse());
+            history.setSchedual(new Date());
+            history.setLink("http://localhost:8080/files/" + imageUUID);
+            historyService.save(history);
 
             return "redirect:/staff/report";
         } catch (Exception e) {
