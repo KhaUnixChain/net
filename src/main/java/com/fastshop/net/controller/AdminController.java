@@ -76,6 +76,7 @@ public class AdminController {
             model.addAttribute("histories", historyService.findAll());
             model.addAttribute("page", "admin.history");
             model.addAttribute("title_main", title_main);
+            model.addAttribute("histories", historyService.findAll());
             model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
 
             return "index";
