@@ -34,11 +34,13 @@ public class History implements Serializable{
     @Column(name = "title", columnDefinition = "nvarchar(250)", nullable = false)
     String title;
 
-    @Column(name = "link", columnDefinition = "varchar(250)", nullable = false)
+    @Column(name = "link", columnDefinition = "varchar(250)", nullable = true)
     String link;
 
     @Column(name = "schedual", columnDefinition = "datetime", nullable = false)
     Date schedual = new Date();
+
+    Boolean status;
 
     @ManyToOne
     @JoinColumn(name = "Username", nullable = false)
