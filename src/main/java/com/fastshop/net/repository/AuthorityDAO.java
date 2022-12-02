@@ -14,6 +14,8 @@ import com.fastshop.net.model.Authority;
 public interface AuthorityDAO extends JpaRepository<Authority, Integer>{
     Optional<Authority> findByAccount(Account account);
     void deleteByAccount(Account account);
+    @Query("SELECT au.account FROM Authority au WHERE (au.role.id = 'STAFF' AND ( au.account.active != null OR au.account.active = false))")
+    List<Account> getEmployee();
 
     @Query("SELECT au.account FROM Authority au WHERE (au.role.id='STAFF') AND (au.account.id=?1)")
     List<Account> findByKeyword(String keyword);
