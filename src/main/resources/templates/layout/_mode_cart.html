@@ -46,8 +46,13 @@
       <span class="badge bg-red" style="border-radius: 50%;" id="number" hidden></span>
       <a href="#" class="nav-link px-0 me-1" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
         <!-- thông báo icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path><path d="M9 17v1a3 3 0 0 0 6 0v-1"></path></svg>
-        <span class="badge bg-red"  style="border-radius: 50%;" id="notify-number">[[${count_notify.size()}]]</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path>
+          <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+        </svg>
+        <span class="badge bg-red"  style="border-radius: 50%;" th:if="${auth.role.id == 'STAFF'}">[[${count_notify.size()}]]</span>
+        <span class="badge bg-red"  style="border-radius: 50%;" th:if="${auth.role.id == 'ADMIN'}">[[${histories.size()}]]</span>
       </a>
       <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card" ng-controller="notify-ctrl">
         <div class="card">
@@ -56,7 +61,8 @@
           </div>
           <div class="list-group list-group-flush list-group-hoverable">
 
-            <div class="list-group-item" th:each="notify : ${count_notify}">
+            <!-- display for staff -->
+            <div th:if="${auth.role.id == 'STAFF'}" class="list-group-item" th:each="notify : ${count_notify}">
               <div class="row align-items-center">
                 <div class="col-auto">
                   <th:block th:if="${notify.status == false}">
@@ -70,6 +76,27 @@
                   <a href="#" class="text-body d-block">[[${notify.title}]]</a>
                   <div class="d-block text-muted pe-2 fs-5">
                     [[${notify.fileName}]]
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- display for admin -->
+            <div th:if="${auth.role.id == 'ADMIN'}" class="list-group-item" th:each="history : ${histories}">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <th:block th:if="${history.status == false || history.status == null}">
+                    <span class="status-dot status-dot-animated bg-red d-block"></span>
+                  </th:block>
+                  <th:block th:if="${history.status == true}">
+                    <span class="status-dot status-dot-animated bg-green d-block"></span>
+                  </th:block>
+                </div>
+                <div class="col text-truncate pe-4 me-2"  th:attr="ng-click='update(${history.id})'">
+                  <a href="#" class="text-body d-block">[[${history.title}]]</a>
+                  <div class="d-block text-muted pe-2 fs-5">
+                    [[${history.link}]]
                   </div>
                 </div>
               </div>

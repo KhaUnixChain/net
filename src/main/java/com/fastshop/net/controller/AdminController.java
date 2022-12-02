@@ -38,18 +38,15 @@ public class AdminController {
 
     @RequestMapping("/admin/home")
     public String home(Model model, @ModelAttribute("auth") Authority authority) {
-        try {
-            String title_main = "Admin - Thống kê doanh số bán hàng";
-            model.addAttribute("page", "admin.home");
-            model.addAttribute("title_main", title_main);
-            model.addAttribute("totalRevenue", Math.round(orderDetailService.getTotalRevenue()));
-            model.addAttribute("totalOrder", orderDetailService.getTotalOrder());
-            model.addAttribute("top3Product", orderDetailService.getTop3BestSelling());
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
-            return "index";
-        } catch (Exception e) {
-            return "redirect:/login.fastshop.com";
-        }
+        String title_main = "Admin - Thống kê doanh số bán hàng";
+        model.addAttribute("page", "admin.home");
+        model.addAttribute("title_main", title_main);
+        model.addAttribute("totalRevenue", orderDetailService.getTotalRevenue());
+        model.addAttribute("totalOrder", orderDetailService.getTotalOrder());
+        model.addAttribute("top3Product", orderDetailService.getTop3BestSelling());
+        model.addAttribute("histories", historyService.findAll());
+        return "index";
+
     }
 
     @RequestMapping("/admin/employee")
