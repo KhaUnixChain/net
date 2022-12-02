@@ -67,8 +67,10 @@ public class EmployeeController {
     @RequestMapping("/account/active/{username}")
     public String delete(@PathVariable("username") String username) {
         Account account = accountService.findById(username);
-        account.setActive( account.getActive() != null ? false : null);
-        accountService.save(account);
+        if (account.getActive() != null) {
+            account.setActive( !account.getActive() );
+            accountService.save(account);            
+        }
         return "redirect:/admin/employee";
     }
 
