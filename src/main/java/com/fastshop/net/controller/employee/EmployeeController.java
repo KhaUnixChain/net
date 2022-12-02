@@ -115,6 +115,7 @@ public class EmployeeController {
             history.setTitle("Nhân viên " + auth.getAccount().getFullname() + " đã gửi báo cáo " + FormatDate.parse());
             history.setSchedual(new Date());
             history.setLink("http://localhost:8080/files/" + imageUUID);
+            history.setStatus(true);
             historyService.save(history);
 
             return "redirect:/staff/report";
