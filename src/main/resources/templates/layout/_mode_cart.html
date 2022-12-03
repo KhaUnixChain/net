@@ -62,7 +62,7 @@
           <div class="list-group list-group-flush list-group-hoverable">
 
             <!-- display for staff -->
-            <div th:if="${auth.role.id == 'STAFF'}" class="list-group-item" th:each="notify : ${count_notify}">
+            <div class="list-group-item" th:each="notify : ${count_notify}">
               <div class="row align-items-center">
                 <div class="col-auto">
                   <th:block th:if="${notify.status == false}">
@@ -76,27 +76,6 @@
                   <a href="#" class="text-body d-block">[[${notify.title}]]</a>
                   <div class="d-block text-muted pe-2 fs-5">
                     [[${notify.fileName}]]
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-            <!-- display for admin -->
-            <div th:if="${auth.role.id == 'ADMIN'}" class="list-group-item" th:each="history : ${histories}">
-              <div class="row align-items-center">
-                <div class="col-auto">
-                  <th:block th:if="${history.status == false || history.status == null}">
-                    <span class="status-dot status-dot-animated bg-red d-block"></span>
-                  </th:block>
-                  <th:block th:if="${history.status == true}">
-                    <span class="status-dot status-dot-animated bg-green d-block"></span>
-                  </th:block>
-                </div>
-                <div class="col text-truncate pe-4 me-2"  th:attr="ng-click='update(${history.id})'">
-                  <a href="#" class="text-body d-block">[[${history.title}]]</a>
-                  <div class="d-block text-muted pe-2 fs-5">
-                    [[${history.link}]]
                   </div>
                 </div>
               </div>

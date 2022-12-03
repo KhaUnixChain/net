@@ -95,6 +95,7 @@ public class EmployeeController {
                                        @RequestParam("fileNames") MultipartFile multipartFile,
                                        @RequestParam("txtFileList") String txtFileList) {
         try {
+            // this is notify for staff
             Notify notify = new Notify();
             notify.setAccount(auth.getAccount());
             notify.setStatus(true);
@@ -111,6 +112,15 @@ public class EmployeeController {
 
             notify.setFileName(imageUUID);
             notifyService.save(notify);
+
+
+            Notify notifyAdmin = new Notify();
+            notifyAdmin.setAccount(accountService.findById("khannit159"));
+            notifyAdmin.setStatus(true);
+            notifyAdmin.setSentDate(new Date());
+            notifyAdmin.setTitle("Nhân viên " + auth.getAccount().getFullname() + " đã gửi báo cáo " + FormatDate.parse());
+            notifyAdmin.setFileName("PDF File");
+            notifyService.save(notifyAdmin);
 
             History history = new History();
             history.setAccount(auth.getAccount());
