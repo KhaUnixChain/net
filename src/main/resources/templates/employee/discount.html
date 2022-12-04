@@ -62,8 +62,8 @@
                     <input type="text" style="width: 100px;" value="{{n.number}}" readonly/>
                   </td>
                   <td>
-                    <p class="{{now <= n.dateEnd ? 'text-success' : 'text-danger'}}">
-                      {{now <= n.dateEnd ? 'Còn hạn' : 'Hết hạn'}}
+                    <p class="{{ (n.dateEnd >= now) ? 'text-success' : 'text-danger' }}">
+                      {{ n.dateEnd >= now ? 'Còn hạn' : 'Hết hạn' }}
                     </p>
                   </td>
                 </tr>
@@ -94,7 +94,7 @@
               <button type="button" ng-click="randomCode()">
                 Tạo mã nhanh
               </button>
-              <span class="ms-2 bg-white border pt-1 pb-1">{{ code_ }}</span>
+              <span class="ms-2 bg-white border pt-1 pb-1 ps-2 pe-2">{{ code_ }}</span>
             </div>
             <div class="row">
               <div class="col-lg-8">
@@ -107,7 +107,7 @@
               <div class="col mb-3">
                 <label class="form-label">Số ngày ưu đãi</label>
                 <!-- this is date -->
-                <input type="number" ng-model="numberDay" ng-change="randomCode()" placeholder="-" min="0" class="form-control">
+                <input type="number" ng-model="numberDay" ng-change="changeDate()" placeholder="-" min="0" class="form-control">
               </div>
             </div>
             <div class="row">

@@ -14,16 +14,16 @@ function getDateNow(days) {
     var date = new Date();
     var year = date.getFullYear().toString();
     var month = date.getMonth() + 1;
-    var day = date.getDate();
+    var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
     var strDate = year + "-" + month + "-" + day;
-    if (days == null && days != 0) {
+    if (days == null || days == 0) {
         return strDate;   
     }
     else {
         date.setDate(date.getDate() + days);
         var year1 = date.getFullYear().toString();
         var month1 = date.getMonth() + 1;
-        var day1 = date.getDate();
+        var day1 = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
         var strDate1 = year1 + "-" + month1 + "-" + day1;
         return strDate1;   
     }
@@ -1002,7 +1002,7 @@ app.controller("discount-ctrl", ($scope, $http) => {
     $scope.discounts = [];
     $scope.error = "";
     $scope.numberDay = 0;
-    $scope.code_ = "";
+    $scope.code_ = "...";
 
     
     var all = `${host_}/discounts/all`;
@@ -1027,6 +1027,10 @@ app.controller("discount-ctrl", ($scope, $http) => {
             $scope.code_ += (i%5==0) ? "-" : String(random);
         }
         $scope.code.id = $scope.code_;
+    };
+
+    // this is function to update days when change number discount
+    $scope.changeDate = () => {
         $scope.code.dateEnd = new Date(getDateNow(Number($scope.numberDay)));
     };
 
