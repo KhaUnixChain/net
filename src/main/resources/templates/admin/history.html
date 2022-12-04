@@ -25,7 +25,15 @@
               <input ng-checked="all" ng-click="add(history.id)"  type="checkbox" name="history" style="width: 17px; height: 17px; vertical-align: middle;" class="align-items-center me-3">
               <strong class="small text-muted me-4">{{history.schedual | date: 'dd-MM-yyyy HH:mm' }}</strong>
             </div>
-            <div class="text-truncate" style="width: 24rem;">
+            <div ng-if="history.link != null" class="text-truncate" style="width: 24rem;">
+              <img th:src="@{/chrome.png}" style="width: 23px; height: 23px;" class="me-2" alt=""  ng-if="history.link != null">
+              <img th:src="@{/dist/img/logo/logo_favicon.png}" style="width: 23px; height: 23px;" class="me-2" alt=""  ng-if="history.link == null">
+
+              <a href="{{history.link}}" class="text-muted" download>
+                <span class="fs-5 me-4">{{history.title}}</span>
+              </a>
+            </div>
+            <div ng-if="history.link == null">
               <img th:src="@{/chrome.png}" style="width: 23px; height: 23px;" class="me-2" alt=""  ng-if="history.link != null">
               <img th:src="@{/dist/img/logo/logo_favicon.png}" style="width: 23px; height: 23px;" class="me-2" alt=""  ng-if="history.link == null">
 

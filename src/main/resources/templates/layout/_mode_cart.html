@@ -52,8 +52,8 @@
             <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path>
             <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
           </svg>
-          <span class="badge bg-red" style="border-radius: 50%;" th:if="${auth.role.id == 'STAFF'}">[[${count_notify.size()}]]</span>
-          <span class="badge bg-red" style="border-radius: 50%;" th:if="${auth.role.id == 'ADMIN'}">[[${histories.size()}]]</span>
+          <span class="badge bg-red" style="border-radius: 50%;" ng-if="badge">{{count_notify.length}}</span>
+          <span class="badge bg-red" style="border-radius: 50%;" ng-if="!badge">{{count_notify.length}}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
           <div class="card">
@@ -63,19 +63,15 @@
             <div class="list-group list-group-flush list-group-hoverable">
   
               <!-- display for staff -->
-              <div class="list-group-item" th:each="notify : ${count_notify}">
+              <div class="list-group-item" ng-repeat="notify in count_notify | limitTo: 5">
                 <div class="row align-items-center">
                   <div class="col-auto">
-                    <th:block th:if="${notify.status == false}">
-                      <span class="status-dot status-dot-animated bg-red d-block"></span>
-                    </th:block>
-                    <th:block th:if="${notify.status == true}">
-                      <span class="status-dot status-dot-animated bg-green d-block"></span>
-                    </th:block>
+                      <span ng-if="notify.status == false" class="status-dot status-dot-animated bg-red d-block"></span>
+                      <span ng-if="notify.status == true" class="status-dot status-dot-animated bg-green d-block"></span>
                   </div>
-                  <div class="col text-truncate pe-4 me-2">
-                    <a href="/admin/history" class="text-body d-block">[[${notify.title}]]</a>
-                    <div class="d-block text-muted pe-2 fs-5">[[${notify.fileName}]]</div>
+                  <div class="col text-truncate pe-4 me-2" style="width: 450px;">
+                    <a href="/admin/history" class="text-body d-block">{{notify.title}}</a>
+                    <div class="d-block text-muted pe-2 fs-5">{{notify.fileName}}</div>
                   </div>
                 </div>
               </div>

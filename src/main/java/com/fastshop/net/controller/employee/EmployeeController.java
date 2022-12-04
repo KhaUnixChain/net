@@ -65,11 +65,27 @@ public class EmployeeController {
 
 
     @RequestMapping("/account/active/{username}")
-    public String delete(@PathVariable("username") String username) {
+    public String delete(@PathVariable("username") String username, @ModelAttribute("auth") Authority auth) {
         Account account = accountService.findById(username);
         if (account.getActive() != null) {
             account.setActive( !account.getActive() );
-            accountService.save(account);            
+            accountService.save(account);
+
+            Notify notify = new Notify();
+            notify.setAccount(auth.getAccount());
+            notify.setFileName("Thông báo");
+            notify.setSentDate(new Date());
+            notify.setStatus(true);
+            notify.setTitle("Bạn đã thay đổi trạng thái nhân viên " + account.getFullname() + " thành " + (!account.getActive() ? "Dừng làm việc" : "Đang làm việc"));
+            notifyService.save(notify);
+
+            History history = new History();
+            history.setAccount(auth.getAccount());
+            history.setTitle("Bạn đã thay đổi trạng thái nhân viên " + account.getFullname() + " thành " + (!account.getActive() ? "Dừng làm việc" : "Đang làm việc"));
+            history.setSchedual(new Date());
+            history.setLink(null);
+            history.setStatus(true);
+            historyService.save(history);
         }
         return "redirect:/admin/employee";
     }
@@ -77,13 +93,13 @@ public class EmployeeController {
 
     @RequestMapping("/account/search")
     public String name(Model model, @ModelAttribute("auth") Authority auth, String keyword) {
-        if (keyword.equalsIgnoreCase("") || keyword == null) {
+        if (keyword.trim().equalsIgnoreCase("") || keyword == null) {
             return "redirect:/admin/employee";
         }
         else {
             model.addAttribute("staff", new Account());
             model.addAttribute("title_main", "Admin - Thống kê danh sách nhân viên");
-            model.addAttribute("employees", authorityService.findByKeyword(keyword));
+            model.addAttribute("employees", authorityService.findByKeyword(keyword.trim()));
             model.addAttribute("page", "admin.employee");
             model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
             return "index";
