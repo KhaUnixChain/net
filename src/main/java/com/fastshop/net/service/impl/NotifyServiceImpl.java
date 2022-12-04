@@ -48,4 +48,14 @@ public class NotifyServiceImpl implements NotifyService {
     public void delete(Notify notify) {
         notifyDAO.delete(notify);
     }
+
+    @Override
+    public Notify findById(Long id) {
+        return notifyDAO.findById(id).get();
+    }
+
+    @Override
+    public List<Notify> findAll(Account account) {
+        return notifyDAO.findAllByAccount(account);
+    }
 }

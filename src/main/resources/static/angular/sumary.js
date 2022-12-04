@@ -1070,13 +1070,31 @@ app.controller("staffhome-ctrl", ($scope, $http) => {
 });
 
 app.controller("mode-cart-ctrl", ($scope, $http) => {
-    $scope.badge = true;
     $scope.count_notify = [];
-    var url_all = `${host_}/notifications/${id}`;
+    $scope.count_true = [];
+    var url_all  = `${host_}/notifications/${id}`; // id of account
+    var url_true = `${host_}/notifications/${id}/true`; // id of account
     $http.get(url_all).then((resp) => { $scope.count_notify = resp.data; }).catch((err) => {});
+    $http.get(url_true).then((resp) => { $scope.count_true = resp.data; }).catch((err) => {});
 
 
+    // id of nofity
     $scope.update_status = (id) => {
-        console.log(id);
+        var url_id = `${host_}/notifications/notify/${id}`;
+
+        $scope.notify = {};
+
+        setTimeout(() => {
+            $http.get(url_id).then((resp) => {
+                $scope.notify = resp.data;
+            }).catch((err) => {});    
+        }, 400);
+        
+
+        setTimeout(() => {
+            $http.put(url_id).then(() => {
+                window.location.href = "http://localhost:8080/admin/history";
+            }).catch((err) => {});    
+        }, 800);
     };
 });
