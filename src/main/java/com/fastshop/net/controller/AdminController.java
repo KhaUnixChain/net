@@ -45,7 +45,7 @@ public class AdminController {
         model.addAttribute("totalOrder", orderDetailService.getTotalOrder());
         model.addAttribute("top3Product", orderDetailService.getTop3BestSelling());
         model.addAttribute("histories", historyService.findAll());
-        model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
+        model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(authority.getAccount()));
 
         return "index";
 
@@ -60,7 +60,7 @@ public class AdminController {
             model.addAttribute("employees", authorityService.getListStaff());
             model.addAttribute("page", "admin.employee");
             model.addAttribute("histories", historyService.findAll());
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(authority.getAccount()));
 
             return "index";
         } catch (Exception e) {
@@ -77,7 +77,7 @@ public class AdminController {
             model.addAttribute("page", "admin.history");
             model.addAttribute("title_main", title_main);
             model.addAttribute("histories", historyService.findAll());
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(authority.getAccount()));
 
             return "index";
         } catch (Exception e) {
@@ -91,7 +91,7 @@ public class AdminController {
         String title_main = "Tài liệu hỗ trợ phần mềm";
         model.addAttribute("page", "admin.docs");
         model.addAttribute("title_main", title_main);
-        model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
+        model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(authority.getAccount()));
         model.addAttribute("histories", historyService.findAll());
 
         return "index";
@@ -103,7 +103,7 @@ public class AdminController {
         String title_main  = "Tài liệu thông tin pháp lý";
         model.addAttribute("page", "admin.license");
         model.addAttribute("title_main", title_main);
-        model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
+        model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(authority.getAccount()));
         model.addAttribute("histories", historyService.findAll());
 
         return "index";
@@ -115,7 +115,7 @@ public class AdminController {
         String title_main = "Thông tin liên hệ chúng tôi";
         model.addAttribute("page", "admin.contact");
         model.addAttribute("title_main", title_main);
-        model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
+        model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(authority.getAccount()));
         model.addAttribute("histories", historyService.findAll());
 
         return "index";

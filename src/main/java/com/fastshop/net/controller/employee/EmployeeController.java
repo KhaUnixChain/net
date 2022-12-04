@@ -101,7 +101,7 @@ public class EmployeeController {
             model.addAttribute("title_main", "Admin - Thống kê danh sách nhân viên");
             model.addAttribute("employees", authorityService.findByKeyword(keyword.trim()));
             model.addAttribute("page", "admin.employee");
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(auth.getAccount()));
             return "index";
         }
     }

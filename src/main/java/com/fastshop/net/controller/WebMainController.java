@@ -190,7 +190,7 @@ public class WebMainController {
             model.addAttribute("error1", "");
             model.addAttribute("error2", "");
             model.addAttribute("error3", "");
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(auth.getAccount()));
 
             return "index";
         } catch (Exception e) {

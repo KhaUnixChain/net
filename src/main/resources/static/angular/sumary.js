@@ -1074,4 +1074,9 @@ app.controller("mode-cart-ctrl", ($scope, $http) => {
     $scope.count_notify = [];
     var url_all = `${host_}/notifications/${id}`;
     $http.get(url_all).then((resp) => { $scope.count_notify = resp.data; }).catch((err) => {});
+
+
+    $scope.update_status = (id) => {
+        console.log(id);
+    };
 });

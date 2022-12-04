@@ -82,7 +82,7 @@ public class OrderController {
             model.addAttribute("title_main", "Fastshop - Quản lý hóa đơn");
             model.addAttribute("orders", orders);
             model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(auth.getAccount()));
 
             return "index";
         } catch (Exception e) {

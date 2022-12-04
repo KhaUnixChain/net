@@ -66,11 +66,11 @@
               <div class="list-group-item" ng-repeat="notify in count_notify | limitTo: 5">
                 <div class="row align-items-center">
                   <div class="col-auto">
-                      <span ng-if="notify.status == false" class="status-dot status-dot-animated bg-red d-block"></span>
-                      <span ng-if="notify.status == true" class="status-dot status-dot-animated bg-green d-block"></span>
+                    <span ng-if="notify.status == false" class="status-dot status-dot-animated bg-red d-block"></span>
+                    <span ng-if="notify.status == true" class="status-dot status-dot-animated bg-green d-block"></span>
                   </div>
                   <div class="col text-truncate pe-4 me-2" style="width: 450px;">
-                    <a href="/admin/history" class="text-body d-block">{{notify.title}}</a>
+                    <a href="#" ng-click="update_status(notify.id)" class="text-body d-block">{{notify.title}}</a>
                     <div class="d-block text-muted pe-2 fs-5">{{notify.fileName}}</div>
                   </div>
                 </div>

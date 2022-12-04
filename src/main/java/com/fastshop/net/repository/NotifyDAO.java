@@ -12,5 +12,8 @@ import com.fastshop.net.model.Notify;
 @Repository
 public interface NotifyDAO extends JpaRepository<Notify, Long>{
     @Query("SELECT o FROM Notify o WHERE o.account = ?1 AND o.status = true ORDER BY o.sentDate DESC")
-    List<Notify> findAllByAccAndNowAndStatusOrderBy(Account account);
+    List<Notify> findAllByAccAndNowAndStatusTrueOrderBy(Account account);
+
+    @Query("SELECT o FROM Notify o WHERE o.account = ?1 AND o.status = false ORDER BY o.sentDate DESC")
+    List<Notify> findAllByAccAndNowAndStatusFalseOrderBy(Account account);
 }

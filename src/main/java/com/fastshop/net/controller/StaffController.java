@@ -78,7 +78,7 @@ public class StaffController {
             model.addAttribute("items", productSevice.findAll());
             model.addAttribute("page", "staff.product");
             model.addAttribute("title_main", "Thông tin chi tiết các sản phẩm");
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(auth.getAccount()));
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
@@ -97,7 +97,7 @@ public class StaffController {
             model.addAttribute("categories", categoryService.findAll());
             model.addAttribute("productAll", productSevice.findAll());
             model.addAttribute("voucherAll", discountService.findByAll());
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(authority.getAccount()));
 
             return "index";
         } catch (Exception e) {
@@ -112,7 +112,7 @@ public class StaffController {
         try {
             model.addAttribute("page", "staff.category");
             model.addAttribute("category", new Category());
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(authority.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(authority.getAccount()));
             String title_main = "";
 
             if (status.equals("stock")) {
@@ -152,7 +152,7 @@ public class StaffController {
             model.addAttribute("now", FormatDate.parse());
             model.addAttribute("title_main", "Báo cáo hoạch toán hằng ngày");
             model.addAttribute("products", productSevice.findAll());
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(account));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(account));
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
@@ -185,7 +185,7 @@ public class StaffController {
             model.addAttribute("productDetail", new ProductDetail());
             model.addAttribute("page", "staff.detail");
             model.addAttribute("productdetails", productDetailService.getByProductId(id));
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(auth.getAccount()));
             model.addAttribute("title_main", "Form thông tin chi tiết mô tả sản phẩm");
             return "index";
         } catch (Exception e) {
@@ -213,7 +213,7 @@ public class StaffController {
     public String dicsount(Model model, @ModelAttribute("auth") Authority auth) {
         try {
             model.addAttribute("page", "staff.discount");
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(auth.getAccount()));
             model.addAttribute("title_main", "Fastshop - Giảm giá sản phẩm");
             return "index";
         } catch (Exception e) {
@@ -245,7 +245,7 @@ public class StaffController {
             model.addAttribute("status", status);
             model.addAttribute("title_main", "Danh sách hóa đơn theo loại");
             model.addAttribute("ordertoday", orderService.findByStatus(status));
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusOrderBy(auth.getAccount()));
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(auth.getAccount()));
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";

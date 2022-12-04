@@ -19,9 +19,15 @@ public class RestNotifyController {
     @Autowired
     AccountService accountService;
 
-    @GetMapping("/rest/notifications/{username}")
-    public List<Notify> findAll(@PathVariable("username") String username) {
+    @GetMapping("/rest/notifications/{username}/true")
+    public List<Notify> findAllTrue(@PathVariable("username") String username) {
         Account account = accountService.findByUsername(username);
-        return notifyService.findAllByAccAndNowAndStatusOrderBy(account);
+        return notifyService.findAllByAccAndNowAndStatusTrueOrderBy(account);
+    }
+
+    @GetMapping("/rest/notifications/{username}/false")
+    public List<Notify> findAllFalse(@PathVariable("username") String username) {
+        Account account = accountService.findByUsername(username);
+        return notifyService.findAllByAccAndNowAndStatusFalseOrderBy(account);
     }
 }

@@ -17,9 +17,18 @@ public class NotifyServiceImpl implements NotifyService {
     NotifyDAO notifyDAO;
 
     @Override
-    public List<Notify> findAllByAccAndNowAndStatusOrderBy(Account account) {
+    public List<Notify> findAllByAccAndNowAndStatusTrueOrderBy(Account account) {
         try {
-            return notifyDAO.findAllByAccAndNowAndStatusOrderBy(account);
+            return notifyDAO.findAllByAccAndNowAndStatusTrueOrderBy(account);
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public List<Notify> findAllByAccAndNowAndStatusFalseOrderBy(Account account) {
+        try {
+            return notifyDAO.findAllByAccAndNowAndStatusFalseOrderBy(account);
         } catch (Exception e) {
             return new ArrayList<>();
         }
