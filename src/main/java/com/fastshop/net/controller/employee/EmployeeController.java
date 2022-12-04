@@ -73,7 +73,7 @@ public class EmployeeController {
 
             Notify notify = new Notify();
             notify.setAccount(auth.getAccount());
-            notify.setFileName("Thông báo");
+            notify.setFileName("- Tin nhắn thông báo -");
             notify.setSentDate(new Date());
             notify.setStatus(true);
             notify.setTitle("Bạn đã thay đổi trạng thái nhân viên " + account.getFullname() + " thành " + (!account.getActive() ? "Dừng làm việc" : "Đang làm việc"));

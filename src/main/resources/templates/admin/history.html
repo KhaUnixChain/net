@@ -18,7 +18,7 @@
 
       <!--  -->
 
-      <div class="hover row mb-2" ng-repeat="history in histories">
+      <div class="hover row mb-2" ng-repeat="history in histories.slice().reverse()">
         <div class="d-flex align-items-center justify-content-between mb-3">
           <span class="align-items-center d-flex">
             <div style="width: 200px;">
@@ -35,21 +35,26 @@
             </div>
             <div ng-if="history.link == null">
               <img th:src="@{/chrome.png}" style="width: 23px; height: 23px;" class="me-2" alt=""  ng-if="history.link != null">
-              <img th:src="@{/dist/img/logo/logo_favicon.png}" style="width: 23px; height: 23px;" class="me-2" alt=""  ng-if="history.link == null">
+              <img th:src="@{/earth.png}" style="width: 23px; height: 23px; opacity: 0.5;" class="me-2" alt=""  ng-if="history.link == null">
 
-              <a href="{{history.link}}" class="text-muted" download>
+              <!-- this is link document when history link is not null -->
+              <a href="{{history.link}}" ng-if="history.link != null" download>
                 <span class="fs-5 me-4">{{history.title}}</span>
               </a>
+
+              <!-- this is link document when history link is null -->
+              <span ng-if="history.link == null" class="fs-5 me-4">{{history.title}}</span>
+              
             </div>
 
             <div class="badge bg-primary" ng-if="history.link != null">
-              {{history.link.substr(history.link.lastIndexOf('/') + 1)}}
+              PDF
             </div>
           </span>
           <span ng-click="remove(history.id)">
             <!-- icon x -->
-            <svg style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg me-3" viewBox="0 0 16 16">
-              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x me-3" viewBox="0 0 16 16">
+              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
             </svg>
           </span>
         </div>
