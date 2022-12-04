@@ -510,11 +510,8 @@ app.controller("report-staff-ctrl", ($scope, $http) => {
 });
 
 app.controller("report-admin-ctrl", ($scope, $http) => {
-    
-});
-
-app.controller("admin-employee-ctrl", ($scope, $http) => {
-    $scope.role = ["Giám đốc", "Trưởng quản lý", ""];
+    // chỗ này để sau này chèn thêm đồ thị
+    // trong home admin html
 });
 
 // cart là cái chỉ để thêm sản phẩm vào giỏ hàng
@@ -1072,10 +1069,7 @@ app.controller("staffhome-ctrl", ($scope, $http) => {
     $scope.length = 0;
 });
 
-
 // notify
-app.controller("notify-ctrl", ($scope, $http) => {
-    $scope.update = (id) => {
-        console.log(id);
-    }
+app.controller("mode-cart-ctrl", ($scope, $http) => {
+    
 });

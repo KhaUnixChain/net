@@ -7,80 +7,80 @@
   </a>
 
   <th:block th:if="${auth != null}">
-    <div th:if="${auth.role.id == 'USER'}" class="nav-item dropdown d-none d-md-flex me-3">
-      <a href="/user/checkout" data-bs-toggle="tooltip" title="Xem giỏ hàng" data-bs-placement="bottom" tabindex="-1" aria-label="Show notifications" class="nav-link px-0">
-        
-        <!-- giỏ hàng icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-          <circle cx="6" cy="19" r="2"></circle>
-          <circle cx="17" cy="19" r="2"></circle>
-          <path d="M17 17h-11v-14h-2"></path>
-          <path d="M6 5l14 1l-1 7h-13"></path>
-        </svg>
-        <span class="badge bg-red" style="border-radius: 50%;" id="number">0</span>
-      </a>
-    </div>
-
-
-
-    <!-- notification when add item -->
-    <div class="toast border" data-autohide="false" style="position: absolute; top: 52px; right: 7%; width: 16%; z-index: 3;">
-      <div class="toast-header bg-light d-flex justify-content-between">
-        <strong class="mr-auto text-primary">Thông báo</strong>
+    <div ng-controller="mode-cart-ctrl">
+      <div th:if="${auth.role.id == 'USER'}" class="nav-item dropdown d-none d-md-flex me-3">
+        <a href="/user/checkout" data-bs-toggle="tooltip" title="Xem giỏ hàng" data-bs-placement="bottom" tabindex="-1" aria-label="Show notifications" class="nav-link px-0">
+          
+          <!-- giỏ hàng icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <circle cx="6" cy="19" r="2"></circle>
+            <circle cx="17" cy="19" r="2"></circle>
+            <path d="M17 17h-11v-14h-2"></path>
+            <path d="M6 5l14 1l-1 7h-13"></path>
+          </svg>
+          <span class="badge bg-red" style="border-radius: 50%;" id="number">0</span>
+        </a>
       </div>
-      <div class="toast-body">
-        <svg xmlns="http://www.w3.org/2000/svg" style="color: #04AA6D;" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-        </svg>
-        <span id="toast-number">Thêm sản phẩm thành công</span>
-        <div class="mt-2">
-          <a href="/user/checkout" class="text-danger" style="text-decoration: none;"><button class="btn " style="width: 100%;">Xem giỏ hàng</button></a>
+  
+  
+  
+      <!-- notification when add item -->
+      <div class="toast border" data-autohide="false" style="position: absolute; top: 52px; right: 7%; width: 16%; z-index: 3;">
+        <div class="toast-header bg-light d-flex justify-content-between">
+          <strong class="mr-auto text-primary">Thông báo</strong>
+        </div>
+        <div class="toast-body">
+          <svg xmlns="http://www.w3.org/2000/svg" style="color: #04AA6D;" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+          </svg>
+          <span id="toast-number">Thêm sản phẩm thành công</span>
+          <div class="mt-2">
+            <a href="/user/checkout" class="text-danger" style="text-decoration: none;"><button class="btn " style="width: 100%;">Xem giỏ hàng</button></a>
+          </div>
         </div>
       </div>
-    </div>
-
-
-
-    <div th:if="${auth.role.id == 'ADMIN' || auth.role.id == 'STAFF'}" class="nav-item dropdown d-none d-md-flex me-2">
-      <span class="badge bg-red" style="border-radius: 50%;" id="number" hidden></span>
-      <a href="#" class="nav-link px-0 me-1" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
-        <!-- thông báo icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-          <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path>
-          <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
-        </svg>
-        <span class="badge bg-red"  style="border-radius: 50%;" th:if="${auth.role.id == 'STAFF'}">[[${count_notify.size()}]]</span>
-        <span class="badge bg-red"  style="border-radius: 50%;" th:if="${auth.role.id == 'ADMIN'}">[[${histories.size()}]]</span>
-      </a>
-      <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card" ng-controller="notify-ctrl">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Thông báo của bạn</h3>
-          </div>
-          <div class="list-group list-group-flush list-group-hoverable">
-
-            <!-- display for staff -->
-            <div class="list-group-item" th:each="notify : ${count_notify}">
-              <div class="row align-items-center">
-                <div class="col-auto">
-                  <th:block th:if="${notify.status == false}">
-                    <span class="status-dot status-dot-animated bg-red d-block"></span>
-                  </th:block>
-                  <th:block th:if="${notify.status == true}">
-                    <span class="status-dot status-dot-animated bg-green d-block"></span>
-                  </th:block>
-                </div>
-                <div class="col text-truncate pe-4 me-2"  th:attr="ng-click='update(${notify.id})'">
-                  <a href="#" class="text-body d-block">[[${notify.title}]]</a>
-                  <div class="d-block text-muted pe-2 fs-5">
-                    [[${notify.fileName}]]
+  
+  
+  
+      <div th:if="${auth.role.id == 'ADMIN' || auth.role.id == 'STAFF'}" class="nav-item dropdown d-none d-md-flex me-2 mt-2">
+        <span class="badge bg-red" style="border-radius: 50%;" id="number" hidden></span>
+        <a href="#" class="nav-link px-0 me-1" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
+          <!-- thông báo icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path>
+            <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+          </svg>
+          <span class="badge bg-red" style="border-radius: 50%;" th:if="${auth.role.id == 'STAFF'}">[[${count_notify.size()}]]</span>
+          <span class="badge bg-red" style="border-radius: 50%;" th:if="${auth.role.id == 'ADMIN'}">[[${histories.size()}]]</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Thông báo của bạn</h3>
+            </div>
+            <div class="list-group list-group-flush list-group-hoverable">
+  
+              <!-- display for staff -->
+              <div class="list-group-item" th:each="notify : ${count_notify}">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <th:block th:if="${notify.status == false}">
+                      <span class="status-dot status-dot-animated bg-red d-block"></span>
+                    </th:block>
+                    <th:block th:if="${notify.status == true}">
+                      <span class="status-dot status-dot-animated bg-green d-block"></span>
+                    </th:block>
+                  </div>
+                  <div class="col text-truncate pe-4 me-2">
+                    <a href="/admin/history" class="text-body d-block">[[${notify.title}]]</a>
+                    <div class="d-block text-muted pe-2 fs-5">[[${notify.fileName}]]</div>
                   </div>
                 </div>
               </div>
+  
             </div>
-
           </div>
         </div>
       </div>
