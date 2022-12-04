@@ -275,6 +275,60 @@ app.controller("atm-ctrl", ($scope, $http) => {
 
 });
 
+// cart là cái chỉ để thêm sản phẩm vào giỏ hàng
+app.controller("cart-ctrl", ($scope, $http) => {
+
+    // luôn lấy dữ liệu từ trong localStorage để khi bấm F5 ko bị mất
+    var id = account_.innerHTML;
+    number.innerHTML = (localStorage.getItem(id) == undefined) ? 0 : JSON.parse(localStorage.getItem(id)).length;
+    $scope.letter = [0,1,2,3,4,5,6,7,8,9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+
+    $scope.qty = 1;
+
+    $scope.minus = () => {
+        $scope.qty = ($scope.qty < 2) ? 1 : $scope.qty-1;
+    };
+
+    $scope.plus = () => {
+        $scope.qty++;
+    };
+
+
+    $scope.cart = {
+        item: [],
+
+        add(id_product) {
+            var item = this.items.find(item => item.id == id_product);
+            if (item) {
+                item.qty += $scope.qty;
+                this.saveToLocalStorage();
+            }
+            else {
+                $http.get(`${host_}/products/${id_product}`).then(resp => {
+                    resp.data.qty = $scope.qty;
+                    this.items.push(resp.data);
+                    this.saveToLocalStorage();
+                    number.innerHTML = Number(number.innerHTML) + 1;   // để mặc định number sẽ là $scope.count (+1) để hiện 1 ngay - nó sẽ là localStorage đang giữ bao nhiêu item, nên ko nhất định là 1;
+                })
+            }
+        },
+
+        //Lưu giỏ hàng vào local storage
+        saveToLocalStorage(){
+            var json = JSON.stringify(angular.copy(this.items));
+            localStorage.setItem(id, json);
+        },
+
+        //Đọc giỏ hàng từ local storage
+        loadFromLocalStorage(){
+            var json = localStorage.getItem(id);
+            this.items = json ? JSON.parse(json) : [];
+        }
+    }
+
+    $scope.cart.loadFromLocalStorage();
+});
+
 // cái này là để hiển thị danh sách sản phẩm và thanh toán luôn
 app.controller("checkout-ctrl", ($scope, $http) => {
     var date = new Date().toLocaleDateString("en-CA").toString();
@@ -512,60 +566,6 @@ app.controller("report-staff-ctrl", ($scope, $http) => {
 app.controller("report-admin-ctrl", ($scope, $http) => {
     // chỗ này để sau này chèn thêm đồ thị
     // trong home admin html
-});
-
-// cart là cái chỉ để thêm sản phẩm vào giỏ hàng
-app.controller("cart-ctrl", ($scope, $http) => {
-
-    // luôn lấy dữ liệu từ trong localStorage để khi bấm F5 ko bị mất
-    var id = account_.innerHTML;
-    number.innerHTML = (localStorage.getItem(id) == undefined) ? 0 : JSON.parse(localStorage.getItem(id)).length;
-    $scope.letter = [0,1,2,3,4,5,6,7,8,9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
-
-    $scope.qty = 1;
-
-    $scope.minus = () => {
-        $scope.qty = ($scope.qty < 2) ? 1 : $scope.qty-1;
-    };
-
-    $scope.plus = () => {
-        $scope.qty++;
-    };
-
-
-    $scope.cart = {
-        item: [],
-
-        add(id_product) {
-            var item = this.items.find(item => item.id == id_product);
-            if (item) {
-                item.qty += $scope.qty;
-                this.saveToLocalStorage();
-            }
-            else {
-                $http.get(`${host_}/products/${id_product}`).then(resp => {
-                    resp.data.qty = $scope.qty;
-                    this.items.push(resp.data);
-                    this.saveToLocalStorage();
-                    number.innerHTML = Number(number.innerHTML) + 1;   // để mặc định number sẽ là $scope.count (+1) để hiện 1 ngay - nó sẽ là localStorage đang giữ bao nhiêu item, nên ko nhất định là 1;
-                })
-            }
-        },
-
-        //Lưu giỏ hàng vào local storage
-        saveToLocalStorage(){
-            var json = JSON.stringify(angular.copy(this.items));
-            localStorage.setItem(id, json);
-        },
-
-        //Đọc giỏ hàng từ local storage
-        loadFromLocalStorage(){
-            var json = localStorage.getItem(id);
-            this.items = json ? JSON.parse(json) : [];
-        }
-    }
-
-    $scope.cart.loadFromLocalStorage();
 });
 
 app.controller("product-ctrl", ($scope, $http) => {
