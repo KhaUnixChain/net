@@ -2,7 +2,7 @@
   <div class="card mt-4 bg-white mb-4" ng-controller="history-ctrl">
     <div class="card-header d-flex justify-content-between">
       <h3 class="ms-2 card-title text-primary">
-        <input ng-click="choose_all()" type="checkbox" class="ms-1 me-3" style="width: 17px; height: 17px; vertical-align: middle;" ng-model="all"> Lịch sử hoạt động
+        <input ng-click="choose_all()" type="checkbox" class="ms-1 me-3" style="width: 17px; height: 17px; vertical-align: middle;" ng-model="all"> Danh sách thông báo
       </h3>
       <svg ng-click="delete()" xmlns="http://www.w3.org/2000/svg" style="color: red; cursor: pointer;" class="icon icon-tabler icon-tabler-trash me-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -18,7 +18,7 @@
 
       <!--  -->
 
-      <div class="hover row mb-4" ng-repeat="history in histories">
+      <div class="hover row mb-2" ng-repeat="history in histories">
         <div class="d-flex align-items-center justify-content-between mb-3">
           <span class="align-items-center d-flex">
             <div style="width: 200px;">
@@ -32,8 +32,8 @@
               </a>
             </div>
 
-            <div>
-              PDF file
+            <div class="badge bg-primary">
+              {{history.link.substr(history.link.lastIndexOf('/') + 1)}}
             </div>
           </span>
           <span ng-click="remove(history.id)">
