@@ -50,17 +50,39 @@ public class EmployeeController {
 
 
     @RequestMapping("/account/add")
-    public String add(Account account) {
-        // save account
-        accountService.save(account);
+    public String add(Account account, @ModelAttribute("auth") Authority auth) {
+        try {
+            // save account
+            accountService.save(account);
 
-        // save auth
-        Role role = roleService.findById("STAFF");
-        Authority authority = new Authority();
-        authority.setAccount(account);
-        authority.setRole(role);
-        authorityService.save(authority);
-        return "redirect:/admin/employee";
+            // save auth
+            Role role = roleService.findById("STAFF");
+            Authority authority = new Authority();
+            authority.setAccount(account);
+            authority.setRole(role);
+            authorityService.save(authority);
+
+            Notify notify = new Notify();
+            notify.setAccount(auth.getAccount());
+            notify.setFileName("- Tin nhắn thông báo -");
+            notify.setSentDate(new Date());
+            notify.setStatus(true);
+            notify.setTitle("Bạn đã thêm thành công nhân viên ID ( "  + account.getUsername() + " )");
+            notifyService.save(notify);
+
+            History history = new History();
+            history.setAccount(auth.getAccount());
+            history.setTitle("Bạn đã thêm thành công nhân viên ID ( "  + account.getUsername() + " )");
+            history.setSchedual(new Date());
+            history.setLink(null);
+            history.setStatus(true);
+            historyService.save(history);
+
+            return "redirect:/admin/employee";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/login.fastshop.com";
+        }
     }
 
 

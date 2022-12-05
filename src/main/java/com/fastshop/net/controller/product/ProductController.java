@@ -13,14 +13,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fastshop.net.model.Account;
+import com.fastshop.net.model.Authority;
+import com.fastshop.net.model.Notify;
 import com.fastshop.net.model.Product;
 import com.fastshop.net.model.ProductDTO;
+import com.fastshop.net.service.AccountService;
+import com.fastshop.net.service.AuthorityService;
 import com.fastshop.net.service.CategoryService;
+import com.fastshop.net.service.NotifyService;
 import com.fastshop.net.service.ProductService;
+import com.fastshop.net.service._CookieService;
 
 @Controller
 public class ProductController {
     public static String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/dist/img/products";
+    @Autowired
+    _CookieService cookieService;
+    @Autowired
+    AccountService accountService;
+    @Autowired
+    AuthorityService authorityService;
+    @Autowired
+    NotifyService notifyService;
     @Autowired
     ProductService productService;
     @Autowired
@@ -28,6 +43,7 @@ public class ProductController {
 
     @RequestMapping("/staff/products/add")
     public String postProAdd(@ModelAttribute("productDTO") ProductDTO productDTO,
+                             @ModelAttribute("atuh") Authority authority,
                              @RequestParam("productImage") MultipartFile fileProductImage,
                              @RequestParam("imgName") String imgName) {
         try {
@@ -50,9 +66,35 @@ public class ProductController {
             product.setImage(imageUUID);
 
             productService.save(product);
+
+            Notify notify = new Notify();
+            notify.setSentDate(new Date());
+            notify.setAccount(authority.getAccount());
+            notify.setStatus(true);
+            notify.setTitle("Bạn đã thêm thành công sản phẩm " + productDTO.getName());
+            notify.setFileName("- Tin nhắn thông báo -");
+            notifyService.save(notify);
+
+
             return "redirect:/staff/products";   
         } catch (IOException e) {
             return "redirect:/login.fastshop.com";
         }
+    }
+
+
+    /**
+     * this is model of authority
+     * @return
+     */
+    @ModelAttribute("auth")
+    public Authority getAuth() {
+        Authority auth = null;
+        String username = cookieService.getValue("username");
+        if (username != null) {
+            Account account = accountService.findByUsernameOrEmail(username, username);
+            auth = authorityService.findByAccount(account);
+        }
+        return auth;
     }
 }
