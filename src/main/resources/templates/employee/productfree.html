@@ -1,0 +1,155 @@
+<div th:fragment="subfragment" class="page-wrapper">
+  <div class="container d-flex justify-content-center">
+    <div class="page">
+      <div class="page-wrapper" ng-controller="productfree-ctrl">
+        <div class="container-xl">
+          <!-- Page title -->
+          <div class="page-header d-print-none">
+            <div class="row g-2">
+
+              <!-- Page title actions -->
+              <div class="">
+                <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
+                  data-bs-target="#modal-voucher-add" style="text-decoration: none;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-magic me-2" viewBox="0 0 16 16">
+                    <path d="M9.5 2.672a.5.5 0 1 0 1 0V.843a.5.5 0 0 0-1 0v1.829Zm4.5.035A.5.5 0 0 0 13.293 2L12 3.293a.5.5 0 1 0 .707.707L14 2.707ZM7.293 4A.5.5 0 1 0 8 3.293L6.707 2A.5.5 0 0 0 6 2.707L7.293 4Zm-.621 2.5a.5.5 0 1 0 0-1H4.843a.5.5 0 1 0 0 1h1.829Zm8.485 0a.5.5 0 1 0 0-1h-1.829a.5.5 0 0 0 0 1h1.829ZM13.293 10A.5.5 0 1 0 14 9.293L12.707 8a.5.5 0 1 0-.707.707L13.293 10ZM9.5 11.157a.5.5 0 0 0 1 0V9.328a.5.5 0 0 0-1 0v1.829Zm1.854-5.097a.5.5 0 0 0 0-.706l-.708-.708a.5.5 0 0 0-.707 0L8.646 5.94a.5.5 0 0 0 0 .707l.708.708a.5.5 0 0 0 .707 0l1.293-1.293Zm-3 3a.5.5 0 0 0 0-.706l-.708-.708a.5.5 0 0 0-.707 0L.646 13.94a.5.5 0 0 0 0 .707l.708.708a.5.5 0 0 0 .707 0L8.354 9.06Z"/>
+                  </svg>
+                  Thêm giảm giá
+                </button>
+              </div>
+
+
+              <th:block th:if="${productFree.size() > 0}">
+                <table class="col-10 table bg-white table-borderless text-center" style="box-shadow:  0 0 1px gray;">
+                  <thead style="font-weight: bolder;">
+                    <tr>
+                      <th class="text-center p-3">Hình ảnh</th>
+                      <th class="text-center p-3">Tên sản phẩm</th>
+                      <th class="text-center p-3">Phần trăm %</th>
+                      <th class="text-center p-3">Tiền mặt USD</th>
+                      <th class="text-center p-3">Mã giảm giá</th>
+                      <th class="text-center p-3">Ngày hết hạn</th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-middle">
+                    <tr class="mb-4" th:each="p : ${productFree}">
+                      <td>
+                        <img th:src="@{${'/dist/img/products/' + p.image}}" width="50" alt="">
+                      </td>
+                      <td class="text-start ms-3">
+                        [[${p.name}]]
+                      </td>
+                      <td class="text-center">
+                        <th:block th:if="${p.discount != null}">
+                          <th:block th:if="${p.discount.free != null}">
+                            <span class="badge bg-primary" th:if="${p.discount.free == 10}">[[${p.discount.free}]] %</span>
+                            <span class="badge bg-warning" th:if="${p.discount.free == 15}">[[${p.discount.free}]] %</span>
+                            <span class="badge bg-danger"  th:if="${p.discount.free == 20}">[[${p.discount.free}]] %</span>
+                            <span class="badge bg-yellow"  th:if="${p.discount.free == 30}">[[${p.discount.free}]] %</span>
+                            <span class="badge bg-success" th:if="${p.discount.free == 50}">[[${p.discount.free}]] %</span>
+                          </th:block>
+                          <th:block th:if="${p.discount.free == null}">
+                            <span>-</span>
+                          </th:block>
+                        </th:block>
+                      </td>
+                      <td class="text-center">
+                        <th:block th:if="${p.discount != null}">
+                          <th:block th:if="${p.discount.dolar != null}">
+                            <span class="badge bg-dark">- [[${p.discount.dolar}]] $</span>
+                          </th:block>
+                          <th:block th:if="${p.discount.dolar == null}">
+                            <span>-</span>
+                          </th:block>
+                        </th:block>
+                      </td>
+                      <td class="text-center">
+                        <i class="border p-2">
+                          [[${p.discount.id}]]
+                        </i>
+                      </td>
+                      <td class="text-center">
+                        <i class="border p-2">
+                          [[${p.discount.dateEnd}]]
+                        </i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </th:block>
+
+              <th:block th:if="${productFree.size() == 0}">
+                <div class="row d-flex justify-content-center" style="opacity: 0.7;">
+                  <img src="/empty-discount.jpg" class="col-8" alt="">
+                </div>
+              </th:block>
+
+              
+              
+
+
+              <!-- modal add voucher -->
+              <div class="modal modal-blur fade" id="modal-voucher-add" tabindex="-1" role="dialog" aria-hidden="true" style="transition: 0.2s;">
+                <div class="modal-dialog modal-lg" role="document">
+                  <form method="post" class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Áp mã giảm giá</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                      <div class="mb-3">
+                        <label class="form-label">Tên sản phẩm</label>
+                        <!-- this is model name of form product -->
+                        <select class="form-select" ng-change="readURL_product()" id="productImageVoucher" ng-model="model_discount.productId">
+                          <option value="" disabled selected>-- Chọn sản phẩm --</option>
+                          <option ng-repeat="product in items" value="{{product.id}}">
+                            {{product.name}}
+                          </option>
+                        </select>
+                        <span class="error fs-5" id="eror_free_1">(*) Vui lòng chọn một sản phẩm !</span>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Mã giảm giá</label>
+                        <!-- this is model name of form product -->
+                        <select class="form-select" ng-change="readURL_discount()" id="discountImageVoucher" ng-model="model_discount.discountId">
+                          <option value="" disabled selected>-- Chọn giảm giá --</option>
+                          <option ng-repeat="discount in discounts" value="{{discount.id}}">
+                            {{discount.id}}
+                          </option>
+                        </select>
+                        <span class="error fs-5" id="eror_free_2">(*) Vui lòng chọn một mã giảm giá !</span>
+
+                      </div>
+                    </div>
+
+                    <!-- this is for edit to update and delete -->
+                    <div class="modal-footer">
+                      <img src="" alt="">
+                      <button type="submit" ng-click="addvoucher()" class="btn btn-success">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ballpen" width="24"
+                          height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                          <path d="M14 6l7 7l-4 4"></path>
+                          <path
+                            d="M5.828 18.172a2.828 2.828 0 0 0 4 0l10.586 -10.586a2 2 0 0 0 0 -2.829l-1.171 -1.171a2 2 0 0 0 -2.829 0l-10.586 10.586a2.828 2.828 0 0 0 0 4z">
+                          </path>
+                          <path d="M4 20l1.768 -1.768"></path>
+                        </svg>
+                        Hoàn tất giảm giá
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
