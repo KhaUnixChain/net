@@ -45,6 +45,8 @@ public class Order  implements Serializable{
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dateConfirm")
 	Date dateConfirm = new Date();
+
+	Double total;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")
