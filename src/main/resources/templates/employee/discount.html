@@ -91,10 +91,10 @@
             <div class="mb-3">
               <label class="form-label">Nhập mã giảm</label>
               <img src="/dist/img/vourcher/point-hand.gif" class="me-2" style="width: 30px;" alt="">
-              <button type="button" ng-click="randomCode()">
+              <button class="btn btn-outline-primary" type="button" ng-click="randomCode()">
                 Tạo mã nhanh
               </button>
-              <span class="ms-2 bg-white border pt-1 pb-1 ps-2 pe-2">{{ code_ }}</span>
+              <span class="ms-2 bg-white border p-2">{{ code_ }}</span>
             </div>
             <div class="row">
               <div class="col-lg-8">
@@ -133,7 +133,7 @@
 
           <!-- this is for edit to update and delete -->
           <div class="modal-footer">
-            <a href="#" class="btn btn-success" ng-click="check()">
+            <a href="#" class="btn btn-primary" ng-click="check()">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ballpen" width="24"
                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                 stroke-linecap="round" stroke-linejoin="round">
