@@ -572,20 +572,12 @@ app.controller("report-admin-ctrl", ($scope, $http) => {
 app.controller("product-ctrl", ($scope, $http) => {
     $scope.form = {};
     $scope.items = [];
-    $scope.discounts = [];
     $scope.open = 0;
     $scope.now = getDateNow(null);
 
     var url1 = `${host_}/products`;
     $http.get(url1).then((resp) => {
         $scope.items = resp.data;
-    }).catch((err) => {
-        console.log("Error load items", err);
-    });
-
-    var url2 = `${host_}/discounts/unexpiry`;
-    $http.get(url2).then((resp) => {
-        $scope.discounts = resp.data;
     }).catch((err) => {
         console.log("Error load items", err);
     });
@@ -623,34 +615,27 @@ app.controller("product-ctrl", ($scope, $http) => {
             console.log("error", err);
         });
     };
+});
 
+app.controller("productfree-ctrl", ($scope, $http) => {
+    $scope.items = [];
+    $scope.discounts = [];
+    var url2 = `${host_}/discounts/unexpiry`;
 
+    var url1 = `${host_}/products`;
+    $http.get(url1).then((resp) => {
+        $scope.items = resp.data;
+    }).catch((err) => {
+        console.log("Error load items", err);
+    });
 
+    $http.get(url2).then((resp) => {
+        $scope.discounts = resp.data;
+    }).catch((err) => {
+        console.log("Error load items", err);
+    });
 
-
-    // this is add discount for product if role staff
-    // đây là lấy product hiện tại có ID trên
-    $("#eror_free_1").hide();
-    $("#eror_free_2").hide();
-    $scope.model_discount = {
-        "productId": "",
-        "discountId": ""
-    }
-
-
-
-    $scope.readURL_product = () => {
-        var image = $('#productImageVoucher').val();
-        // $('#productImage_').attr("src", "/dist/img/products/" + image);
-        console.log($scope.model_discount);
-    }
-
-    $scope.readURL_discount = () => {
-        var free = $('#discountImageVoucher').val();
-        // $('#discountImage_').attr("src", "/dist/img/vourcher/" + Math.round(free) + ".png");
-        console.log($scope.model_discount);
-    }
-
+    // ------------------------
     $scope.item_discount = {};
     $scope.item_products = {};
     $scope.addvoucher = () => {
@@ -684,22 +669,32 @@ app.controller("product-ctrl", ($scope, $http) => {
                 }).catch((err) => {});
 
                 console.log($scope.item_products.discount);
-
-                // setTimeout(() => {
-                //     var url4 = `${host_}/products/${$scope.model_discount.productId}`;
-                //     $http.put(url4, $scope.item_products).then((resp) => {
-                //         console.log("Update discount ok", resp);
-                //     }).catch((err) => {
-                //         console.log("Update discount failed", err);
-                //     });
-                // }, 2000);
             }, 1500);
-
-
-            
         }
+    };
+
+    // this is add discount for product if role staff
+    // đây là lấy product hiện tại có ID trên
+    $("#eror_free_1").hide();
+    $("#eror_free_2").hide();
+    $scope.model_discount = {
+        "productId": "",
+        "discountId": ""
     }
 
+
+
+    $scope.readURL_product = () => {
+        var image = $('#productImageVoucher').val();
+        // $('#productImage_').attr("src", "/dist/img/products/" + image);
+        console.log($scope.model_discount);
+    }
+
+    $scope.readURL_discount = () => {
+        var free = $('#discountImageVoucher').val();
+        // $('#discountImage_').attr("src", "/dist/img/vourcher/" + Math.round(free) + ".png");
+        console.log($scope.model_discount);
+    }
 });
 
 app.controller("order-ctrl", ($scope, $http) => {

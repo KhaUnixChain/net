@@ -1,6 +1,7 @@
 package com.fastshop.net.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,6 +100,25 @@ public class StaffController {
             model.addAttribute("voucherAll", discountService.findByAll());
             model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(authority.getAccount()));
 
+            return "index";
+        } catch (Exception e) {
+            return "redirect:/login.fastshop.com";
+        }
+    }
+
+
+    // trang của status product giảm giá discount tiền mặt hoặc %
+    @RequestMapping("/staff/productfree")
+    public String productFree(Model model, @ModelAttribute("auth") Authority auth) {
+        try {
+            String title_main = "User - Sản phẩm theo discount";
+            model.addAttribute("page", "staff.productfree");
+            model.addAttribute("title_main", title_main);
+            model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("productNotFree", productSevice.findByDiscountIsNull());
+            model.addAttribute("productFree", new ArrayList<>());
+
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(auth.getAccount()));
             return "index";
         } catch (Exception e) {
             return "redirect:/login.fastshop.com";
