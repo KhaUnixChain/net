@@ -287,14 +287,22 @@
                   </a> | đánh giá 5 sao
                 </div>
                 <div id="gallery-price" class="d-flex justify-content-between align-items-center">
-                  <b class="text-danger me-4">
+                  <b class="text-danger me-3" th:if="${item.discount != null}">
+                    <th:block th:if="${item.discount.dolar != null}">
+                      <span style="text-decoration: underline;">Giá</span> : [[${item.price - item.discount.dolar}]] $
+                    </th:block>
+                    <th:block th:if="${item.discount.dolar == null}">
+                      <span style="text-decoration: underline;">Giá</span> : [[${item.price}]] $
+                    </th:block>
+                  </b>
+                  <b class="text-danger me-4" th:if="${item.discount == null}">
                     <span style="text-decoration: underline;">Giá</span> : [[${item.price}]] $
                   </b>
                   <th:block th:if="${item.discount != null}">
                     <th:block th:if="${item.discount.dolar != null}">
-                      <span class="text-muted text-end ms-4">
-                        [[${item.discount.dolar}]]
-                      </span>
+                      <strike class="badge bg-dark">
+                        [[${item.price}]] $
+                      </strike>
                     </th:block>
                   </th:block>
                 </div>
