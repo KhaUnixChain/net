@@ -79,4 +79,19 @@ public class ProductServiceImpl implements ProductService{
             return list2;
         }
     }
+
+    @Override
+    public List<Product> findByDiscountIsNull() {
+        return productDAO.findByDiscountIsNull();
+    }
+
+    @Override
+    public List<Product> findByDiscountNotNull() {
+        return productDAO.findByDiscountNotNull();
+    }
+
+    @Override
+    public List<Product> findByDiscountId(String id) {
+        return productDAO.findByDiscountId(id);
+    }
 }
