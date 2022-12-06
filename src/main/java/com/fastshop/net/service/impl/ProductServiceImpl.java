@@ -82,16 +82,28 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<Product> findByDiscountIsNull() {
-        return productDAO.findByDiscountIsNull();
+        try {
+            return productDAO.findByDiscountIsNull();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     @Override
     public List<Product> findByDiscountNotNull() {
-        return productDAO.findByDiscountNotNull();
+        try {
+            return productDAO.findByDiscountNotNull();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     @Override
     public List<Product> findByDiscountId(String id) {
-        return productDAO.findByDiscountId(id);
+        try {
+            return productDAO.findByDiscountId(id);
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 }
