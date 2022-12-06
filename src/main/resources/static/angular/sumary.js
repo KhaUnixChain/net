@@ -1015,7 +1015,7 @@ app.controller("discount-ctrl", ($scope, $http) => {
         "id": "",
         "dateFrom": new Date(getDateNow(null)),
         "dateEnd": new Date(getDateNow(Number($scope.numberDay))),
-        "free": 0.0,
+        "free": "",
         "dolar": null,
         "number": 0
     };
@@ -1046,11 +1046,15 @@ app.controller("discount-ctrl", ($scope, $http) => {
         else if ($scope.numberDay <= 0 || $scope.numberDay == null) {
             $scope.error = "(*) Số ngày không thể nhập số âm.";
         }
-        else if (($scope.code.free == null || $scope.code.free == 0.0) && ($scope.code.dolar <= 0 || $scope.code.dolar == null)) {
+        else if (($scope.code.free == null || $scope.code.free == "") && ($scope.code.dolar <= 0 || $scope.code.dolar == null)) {
             $scope.error = "(*) Chưa có giá trị giảm của discount.";
+        }
+        else if ($scope.code.free == "money" && ($scope.code.dolar <= 0 || $scope.code.dolar == null)) {
+            $scope.error = "(*) Chưa có giá trị giảm tiền mặt.";
         }
         else {
             $scope.error = "";
+            $scope.code.free = ($scope.code.free == "money") ? "" : $scope.code.free;
             var url = `${host_}/discounts`;
             var item = angular.copy($scope.code);
             $http.post(url, item).then((resp) => {
