@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,6 +42,12 @@ public class RestNotifyController {
     @GetMapping("/rest/notifications/notify/{id}")
     public Notify findById(@PathVariable("id") Long id) {
         return notifyService.findById(id);
+    }
+
+    @PostMapping("/rest/notifications/{username}")
+    public void save(@PathVariable("username") String username) {
+        Account account = accountService.findByUsername(username);
+        accountService.save(account);
     }
 
     @PutMapping("/rest/notifications/notify/{id}")
