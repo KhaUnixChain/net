@@ -423,6 +423,7 @@ app.controller("checkout-ctrl", ($scope, $http) => {
         "account": {},
         "createDate": date,
         "dateConfirm":null,
+        "total" : $scope.cart.amount, 
         "status": {}
     };
 
