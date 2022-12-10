@@ -1076,11 +1076,14 @@ app.controller("staffhome-ctrl", ($scope, $http) => {
 app.controller("mode-cart-ctrl", ($scope, $http) => {
     $scope.count_notify = [];
     $scope.count_true = [];
+    $scope.count_false = [];
     var url_all  = `${host_}/notifications/${id}`; // id of account
     var url_true = `${host_}/notifications/${id}/true`; // id of account
+    var url_false = `${host_}/notifications/${id}/false`; // id of account
+
     $http.get(url_all).then((resp) => { $scope.count_notify = resp.data; }).catch((err) => {});
     $http.get(url_true).then((resp) => { $scope.count_true = resp.data; }).catch((err) => {});
-
+    $http.get(url_false).then((resp) => { $scope.count_false = resp.data; }).catch((err) => {});
 
     // id of nofity
     $scope.update_status = (id) => {
