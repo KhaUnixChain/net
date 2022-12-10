@@ -43,10 +43,10 @@ public class ProductController {
 
     @RequestMapping("/staff/products/add")
     public String postProAdd(@ModelAttribute("productDTO") ProductDTO productDTO,
-                             @ModelAttribute("atuh") Authority authority,
                              @RequestParam("productImage") MultipartFile fileProductImage,
                              @RequestParam("imgName") String imgName) {
         try {
+            Account account = accountService.findByUsername(cookieService.getValue("username"));
             Product product = new Product();
             product.setName(productDTO.getName());
             product.setCategory(categoryService.findById(productDTO.getCategory()));
@@ -69,7 +69,7 @@ public class ProductController {
 
             Notify notify = new Notify();
             notify.setSentDate(new Date());
-            notify.setAccount(authority.getAccount());
+            notify.setAccount(account);
             notify.setStatus(true);
             notify.setTitle("Bạn đã thêm thành công sản phẩm " + productDTO.getName());
             notify.setFileName("- Tin nhắn thông báo -");

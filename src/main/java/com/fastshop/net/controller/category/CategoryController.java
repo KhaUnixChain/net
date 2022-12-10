@@ -33,13 +33,14 @@ public class CategoryController {
     NotifyService notifyService;
 
     @RequestMapping("/category/add")
-    public String add(Category category, @ModelAttribute("auth") Authority auth) {
+    public String add(Category category) {
         try {
             category.setStatus(true);
             categoryService.save(category);
+            Account account = accountService.findByUsername(cookie.getValue("username"));
 
             Notify notify = new Notify();
-            notify.setAccount(auth.getAccount());
+            notify.setAccount(account);
             notify.setFileName("-Tin nhắn thông báo-");
             notify.setSentDate(new Date());
             notify.setStatus(true);
@@ -54,12 +55,12 @@ public class CategoryController {
     }
 
     @RequestMapping("/category/update/avaiable/{id}")
-    public String update(@PathVariable("id") String id, @RequestParam("avaiable") Boolean avaiable, @RequestParam("focus") String focus, @ModelAttribute("auth") Authority auth) {
+    public String update(@PathVariable("id") String id, @RequestParam("avaiable") Boolean avaiable, @RequestParam("focus") String focus) {
         categoryService.updateProductAvaiableFromCategory(id, avaiable);
         Category category = categoryService.findById(id);
-
+        Account account = accountService.findByUsername(cookie.getValue("username"));
         Notify notify = new Notify();
-        notify.setAccount(auth.getAccount());
+        notify.setAccount(account);
         notify.setFileName("-Tin nhắn thông báo-");
         notify.setSentDate(new Date());
         notify.setStatus(true);

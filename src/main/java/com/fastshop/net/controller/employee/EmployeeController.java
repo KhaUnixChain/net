@@ -50,10 +50,12 @@ public class EmployeeController {
 
 
     @RequestMapping("/account/add")
-    public String add(Account account, @ModelAttribute("auth") Authority auth) {
+    public String add(Account account) {
         try {
             // save account
             accountService.save(account);
+
+            Account acc = accountService.findByUsername(cookie.getValue("username"));
 
             // save auth
             Role role = roleService.findById("STAFF");
@@ -63,7 +65,7 @@ public class EmployeeController {
             authorityService.save(authority);
 
             Notify notify = new Notify();
-            notify.setAccount(auth.getAccount());
+            notify.setAccount(acc);
             notify.setFileName("- Tin nhắn thông báo -");
             notify.setSentDate(new Date());
             notify.setStatus(true);
@@ -71,7 +73,7 @@ public class EmployeeController {
             notifyService.save(notify);
 
             History history = new History();
-            history.setAccount(auth.getAccount());
+            history.setAccount(acc);
             history.setTitle("Bạn đã thêm thành công nhân viên ID ( "  + account.getUsername() + " )");
             history.setSchedual(new Date());
             history.setLink(null);
