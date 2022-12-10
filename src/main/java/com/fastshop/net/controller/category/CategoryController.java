@@ -54,8 +54,17 @@ public class CategoryController {
     }
 
     @RequestMapping("/category/update/avaiable/{id}")
-    public String update(@PathVariable("id") String id, @RequestParam("avaiable") Boolean avaiable, @RequestParam("focus") String focus) {
+    public String update(@PathVariable("id") String id, @RequestParam("avaiable") Boolean avaiable, @RequestParam("focus") String focus, @ModelAttribute("auth") Authority auth) {
         categoryService.updateProductAvaiableFromCategory(id, avaiable);
+        Category category = categoryService.findById(id);
+
+        Notify notify = new Notify();
+        notify.setAccount(auth.getAccount());
+        notify.setFileName("-Tin nhắn thông báo-");
+        notify.setSentDate(new Date());
+        notify.setStatus(true);
+        notify.setTitle("Bạn đã thay đổi loại hàng " + category.getName() + " thành " + (avaiable?"Bán lại":"Dừng bán"));
+        notifyService.save(notify);
         return "redirect:/staff/category/" + focus; 
     }
 

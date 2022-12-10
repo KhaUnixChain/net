@@ -62,7 +62,7 @@
             <div class="list-group list-group-flush list-group-hoverable">
   
               <!-- display for staff -->
-              <div class="list-group-item" ng-repeat="notify in count_notify.slice().reverse() | limitTo: 5 | orderBy:'notify.sentDate'">
+              <div class="list-group-item" ng-repeat="notify in count_notify | limitTo: 5 | orderBy:'notify.sentDate' | orderBy:'notify.status'">
                 <div class="row align-items-center">
                   <div class="col-auto">
                     <span ng-if="notify.status == false" class="status-dot status-dot-animated bg-red d-block"></span>
