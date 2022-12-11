@@ -1,6 +1,6 @@
 <div th:fragment="subfragment" class="page-wrapper">
 
-  <div class="page-wrapper" ng-controller="myorder-ctrl">
+  <div class="page-wrapper">
     <hr class="mt-0 mb-3">
     <div>
       <div class="row">
@@ -104,26 +104,15 @@
         <div class="col-xl-9 mb-4">
           <!-- Account details card-->
           <div class="card">
-            <h1 class="m-3">Quản lí đơn hàng</h1>
+            <h1 class="mt-3 ms-3 ps-2">Quản lí đơn hàng</h1>
             <div class="card-body rounded">
-              <div class="date mb-2" style="float:right">
-
-                <select class="form-control" name="" id="">
-                  <option value="">Trong 6 tháng</option>
-                  <option value="">Trong 2 tháng</option>
-                  <option value="">Trong 1 tháng</option>
-                  <option value="">Trong 15 ngày</option>
-                </select>
-              </div>
-
               <div class="mt-1">
-                <a th:href="@{${'/user/order/' + auth.account.username + '/0'}}" th:class="${status == 0 ? 'status bg-primary' : 'status'}">Đã gửi</a>
-                <a th:href="@{${'/user/order/' + auth.account.username + '/1'}}" th:class="${status == 1 ? 'status bg-primary' : 'status'}">Đã tiếp nhận</a>
-                <a th:href="@{${'/user/order/' + auth.account.username + '/2'}}" th:class="${status == 2 ? 'status bg-primary' : 'status'}">Đang đóng gói</a>
-                <a th:href="@{${'/user/order/' + auth.account.username + '/3'}}" th:class="${status == 3 ? 'status bg-primary' : 'status'}">Đang đi giao</a>
-                <a th:href="@{${'/user/order/' + auth.account.username + '/4'}}" th:class="${status == 4 ? 'status bg-primary' : 'status'}">Đã giao hàng</a>
-                <a th:href="@{${'/user/order/' + auth.account.username + '/5'}}" th:class="${status == 5 ? 'status bg-success' : 'status'}">Thành công</a>
-                <a th:href="@{${'/user/order/' + auth.account.username +'/-1'}}" th:class="${status == -1 ? 'status bg-danger' : 'status'}">Đã hủy đơn</a>
+                <a style="width: 120px; border: 1px solid lightgray" th:href="@{${'/user/order/' + auth.account.username + '/0'}}" th:class="${status == 0 ? 'btn bg-primary' : 'btn'}">Đã gửi</a>
+                <a style="width: 120px; border: 1px solid lightgray" th:href="@{${'/user/order/' + auth.account.username + '/1'}}" th:class="${status == 1 ? 'btn bg-primary' : 'btn'}">Đã tiếp nhận</a>
+                <a style="width: 120px; border: 1px solid lightgray" th:href="@{${'/user/order/' + auth.account.username + '/2'}}" th:class="${status == 2 ? 'btn bg-primary' : 'btn'}">Đang đóng gói</a>
+                <a style="width: 120px; border: 1px solid lightgray" th:href="@{${'/user/order/' + auth.account.username + '/3'}}" th:class="${status == 3 ? 'btn bg-primary' : 'btn'}">Đang giao</a>
+                <a style="width: 120px; border: 1px solid lightgray" th:href="@{${'/user/order/' + auth.account.username + '/5'}}" th:class="${status == 5 ? 'btn bg-success' : 'btn'}">Thành công</a>
+                <a style="width: 120px; border: 1px solid lightgray" th:href="@{${'/user/order/' + auth.account.username +'/-1'}}" th:class="${status == -1 ? 'btn bg-danger' : 'btn'}">Đã hủy đơn</a>
               </div>
             </div>
           </div>
@@ -138,7 +127,7 @@
                   </svg>
                   <b>[[${o.address}]]</b>
                 </span>
-                <span>- Tổng tiền : <b>$ [[${o.total}]]</b></span>
+                <span>- Tổng tiền : <b>$ [[${#numbers.formatDecimal(o.total == null ? 0 : o.total, 0, 2)}]]</b></span>
               </address>
               <div class="col d-flex justify-content-between">
                 <table class="table table-vcenter card-table">
@@ -182,12 +171,49 @@
                       <td></td>
                       <td></td>
                       <td class="text-center">
-                        <a href="#" class="text-danger me-4" th:if="${o.status.id == 0}" data-bs-toggle="modal" >
+                        <a href="#" class="text-danger me-4" th:if="${o.status.id == 0}" data-bs-toggle="modal" th:data-bs-target="${'#modal-delete-' + o.id}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                             <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
                           </svg>
                         </a>
                       </td>
+
+                      <!-- modal delete -->
+                      <div class="modal modal-blur fade" th:id="${'modal-delete-' + o.id}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-status bg-danger"></div>
+                            <div class="modal-body text-center py-4">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M12 9v2m0 4v.01"></path>
+                                <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75">
+                                </path>
+                              </svg>
+                              <h3 class="text-dark">Bạn muốn xóa đơn hàng <spanclass="text-dark">' # [[${o.id}]] '</spanclass=> này ?</h3>
+
+                              <div class="text-muted">Dữ liệu đơn hàng này sẽ bị xóa trong quản lý đơn hàng của bạn !</div>
+                            </div>
+                            <div class="modal-footer">
+                              <div class="w-100">
+                                <div class="row">
+                                  <div class="col">
+                                    <a href="#" class="btn btn-light w-100" data-bs-dismiss="modal">
+                                      Hủy thao tác
+                                    </a>
+                                  </div>
+                                  <div class="col">
+                                    <a href="#" class="btn btn-danger w-100">
+                                      Xóa đơn hàng
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </tr>
                   </tbody>
                 </table>

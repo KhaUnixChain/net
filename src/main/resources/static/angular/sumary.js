@@ -458,6 +458,10 @@ app.controller("checkout-ctrl", ($scope, $http) => {
             setTimeout(() => {
                 this.thread2();
             }, 6000);
+
+            setTimeout(() => {
+                this.thread3();
+            }, 7000);
         },
         thread2(){     
             for (var item of $scope.cart.items) {
@@ -488,6 +492,22 @@ app.controller("checkout-ctrl", ($scope, $http) => {
             };
 
             localStorage.removeItem(id);
+        },
+        thread3() {
+            $scope.notify = {
+                "id"       :20,
+                "title"    : "Bạn đã đặt hàng #" + $scope.orderNow.id + " vào " + $scope.orderNow.createDate + " thành công. Hãy kiểm tra tin nhắn trong gmail.",
+                "fileName" : "- Tin nhắn thông báo -",
+                "sentDate" : "2022-12-10",
+                "status"   : true,
+                "account"  : $scope.orderNow.account
+            };
+            var url_notify_1 = `${host_}/notifications`;
+            $http.post(url_notify_1, $scope.notify).then((resp) => {
+                console.log("notify ok", resp);
+            }).catch((err) => {
+                console.log("notify failed", err);
+            });
             window.location.href = "http://localhost:8080/fastshop.com";
         }
     }
