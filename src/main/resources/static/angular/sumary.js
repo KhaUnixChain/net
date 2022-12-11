@@ -636,9 +636,9 @@ app.controller("productfree-ctrl", ($scope, $http) => {
     });
 
     // ------------------------
-    $scope.item_discount = {};
-    $scope.item_products = {};
     $scope.addvoucher = () => {
+        $scope.item_discount = {};
+        $scope.item_products = {};
         if ($scope.model_discount.productId == "" || $scope.model_discount.productId == null) {
             $("#eror_free_1").show();
         }
@@ -653,23 +653,26 @@ app.controller("productfree-ctrl", ($scope, $http) => {
             $("#eror_free_2").hide();
         }
 
-        if ($scope.model_discount.discountId != "" && $scope.model_discount.productId != "") {
+        if ($scope.model_discount.discountId && $scope.model_discount.productId) {
             var url_3 = `${host_}/discounts/${$scope.model_discount.discountId}`;
             $http.get(url_3).then((resp) => {
                 $scope.item_discount = resp.data;
-            }).catch((err) => {});
-
-
-            console.log($scope.item_discount);
+            }).catch((err) => {
+                console.log(err);
+            });
 
             setTimeout(() => {
                 var url_4 = `${host_}/products/${$scope.model_discount.productId}`;
+                console.log(url_4);
                 $http.get(url_4).then((resp) => {
                     $scope.item_products = resp.data;
-                }).catch((err) => {});
+                    
+                    console.log(JSON.stringify($scope.item_products));
 
-                console.log($scope.item_products.discount);
-            }, 1500);
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }, 1000);
         }
     };
 

@@ -18,9 +18,7 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public void save(Discount discount) {
-        if (!findByAll().contains(discount)) {
-            discountDAO.save(discount);
-        }
+        discountDAO.save(discount);
     }
 
     @Override

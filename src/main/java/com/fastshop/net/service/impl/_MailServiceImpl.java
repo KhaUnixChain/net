@@ -40,14 +40,14 @@ public class _MailServiceImpl implements _MailService{
 		}
 		String[] bcc = mail.getBcc();
 		if(bcc != null && bcc.length > 0) {
-		helper.setBcc(bcc);
+			helper.setBcc(bcc);
 		}
 		String[] attachments = mail.getAttachments();
 		if(attachments != null && attachments.length > 0) {
-		for(String path: attachments) {
-		File file = new File(path);
-		helper.addAttachment(file.getName(), file);
-		}
+			for(String path: attachments) {
+				File file = new File(path);
+				helper.addAttachment(file.getName(), file);
+			}
 		}
 		// Gửi message đến SMTP server
 		sender.send(message);
@@ -73,6 +73,7 @@ public class _MailServiceImpl implements _MailService{
 	@Scheduled(fixedDelay = 5000)
 	public void run() {
 		while (!list.isEmpty()) {
+			// giu lai gia tri can xoa truoc khi xoa khoi list
 			MailInfo mailInfo = list.remove(0);
 			try {
 				this.send(mailInfo);
