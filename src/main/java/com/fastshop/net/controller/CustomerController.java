@@ -242,6 +242,7 @@ public class CustomerController {
         try {
             model.addAttribute("page", "user.notify");
             model.addAttribute("title_main", "Fastshop - Thông báo của tôi");
+            model.addAttribute("notify_all", notifyService.findAll(auth.getAccount()));
             model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(auth.getAccount()));
             return "index";
         } catch (Exception e) {
