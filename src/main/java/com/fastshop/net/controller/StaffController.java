@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Category;
+import com.fastshop.net.model.MailInfo;
 import com.fastshop.net.model.Order;
 import com.fastshop.net.model.Product;
 import com.fastshop.net.model.ProductDTO;
@@ -24,6 +25,7 @@ import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service.StatusService;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._GetListFile;
+import com.fastshop.net.service._MailService;
 import com.fastshop.net.utils.FormatDate;
 import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
@@ -40,6 +42,8 @@ public class StaffController {
     _CookieService cookie;
     @Autowired
     _GetListFile getListFile;
+    @Autowired
+    _MailService mailService;
     @Autowired
     AuthorityService authorityService;
     @Autowired
@@ -182,14 +186,15 @@ public class StaffController {
 
     // function nhan nut xac nhan
     @RequestMapping("/staff/confirm/{id}")
-    public String confirm(@RequestParam("status") Integer kind, @PathVariable("id") Long orderId) {
+    public String confirm(Model model, @RequestParam("status") Integer kind, @PathVariable("id") Long orderId, @ModelAttribute("mailInfo") MailInfo mailInfo) {
         try {
             Order order = orderService.findById(orderId);
             Status status = statusService.findById(kind);
             order.setStatus(status);
             order.setDateConfirm(new Date());
             orderService.save(order);
-            return "redirect:/staff/orders/status/" + (kind-1);
+            mailService.send(mailInfo);
+            return "redirect:/staff/orders/status/" + kind;
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/login.fastshop.com";
@@ -259,6 +264,7 @@ public class StaffController {
     @RequestMapping("/staff/orders/status/{id}")
     public String status(Model model, @ModelAttribute("auth") Authority auth, @PathVariable("id") Integer status) {
         try {
+            model.addAttribute("mailInfo", new MailInfo(auth.getAccount().getEmail(), "Thông báo đơn hàng của bạn đã bị hủy từ Fashshop.com", ""));
             Date toNow = java.sql.Date.valueOf(LocalDate.now());
             model.addAttribute("page", "staff.home");
             model.addAttribute("orderNotToday", orderService.findNotByCreateDate(toNow));

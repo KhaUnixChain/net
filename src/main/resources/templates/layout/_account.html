@@ -66,9 +66,10 @@
 
     <!-- drop down này cho staff -->
     <div th:if="${auth.role.id == 'STAFF'}" class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="font-size: 11px !important; vertical-align: middle;">
-      <a href="/staff/status?kind=4" class="dropdown-item">1. Hóa đơn thành công</a>
-      <a href="/staff/status?kind=-1" class="dropdown-item">2. Hóa đơn đã hủy</a>
-      <a href="/staff/status?kind=3" class="dropdown-item">3. Hóa đơn đang giao</a>
+      <a href="/staff/home" class="dropdown-item">1. Quản lý đơn hàng</a>
+      <a href="/staff/product" class="dropdown-item">2. Quản lý chi tiết sản phẩm</a>
+      <a href="/staff/category/all" class="dropdown-item">3. Quản lý phân loại sản phẩm</a>
+      <a href="/staff/report" class="dropdown-item">4. Báo cáo thống kê</a>
       <a href="/company/logout" class="dropdown-item">
         <svg xmlns="http://www.w3.org/2000/svg" style="color: red;" class="icon icon-tabler icon-tabler-power" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
