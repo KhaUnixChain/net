@@ -48,7 +48,7 @@
                 </svg>
               </th>
               <th>Tên sản phẩm.</th>
-              <th>Hình ảnh.</th>
+              <th class="w-1">Hình ảnh.</th>
               <th>Số lượng.</th>
               <th>Giá cả.</th>
               <th>Ngày tạo ra.</th>
@@ -65,9 +65,8 @@
               <td><span class="text-muted">{{ item.id }}</span></td>
               <td class="text-reset">{{ item.name }}</td>
               <td>
-                <img class="bg-white" src="/dist/img/products/{{item.image}}" width="37px" height="37px"
-                  style="margin-right: 10px;">
-                <a href="/user/detail/{{item.id}}">{{ item.image }}</a>
+                <img class="bg-white" src="/dist/img/products/{{item.image}}" width="37px" height="37px" style="margin-right: 10px;">
+                <a href="/user/detail/{{item.id}}" class="text-truncate">{{ item.image }}</a>
               </td>
               <th>{{ item.number }}</th>
               <td>
@@ -85,9 +84,8 @@
               <td class="text-end">
 
                 <!-- this is edit -->
-                <a ng-click="edit(item.id)" class="btn btn-default d-none d-sm-inline-block" data-bs-toggle="modal"
-                  data-bs-target="#modal-product" style="text-decoration: none;">
-                  Open Detail
+                <a ng-click="edit(item.id)" class="btn btn-default d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-product" style="text-decoration: none; margin-right: 20px;">
+                  Mở
                 </a>
               </td>
             </tr>

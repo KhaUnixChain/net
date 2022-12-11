@@ -170,11 +170,13 @@
             <div class="text-start">
               <h3 class="ps-1">Tổng tiền sản phẩm</h3> 
               <p class="ps-1">Phí vận chuyển</p>
+              <p class="ps-1">Giảm giá</p>
               <h1 class="text-danger mt-3">Tổng chi phí</h1>
             </div>
             <div class="text-end">
               <h3>$ {{cart.amount | number:2}}</h3>
               <p class="fs-3 align-middle"><img th:src="@{/dist/img/free/deliver.png}" style="width: 35px;" alt=""> $ 1.2</p>
+              <p class="fs-3 align-middle">{{ item.discount.free }}</p>
               <h1 class="text-danger mt-3">$ {{cart.amount + 1.2 | number:2}}</h1>
             </div>
           </div>

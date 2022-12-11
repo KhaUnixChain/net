@@ -242,7 +242,7 @@
         <!-- this is modal which to confirm canceled a order -->
         <div class="modal modal-blur fade" th:id="${'modal-cancel-' + o.id}" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <form method="post" th:action="@{|${'/staff/confirm/' + o.id + '?status=-1' }|}" class="modal-content" th:object="${mailInfo}">
               <div class="modal-header">
                 <h5 class="modal-title">Gửi gmail phản hồi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -256,7 +256,7 @@
                       </svg>
                       Gửi đến: 
                     </label>
-                    <input type="text" class="form-control" th:value="${o.account.email}" readonly/>
+                    <input type="text" class="form-control" th:field="*{to}" th:value="${o.account.email}" readonly/>
                   </div>
                 </div>
                 <div class="row mb-3 align-items-end">
@@ -267,7 +267,7 @@
                       </svg>
                       Tiêu đề: 
                     </label>
-                    <input type="text" class="form-control" value="Thông báo đơn hàng của bạn đã bị hủy từ Fashshop.com" readonly/>
+                    <input type="text" class="form-control" th:field="*{subject}" readonly/>
                   </div>
                 </div>
                 <div>
@@ -277,16 +277,14 @@
                     </svg>
                     Nội dung bài viết: 
                   </label>
-                  <textarea class="form-control" rows="7"></textarea>
+                  <textarea class="form-control" rows="7" th:field="*{body}"></textarea>
                 </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn me-auto" data-bs-dismiss="modal">Đóng</button>
-                <a th:href="@{|${'/staff/confirm/' + o.id + '?status=-1' }|}">
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Gửi thông báo</button>
-                </a>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Gửi thông báo</button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
