@@ -39,7 +39,12 @@ public class GoogleController {
         boolean status = userService.loginFromOAuth2(token); 
         // tìm thấy gmail trong db nếu có thì chuyển trang chính, ngược lại lỗi
         // có 1 cách là nếu ko tìm thấy thì sẽ tạo 1 tài khoản trong db luôn nếu làm thêm chức năng này
-        return (status) ? "redirect:/fastshop.com" : "error/error-404";
+        return (status) ? "redirect:/fastshop.com" : "redirect:/google/login/404";
+    }
+
+    @RequestMapping("/google/login/404")
+    public String error404() {
+        return "error/error-404";
     }
 
     @RequestMapping("/google/login/error")
