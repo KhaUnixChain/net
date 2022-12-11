@@ -58,12 +58,11 @@
               <thead>
                 <tr>
                   <th>STT.</th>
-                  <th>Username</th>
+                  <th>Tên đăng nhập</th>
                   <th>Họ tên</th>
                   <th>Email</th>
                   <th>Số điện thoại</th>
-                  <th>Lương cố định</th>
-                  <th>Active</th>
+                  <th>Trạng thái</th>
                 </tr>
               </thead>
               <tbody class="bg-light">
@@ -73,7 +72,6 @@
                   <td class="text-muted">[[${e.fullname}]]</td>
                   <td class="text-muted">[[${e.email}]]</td>
                   <td class="text-muted">[[${e.phone}]]</td>
-                  <th class="text-muted">4,500,000 đ</th>
                   <td>
                     <a href="#" class="bg-white p-2" data-bs-toggle="modal"
                       th:data-bs-target="${'#modal-delete-' + e.username}" style="border-radius: 50%;">
