@@ -47,8 +47,8 @@
                   <polyline points="6 15 12 9 18 15" />
                 </svg>
               </th>
-              <th>Tên sản phẩm.</th>
-              <th class="w-1">Hình ảnh.</th>
+              <th class="w-3">Tên sản phẩm.</th>
+              <th>Hình ảnh.</th>
               <th>Số lượng.</th>
               <th>Giá cả.</th>
               <th>Ngày tạo ra.</th>
@@ -63,7 +63,7 @@
             <tr ng-repeat="item in items | filter : getItems | orderBy : 'item.id'">
               <td></td>
               <td><span class="text-muted">{{ item.id }}</span></td>
-              <td class="text-reset">{{ item.name }}</td>
+              <td class="text-reset text-truncate">{{ item.name }}</td>
               <td class="text-truncate">
                 <img class="bg-white" src="/dist/img/products/{{item.image}}" width="37px" height="37px">
                 <a href="/user/detail/{{item.id}}">{{ item.image }}</a>
