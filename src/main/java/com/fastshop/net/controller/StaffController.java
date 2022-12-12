@@ -193,8 +193,10 @@ public class StaffController {
             order.setStatus(status);
             order.setDateConfirm(new Date());
             orderService.save(order);
-            mailService.send(mailInfo);
-            return "redirect:/staff/orders/status/" + kind;
+            if (kind == -1) {
+                mailService.send(mailInfo);                
+            }
+            return "redirect:/staff/orders/status/" + (kind - 1);
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/login.fastshop.com";
