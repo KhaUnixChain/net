@@ -64,9 +64,9 @@
               <td></td>
               <td><span class="text-muted">{{ item.id }}</span></td>
               <td class="text-reset">{{ item.name }}</td>
-              <td>
-                <img class="bg-white" src="/dist/img/products/{{item.image}}" width="37px" height="37px" style="margin-right: 10px;">
-                <a href="/user/detail/{{item.id}}" class="text-truncate">{{ item.image }}</a>
+              <td class="text-truncate">
+                <img class="bg-white" src="/dist/img/products/{{item.image}}" width="37px" height="37px">
+                <a href="/user/detail/{{item.id}}">{{ item.image }}</a>
               </td>
               <th>{{ item.number }}</th>
               <td>
@@ -76,16 +76,19 @@
                 {{ item.createDate | date:'dd-MM-yyyy'}}
               </td>
               <td>
-                <span
-                  class="badge bg-{{item.number != 0 && item.category.status != false ? 'success' : 'danger'}} me-1"></span>
+                <span class="badge bg-{{item.number != 0 && item.category.status != false ? 'success' : 'danger'}} me-1"></span>
                 {{ item.number != 0 && item.category.status != false ? 'Còn bán' : 'Hết bán' }}
               </td>
               <td> {{ item.category.name }} </td>
               <td class="text-end">
 
                 <!-- this is edit -->
-                <a ng-click="edit(item.id)" class="btn btn-default d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-product" style="text-decoration: none; margin-right: 20px;">
-                  Mở
+                <a ng-click="edit(item.id)" class="btn d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-product" style="text-decoration: none; margin-right: 20px; border: 1px dashed gray">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-vector-pen me-2" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
+                    <path fill-rule="evenodd" d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
+                  </svg>
+                  Xem
                 </a>
               </td>
             </tr>
@@ -103,8 +106,7 @@
     <div class="modal modal-blur fade" id="modal-product-add" tabindex="-1" role="dialog" aria-hidden="true"
       style="transition: 0.2s;">
       <div class="modal-dialog modal-lg" role="document">
-        <form method="post" class="modal-content" action="/staff/products/add" enctype="multipart/form-data"
-          th:object="${productDTO}">
+        <form method="post" class="modal-content" action="/staff/products/add" enctype="multipart/form-data" th:object="${productDTO}">
           <div class="modal-header">
             <h5 class="modal-title">Chi tiết sản phẩm</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
