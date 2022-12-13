@@ -183,16 +183,7 @@ public class CustomerController {
     
     @RequestMapping("/user/myorder")
     public String myorder(Model model, @ModelAttribute("auth") Authority auth) {
-        try {
-            model.addAttribute("page", "user.myorder");
-            model.addAttribute("title_main", "Fastshop - Quản lý hóa đơn");
-            model.addAttribute("orders", orderService.findAllByEmailOrPhone(auth.getAccount().getEmail(), auth.getAccount().getPassword()));
-            model.addAttribute("address", orderService.findAddressByUsername(auth.getAccount()));
-            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(auth.getAccount()));
-            return "index";
-        } catch (Exception e) {
-            return "redirect:/login";
-        }
+        return "redirect:/user/order/"+ auth.getAccount().getUsername() + "/0";
     }
 
 
