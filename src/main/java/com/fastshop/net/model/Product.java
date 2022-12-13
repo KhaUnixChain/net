@@ -65,8 +65,4 @@ public class Product implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	List<Comment> comments;
-
-	@ManyToOne
-	@JoinColumn(name = "Discountid")
-	Discount discount;
 }

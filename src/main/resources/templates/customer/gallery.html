@@ -261,15 +261,6 @@
       <!-- danh sach cac san pham chay bang thymeleaf -->
       <div class="row row-cards" id="gallery-page" th:if="${products != null}">
         <div th:each="item : ${products}" class="col-sm-6 col-lg-3">
-          <th:block th:if="${item.discount != null}">
-            <th:block th:if="${item.discount.free != null}">
-              <img src="/dist/img/vourcher/10.png" th:if="${item.discount.free == 10}" class="col-2" alt="">
-              <img src="/dist/img/vourcher/15.png" th:if="${item.discount.free == 15}" class="col-2" alt="">
-              <img src="/dist/img/vourcher/20.png" th:if="${item.discount.free == 20}" class="col-2" alt="">
-              <img src="/dist/img/vourcher/30.png" th:if="${item.discount.free == 30}" class="col-2" alt="">
-              <img src="/dist/img/vourcher/50.png" th:if="${item.discount.free == 50}" class="col-2" alt="">
-            </th:block>
-          </th:block>
           <a th:href="@{|${'/user/detail/'+{item.id}}|}" class="d-inline">
             <div class="card card-sm p-3 d-flex text-center">
               <img th:src="@{${'/dist/img/products/'+{item.image}}}" class="card-img-top">
@@ -287,24 +278,10 @@
                   </a> | đánh giá 5 sao
                 </div>
                 <div id="gallery-price" class="d-flex justify-content-between align-items-center">
-                  <b class="text-danger me-3" th:if="${item.discount != null}">
-                    <th:block th:if="${item.discount.dolar != null}">
-                      <span style="text-decoration: underline;">Giá</span> : [[${item.price - item.discount.dolar}]] $
-                    </th:block>
-                    <th:block th:if="${item.discount.dolar == null}">
+                  <b class="text-danger me-3">
                       <span style="text-decoration: underline;">Giá</span> : [[${item.price}]] $
                     </th:block>
                   </b>
-                  <b class="text-danger me-4" th:if="${item.discount == null}">
-                    <span style="text-decoration: underline;">Giá</span> : [[${item.price}]] $
-                  </b>
-                  <th:block th:if="${item.discount != null}">
-                    <th:block th:if="${item.discount.dolar != null}">
-                      <strike class="badge bg-dark">
-                        [[${item.price}]] $
-                      </strike>
-                    </th:block>
-                  </th:block>
                 </div>
               </div>
             </div>

@@ -16,15 +16,6 @@ public interface ProductDAO extends JpaRepository<Product, Integer>{
 
     @Query("SELECT o FROM Product o WHERE o.name LIKE %?1%")
     List<Product> findByKeywordName(String kw);
-
-    @Query("SELECT o FROM Product o WHERE o.discount.id IS NULL")
-    List<Product> findByDiscountIsNull();
-
-    @Query("SELECT o FROM Product o WHERE o.discount.id IS NOT NULL")
-    List<Product> findByDiscountNotNull();
-
-    @Query("SELECT o FROM Product o WHERE o.discount.id = ?1")
-    List<Product> findByDiscountId(String id);
     /**
      *  SELECT * FROM products
      *  INNER JOIN categories ON categories.id = products.categoryid

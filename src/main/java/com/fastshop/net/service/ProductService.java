@@ -9,9 +9,6 @@ public interface ProductService {
     void deleteById(Integer id);
     Product findById(Integer id);
     List<Product> findAll();
-    List<Product> findByDiscountIsNull();
-    List<Product> findByDiscountNotNull();
-    List<Product> findByDiscountId(String id);
     List<Product> findByCategoryId(String cid);
     List<Product> findByKeywordName(String kw);
     List<Product> findByFilter(Integer rate, String cateId, double priceFrom, double priceTo);

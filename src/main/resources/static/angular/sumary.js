@@ -592,7 +592,6 @@ app.controller("report-admin-ctrl", ($scope, $http) => {
 app.controller("product-ctrl", ($scope, $http) => {
     $scope.form = {};
     $scope.items = [];
-    $scope.open = 0;
     $scope.now = getDateNow(null);
 
     var url1 = `${host_}/products`;
@@ -607,7 +606,6 @@ app.controller("product-ctrl", ($scope, $http) => {
         var url = `${host_}/products/${id}`;
         $http.get(url).then((resp) => {
             $scope.form = resp.data;
-            $scope.open = 1;
             console.log("edit ok", resp);
         }).catch((err) => {
             console.log("edit fail", err);
@@ -616,8 +614,8 @@ app.controller("product-ctrl", ($scope, $http) => {
 
     $scope.update = () => {
         var item = angular.copy($scope.form);
-        var url = `${host_}/products/${$scope.form.id}`;
-        $http.put(url, item).then((resp) => {
+        var url_p_u = `${host_}/products/${$scope.form.id}`;
+        $http.put(url_p_u, item).then((resp) => {
         }).catch((err) => {
             console.log("Error", err);
         });
@@ -640,7 +638,8 @@ app.controller("product-ctrl", ($scope, $http) => {
 app.controller("productfree-ctrl", ($scope, $http) => {
     $scope.items = [];
     $scope.discounts = [];
-    var url2 = `${host_}/discounts/unexpiry`;
+    $scope.item_discount = {};
+    $scope.item_products = {};
 
     var url1 = `${host_}/products`;
     $http.get(url1).then((resp) => {
@@ -649,6 +648,7 @@ app.controller("productfree-ctrl", ($scope, $http) => {
         console.log("Error load items", err);
     });
 
+    var url2 = `${host_}/discounts/unexpiry`;
     $http.get(url2).then((resp) => {
         $scope.discounts = resp.data;
     }).catch((err) => {
@@ -656,9 +656,16 @@ app.controller("productfree-ctrl", ($scope, $http) => {
     });
 
     // ------------------------
+    // this is add discount for product if role staff
+    // đây là lấy product hiện tại có ID trên
+    $("#eror_free_1").hide();
+    $("#eror_free_2").hide();
+    $scope.model_discount = {
+        "productId" : "",
+        "discountId": ""
+    }
+
     $scope.addvoucher = () => {
-        $scope.item_discount = {};
-        $scope.item_products = {};
         if ($scope.model_discount.productId == "" || $scope.model_discount.productId == null) {
             $("#eror_free_1").show();
         }
@@ -676,36 +683,31 @@ app.controller("productfree-ctrl", ($scope, $http) => {
         if ($scope.model_discount.discountId && $scope.model_discount.productId) {
             var url_3 = `${host_}/discounts/${$scope.model_discount.discountId}`;
             $http.get(url_3).then((resp) => {
-                $scope.item_discount = resp.data;
+                $scope.item_discount = JSON.stringify(resp.data);
             }).catch((err) => {
                 console.log(err);
             });
 
-            setTimeout(() => {
-                var url_4 = `${host_}/products/${$scope.model_discount.productId}`;
-                console.log(url_4);
-                $http.get(url_4).then((resp) => {
-                    $scope.item_products = resp.data;
-                    
-                    console.log(JSON.stringify($scope.item_products));
+            console.log($scope.item_discount);
 
-                }).catch((err) => {
-                    console.log(err);
-                });
-            }, 1000);
+            // setTimeout(() => {
+            //     var url_4 = `${host_}/products/${$scope.model_discount.productId}`;
+            //     $http.get(url_4).then((resp) => {
+            //         $scope.item_products = resp.data;
+            //         $scope.item_products.discount = $scope.item_discount;
+            //     }).catch((err) => {
+            //         console.log(err);
+            //     });
+
+            //     console.log($scope.item_products);
+            //     $http.post(url1, $scope.item_products).then((resp) => {
+            //         console.log("discount success", resp);
+            //     }).catch((err) => {
+            //         console.log("discount failed", err);
+            //     });
+            // }, 1000);
         }
     };
-
-    // this is add discount for product if role staff
-    // đây là lấy product hiện tại có ID trên
-    $("#eror_free_1").hide();
-    $("#eror_free_2").hide();
-    $scope.model_discount = {
-        "productId": "",
-        "discountId": ""
-    }
-
-
 
     $scope.readURL_product = () => {
         var image = $('#productImageVoucher').val();

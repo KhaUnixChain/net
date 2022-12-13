@@ -119,7 +119,7 @@ public class StaffController {
             model.addAttribute("page", "staff.productfree");
             model.addAttribute("title_main", title_main);
             model.addAttribute("categories", categoryService.findAll());
-            model.addAttribute("productNotFree", productSevice.findByDiscountIsNull());
+            model.addAttribute("productNotFree", null); // productSevice.findByDiscountIsNull()
             model.addAttribute("productFree", new ArrayList<>());
 
             model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(auth.getAccount()));

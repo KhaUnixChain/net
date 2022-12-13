@@ -4,7 +4,6 @@
       <div class="row pt-4">
         <div class="col-lg-5 mb-30">
           <div id="product-carousel" class="carousel slide" data-ride="carousel"   style="position: relative;">
-            <img th:if="${product.discount != null}" th:src="@{${'/dist/img/vourcher/' + #numbers.formatDecimal(product.discount.free,0,0) + '.png'}}" class="col-3" alt="" style="position: absolute; z-index: 1; left: 25px">
             <div class="carousel-inner">
               <div class="carousel-item d-flex justify-content-center active pt-3 pb-3">
                 <img style="width: 70%; border-radius: 5px;" th:src="@{${'/dist/img/products/'+{product.image}}}"
