@@ -614,8 +614,10 @@ app.controller("product-ctrl", ($scope, $http) => {
 
     $scope.update = () => {
         var item = angular.copy($scope.form);
+        console.log(item);
         var url_p_u = `${host_}/products/${$scope.form.id}`;
         $http.put(url_p_u, item).then((resp) => {
+            console.log("Update ok", resp);
         }).catch((err) => {
             console.log("Error", err);
         });
@@ -632,94 +634,8 @@ app.controller("product-ctrl", ($scope, $http) => {
         }).catch((err) => {
             console.log("error", err);
         });
+        window.location.href = "http://localhost:8080/staff/products";
     };
-});
-
-app.controller("productfree-ctrl", ($scope, $http) => {
-    $scope.items = [];
-    $scope.discounts = [];
-    $scope.item_discount = {};
-    $scope.item_products = {};
-
-    var url1 = `${host_}/products`;
-    $http.get(url1).then((resp) => {
-        $scope.items = resp.data;
-    }).catch((err) => {
-        console.log("Error load items", err);
-    });
-
-    var url2 = `${host_}/discounts/unexpiry`;
-    $http.get(url2).then((resp) => {
-        $scope.discounts = resp.data;
-    }).catch((err) => {
-        console.log("Error load items", err);
-    });
-
-    // ------------------------
-    // this is add discount for product if role staff
-    // đây là lấy product hiện tại có ID trên
-    $("#eror_free_1").hide();
-    $("#eror_free_2").hide();
-    $scope.model_discount = {
-        "productId" : "",
-        "discountId": ""
-    }
-
-    $scope.addvoucher = () => {
-        if ($scope.model_discount.productId == "" || $scope.model_discount.productId == null) {
-            $("#eror_free_1").show();
-        }
-        else {
-            $("#eror_free_1").hide();
-        }
-
-        if ($scope.model_discount.discountId == "" || $scope.model_discount.discountId == null) {
-            $("#eror_free_2").show();
-        }
-        else {
-            $("#eror_free_2").hide();
-        }
-
-        if ($scope.model_discount.discountId && $scope.model_discount.productId) {
-            var url_3 = `${host_}/discounts/${$scope.model_discount.discountId}`;
-            $http.get(url_3).then((resp) => {
-                $scope.item_discount = JSON.stringify(resp.data);
-            }).catch((err) => {
-                console.log(err);
-            });
-
-            console.log($scope.item_discount);
-
-            // setTimeout(() => {
-            //     var url_4 = `${host_}/products/${$scope.model_discount.productId}`;
-            //     $http.get(url_4).then((resp) => {
-            //         $scope.item_products = resp.data;
-            //         $scope.item_products.discount = $scope.item_discount;
-            //     }).catch((err) => {
-            //         console.log(err);
-            //     });
-
-            //     console.log($scope.item_products);
-            //     $http.post(url1, $scope.item_products).then((resp) => {
-            //         console.log("discount success", resp);
-            //     }).catch((err) => {
-            //         console.log("discount failed", err);
-            //     });
-            // }, 1000);
-        }
-    };
-
-    $scope.readURL_product = () => {
-        var image = $('#productImageVoucher').val();
-        // $('#productImage_').attr("src", "/dist/img/products/" + image);
-        console.log($scope.model_discount);
-    }
-
-    $scope.readURL_discount = () => {
-        var free = $('#discountImageVoucher').val();
-        // $('#discountImage_').attr("src", "/dist/img/vourcher/" + Math.round(free) + ".png");
-        console.log($scope.model_discount);
-    }
 });
 
 app.controller("order-ctrl", ($scope, $http) => {
