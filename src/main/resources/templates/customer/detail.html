@@ -59,9 +59,11 @@
             <div class="pt-2 pb-3">
               <h4>8 Mã giảm giá</h4>
               <div class="d-flex">
-                <button class="btn btn-outline-primary me-2" style="transition: 0.1s;">Giảm 15K</button>
-                <button class="btn btn-outline-primary me-2" style="transition: 0.1s;">Giảm 20K</button>
-                <button class="btn btn-outline-primary me-2" style="transition: 0.1s;">Giảm 30K</button>
+                <th:block th:each="discount : ${discountUnexpery}">
+                  <button th:if="${discount.free != null}" class="btn btn-outline-primary me-2" style="transition: 0.1s;">
+                    Giảm [[${#numbers.formatDecimal(discount.free == null ? 0 : discount.free, 0, 0)}]] %
+                  </button>
+                </th:block>
               </div>
             </div>
             <!-- <div class="row mb-3">
