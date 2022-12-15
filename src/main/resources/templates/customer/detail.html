@@ -57,19 +57,32 @@
             </div>
             <h1 class="mb-4 text-danger">$ [[${product.price}]] / cái</h1>
             <div class="pt-2 pb-3">
-              <h4>8 Mã giảm giá</h4>
-              <div class="d-flex">
+              <h4>Giảm giá hiện có</h4>
+              <div class="d-flex aligh-items-center">
                 <th:block th:each="discount : ${discountUnexpery}">
-                  <button th:if="${discount.free != null}" class="btn btn-outline-primary me-2" style="transition: 0.1s;">
-                    Giảm [[${#numbers.formatDecimal(discount.free == null ? 0 : discount.free, 0, 0)}]] %
-                  </button>
+                  <th:block th:if="${discount.free != null}">
+                    <img th:src="@{${'/dist/img/free/10.png'}}" th:if="${discount.free == 10.00}" class="me-2" style="height: 50px;" alt="">
+                    <img th:src="@{${'/dist/img/free/15.png'}}" th:if="${discount.free == 15.00}" class="me-2" style="height: 50px;" alt="">
+                    <img th:src="@{${'/dist/img/free/20.png'}}" th:if="${discount.free == 20.00}" class="me-2" style="height: 50px;" alt="">
+                    <img th:src="@{${'/dist/img/free/30.png'}}" th:if="${discount.free == 30.00}" class="me-2" style="height: 50px;" alt="">
+                    <img th:src="@{${'/dist/img/free/50.png'}}" th:if="${discount.free == 50.00}" class="me-2" style="height: 50px;" alt="">
+                  </th:block>
                 </th:block>
               </div>
             </div>
-            <!-- <div class="row mb-3">
-                
-                
-              </div> -->
+            <div class="col-10 mb-3 p-2" style="border-radius: 10px; border: 1px dashed lightgray">
+              <div class="d-flex justify-content-start align-items-center">
+                <div style="width: 32px;">
+                  <img src="https://salt.tikicdn.com/ts/upload/67/e4/c2/02b5400b39bb3371e06d33c1e9f4d854.png" alt="" height="16" width="37">
+                </div>
+                <div class="text-success ms-2 fs-4 pt-1 ps-2" style="font-weight: bolder; border-left: 1px solid lightgray;">Thứ 7, ngày 17/12</div>
+              </div>
+              <div class="text-muted fs-4">Vận chuyển: 45.000đ <strike>92.000đ</strike></div>
+              <div class="text-muted fs-5">
+                <img src="https://salt.tikicdn.com/ts/upload/df/e2/b4/063c4d55ca380f818547f00f5175d39f.png" alt="" width="13" height="">
+                <span>Freeship 100% với 308,41 ASA</span>
+              </div>
+            </div>
 
             <div class="align-items-center mb-4 pt-2 buy-product">
               <h4>Số lượng mua</h4>
