@@ -20,6 +20,7 @@ public class Role implements Serializable{
 	@Id
 	private String id;
 	private String name;
+	private String level;
 	@JsonIgnore
 	@OneToMany(mappedBy = "role")
 	List<Authority> authorities;
