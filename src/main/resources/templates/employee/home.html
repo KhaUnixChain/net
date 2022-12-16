@@ -221,7 +221,7 @@
                   <tr th:if="${status != -1}">
                     <td></td>
                     <td></td>
-                    <td>- Tổng tiền : <b>$ [[${o.total}]]</b></td>
+                    <td>- Tổng tiền : <b>$ [[${#numbers.formatDecimal(o.total == null ? 0 : o.total, 0, 2)}]]</b></td>
                     <td></td>
                     <td></td>
                     <td></td>
