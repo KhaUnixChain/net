@@ -1,25 +1,3 @@
-$("#show-up").hide();
-
-// move is true : we gonna show employee page
-// move is false : we gonna show setup page and hide employee page
-let move = true;
-
-function movePage_Employee() {
-	if (move) {
-		setTimeout(() => {
-			$("#show-up").show();
-			$("#set-up").hide();
-		}, 500);
-	}
-	else {
-		setTimeout(() => {
-			$("#set-up").show();
-			$("#show-up").hide();
-		}, 500);
-	}
-	move = !move;
-}
-
 function changeImage(index) {
 	let img = ["/role_hierarchy_territory.gif", "/role_hierarchy_product.gif", "/role_hierarchy_size.gif"];
 	$("#role-hierarchy-img").attr("src", img[index]);
