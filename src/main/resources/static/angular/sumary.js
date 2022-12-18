@@ -330,6 +330,11 @@ app.controller("cart-ctrl", ($scope, $http) => {
         }
     }
 
+    $scope.show_discount = (id) => {
+        document.getElementById("voucher-" + id).style.display = "block";
+        document.getElementById("btn-voucher-" + id).style.display = "none";
+    }
+
     $scope.cart.loadFromLocalStorage();
 });
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fastshop.net.model.OrderDetail;
+import com.fastshop.net.model.Product;
 import com.fastshop.net.repository.OrderDetailDAO;
 import com.fastshop.net.service.OrderDetailService;
 
@@ -55,5 +56,10 @@ public class OrderDetailServiceImpl implements OrderDetailService{
     @Override
     public List<String> getTop3BestSelling() {
         return orderDetailDAO.getTop3BestSelling();
+    }
+
+    @Override
+    public Integer countByProduct(Product product) {
+        return orderDetailDAO.countByProduct(product);
     }
 }

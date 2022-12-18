@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.fastshop.net.model.Order;
 import com.fastshop.net.model.OrderDetail;
+import com.fastshop.net.model.Product;
 
 @Repository
 public interface OrderDetailDAO extends JpaRepository<OrderDetail, Long>{
@@ -16,6 +17,8 @@ public interface OrderDetailDAO extends JpaRepository<OrderDetail, Long>{
     Double getTotalRevenue();
     @Query("select SUM(od.quantity) from OrderDetail od where MONTH(GETDATE()) = MONTH(od.order.createDate)")
     Integer getTotalOrder();
+    @Query("SELECT COUNT(od.product) FROM OrderDetail od WHERE od.product = ?1")
+    Integer countByProduct(Product product);
     @Query("select od.product.name from OrderDetail od where MONTH(GETDATE()) = MONTH(od.order.createDate) group by od.product.name order by SUM(od.quantity) DESC")
     List<String> getTop3BestSelling();
 }

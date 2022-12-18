@@ -6,8 +6,7 @@
           <div id="product-carousel" class="carousel slide" data-ride="carousel"   style="position: relative;">
             <div class="carousel-inner">
               <div class="carousel-item d-flex justify-content-center active pt-3 pb-3">
-                <img style="width: 70%; border-radius: 5px;" th:src="@{${'/dist/img/products/'+{product.image}}}"
-                  class="bg-white" alt="Image">
+                <img style="width: 70%; border-radius: 5px;" th:src="@{${'/dist/img/products/'+{product.image}}}" class="bg-white" alt="Image">
               </div>
             </div>
             <a class="carousel-control-prev text-muted" href="#product-carousel" data-slide="prev">
@@ -27,7 +26,7 @@
           </div>
         </div>
 
-        <div class="col-lg-7 h-auto mb-30">
+        <div class="col-lg-5 h-auto mb-30">
           <div class="h-100 bg-white ps-3 text-dark">
 
             <!-- tên sản phẩm -->
@@ -53,39 +52,106 @@
                 <!--  -->
 
               </div>
-              <small class="mt-1">(99 đã xem) | đã bán 42 sản phẩm</small>
+              <small class="mt-1 ms-1 text-muted"> Đã bán [[${countBought}]] sản phẩm</small>
             </div>
             <h1 class="mb-4 text-danger">$ [[${product.price}]] / cái</h1>
-            <div class="pt-2 pb-3">
-              <h4>Giảm giá hiện có</h4>
-              <div class="d-flex aligh-items-center">
-                <th:block th:each="discount : ${discountUnexpery}">
+            <div class="pt-2 pb-3" th:if="${discountUnexpery.size() > 0}">
+              <h3 class="text-muted">Giảm giá hiện có</h3>
+              <div class="d-flex align-items-center">
+                <th:block th:if="${index.index < 3}" th:each="discount, index : ${discountUnexpery}">
                   <th:block th:if="${discount.free != null}">
-                    <img th:src="@{${'/dist/img/free/10.png'}}" th:if="${discount.free == 10.00}" class="me-2" style="height: 50px;" alt="">
-                    <img th:src="@{${'/dist/img/free/15.png'}}" th:if="${discount.free == 15.00}" class="me-2" style="height: 50px;" alt="">
-                    <img th:src="@{${'/dist/img/free/20.png'}}" th:if="${discount.free == 20.00}" class="me-2" style="height: 50px;" alt="">
-                    <img th:src="@{${'/dist/img/free/30.png'}}" th:if="${discount.free == 30.00}" class="me-2" style="height: 50px;" alt="">
-                    <img th:src="@{${'/dist/img/free/50.png'}}" th:if="${discount.free == 50.00}" class="me-2" style="height: 50px;" alt="">
+                    <img th:src="@{${'/dist/img/free/10.png'}}" th:if="${discount.free == 10.00}" class="me-2" style="height: 40px;" alt="">
+                    <img th:src="@{${'/dist/img/free/15.png'}}" th:if="${discount.free == 15.00}" class="me-2" style="height: 40px;" alt="">
+                    <img th:src="@{${'/dist/img/free/20.png'}}" th:if="${discount.free == 20.00}" class="me-2" style="height: 40px;" alt="">
+                    <img th:src="@{${'/dist/img/free/30.png'}}" th:if="${discount.free == 30.00}" class="me-2" style="height: 40px;" alt="">
+                    <img th:src="@{${'/dist/img/free/50.png'}}" th:if="${discount.free == 50.00}" class="me-2" style="height: 40px;" alt="">
                   </th:block>
                 </th:block>
-              </div>
-            </div>
-            <div class="col-10 mb-3 p-2" style="border-radius: 10px; border: 1px dashed lightgray">
-              <div class="d-flex justify-content-start align-items-center">
-                <div style="width: 32px;">
-                  <img src="https://salt.tikicdn.com/ts/upload/67/e4/c2/02b5400b39bb3371e06d33c1e9f4d854.png" alt="" height="16" width="37">
-                </div>
-                <div class="text-success ms-2 fs-4 pt-1 ps-2" style="font-weight: bolder; border-left: 1px solid lightgray;">Thứ 7, ngày 17/12</div>
-              </div>
-              <div class="text-muted fs-4">Vận chuyển: 45.000đ <strike>92.000đ</strike></div>
-              <div class="text-muted fs-5">
-                <img src="https://salt.tikicdn.com/ts/upload/df/e2/b4/063c4d55ca380f818547f00f5175d39f.png" alt="" width="13" height="">
-                <span>Freeship 100% với 308,41 ASA</span>
-              </div>
-            </div>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#modal-free" style="background: linear-gradient(90deg, rgba(225,225,225,0) 0%, white 68%); margin-left: -50px; padding: 8px 8px 8px 45px;">
+                  <img src="/next.png" style="height: 20px;" alt="">
+                </a>
+                <!-- modal discount free -->
+                <div class="modal modal-blur fade" id="modal-free" tabindex="-1" style="display: none;" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                    <div class="modal-content" style="background-color: rgba(0,0,0, 0.1);">
+                      <div class="modal-header">
+                        <h5 class="modal-title text-primary">Danh sách ưu đãi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row d-flex justify-content-end" th:each="discount, index : ${discountUnexpery}" style="position: relative;">
+                          <th:block th:if="${index.index < 3}">
+                            <th:block th:if="${discount.free != null}">
+                              <img th:src="@{${'/dist/img/free/empty_free.png'}}" class="col-12">
+                              <div class="col-7 d-flex justify-content-between align-items-center text-end me-4" style="position: absolute; top: 13%;">
+                                <span style="font-size: 17px; font-weight: bolder;">Giảm [[${#numbers.formatDecimal(discount.free, 0, 0)}]]%</span>
+                                <svg style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle text-primary" viewBox="0 0 16 16">
+                                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                                </svg>
+                              </div>
+                              <div class="col-7 me-4" style="position: absolute; top: 47%;">
+                                <h2 th:id="${'voucher-' + index.index}" style="display: none;">[[${discount.id}]]</h2>
+                              </div>
+                              <div class="col-7 me-4" style="position: absolute; top: 30%;">
+                                <p>Dành cho tất cả các hóa đơn trên 150K</p>
+                              </div>
 
+                              <div class="col-7 me-4  d-flex justify-content-between align-items-center" style="position: absolute; bottom: 0;">
+                                <p>HSD : [[${discount.dateEnd}]]</p>
+                                <button class="btn btn-primary mb-3" th:id="${'btn-voucher-' + index.index}" th:attr="ng-click=@{|show_discount(${index.index})|}">Xem</button>
+                              </div>
+                            </th:block>
+                          </th:block>
+                        </div>
+                        <br>
+
+                        <div class="row d-flex justify-content-end" th:each="discount, index : ${discountExpery}" style="position: relative;">
+                          <div style="position: absolute; background-color: rgba(0,0,0, 0.2); height: 100%; z-index: 2;">
+
+                          </div>
+                          <th:block th:if="${discount.free != null}">
+                            <img th:src="@{${'/dist/img/free/empty_free.png'}}" class="col-12 pb-2">
+                            <div class="col-7 d-flex justify-content-between align-items-center text-end me-4" style="position: absolute; top: 15%;">
+                              <h3>Giảm [[${#numbers.formatDecimal(discount.free, 0, 0)}]] %</h3>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle text-primary" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                              </svg>
+                            </div>
+                            <div class="col-7 me-4" style="position: absolute; top: 30%;">
+                              <p>Dành cho tất cả các hóa đơn</p>
+                            </div>
+
+                            <div class="col-7 me-4  d-flex justify-content-between align-items-center" style="position: absolute; bottom: 2%;">
+                              <p>HSD : [[${#dates.format(discount.dateEnd, 'dd-MM-yyyy')}]]</p>
+                            </div>
+                          </th:block>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
             <div class="align-items-center mb-4 pt-2 buy-product">
-              <h4>Số lượng mua</h4>
+              <h3 class="text-muted">Số lượng mua</h3>
+
+              <div class="col-12 mb-3 p-2" style="border-radius: 10px; border: 1px dashed lightgray">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div style="width: 32px;">
+                    <img src="https://salt.tikicdn.com/ts/upload/67/e4/c2/02b5400b39bb3371e06d33c1e9f4d854.png" alt="" height="16" width="37">
+                  </div>
+                  <div class="text-success ms-2 fs-4 pt-1 ps-2" style="font-weight: bolder; border-left: 1px solid lightgray;">Thứ 7, ngày 17/12</div>
+                </div>
+                <div class="text-muted fs-4">Vận chuyển: 45.000đ <strike>92.000đ</strike></div>
+                <div class="text-muted fs-5">
+                  <img src="https://salt.tikicdn.com/ts/upload/df/e2/b4/063c4d55ca380f818547f00f5175d39f.png" alt="" width="13" height="">
+                  <span>Freeship 100% với 308,41 ASA</span>
+                </div>
+              </div>
+
               <div class="input-group me-3 pb-3" style="width: max-content;">
                 <div class="input-group-btn">
                   <button class="btn btn-light" style="box-shadow: none;" ng-click="minus()">
@@ -146,7 +212,7 @@
 
             </div>
 
-            <div class="border-top d-flex pt-2 align-items-center">
+            <div class="d-flex align-items-center">
               <p class="text-muted me-2 mt-3">Chia sẻ trên: </p>
               <div>
                 <a class="text-muted px-1" href="">

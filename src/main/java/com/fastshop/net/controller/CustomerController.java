@@ -29,6 +29,7 @@ import com.fastshop.net.service.CategoryService;
 import com.fastshop.net.service.CommentService;
 import com.fastshop.net.service.DiscountService;
 import com.fastshop.net.service.NotifyService;
+import com.fastshop.net.service.OrderDetailService;
 import com.fastshop.net.service.OrderService;
 import com.fastshop.net.service.ProductDetailService;
 
@@ -48,6 +49,8 @@ public class CustomerController {
     CategoryService categoryService;
     @Autowired
     OrderService orderService;
+    @Autowired
+    OrderDetailService orderDetailService;
     @Autowired
     AddressService addressService;
     @Autowired
@@ -129,7 +132,9 @@ public class CustomerController {
         model.addAttribute("productDetails", productDetailService.getByProductId(id));
         model.addAttribute("comments", product.getComments());
         model.addAttribute("maxStar", commentService.getMaxStar(product));
+        model.addAttribute("countBought", orderDetailService.countByProduct(product));
         model.addAttribute("discountUnexpery", discountService.findByDiscountUnexpiry());
+        model.addAttribute("discountExpery", discountService.findByDiscountExpiry());
         try {
             model.addAttribute("address", addressService.findByAccountWithChooseIsTrue(auth.getAccount().getUsername()));
             model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(auth.getAccount()));
