@@ -49,6 +49,10 @@ function convert_vi_to_en(str) {
     return str;
 };
 
+app.controller("admin-employee", ($scope, $http) => {
+    
+});
+
 app.controller("history-ctrl", ($scope, $http) => {
     $scope.histories = [];
     $scope.selectId = [];
