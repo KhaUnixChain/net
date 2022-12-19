@@ -62,4 +62,14 @@ public class OrderDetailServiceImpl implements OrderDetailService{
     public Integer countByProduct(Product product) {
         return orderDetailDAO.countByProduct(product);
     }
+
+    @Override
+    public Double getTotalRevenueLast() {
+        return orderDetailDAO.getTotalRevenueLast();
+    }
+
+    @Override
+    public Integer getTotalOrderLast() {
+        return orderDetailDAO.getTotalOrderLast();
+    }
 }

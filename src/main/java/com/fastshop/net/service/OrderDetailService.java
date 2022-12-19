@@ -14,4 +14,6 @@ public interface OrderDetailService {
     int getTotalOrder();
     List<String> getTop3BestSelling();
     Integer countByProduct(Product product);
+    Double getTotalRevenueLast();
+    Integer getTotalOrderLast();
 }

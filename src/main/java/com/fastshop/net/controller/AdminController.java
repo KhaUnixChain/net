@@ -42,7 +42,9 @@ public class AdminController {
         model.addAttribute("page", "admin.home");
         model.addAttribute("title_main", title_main);
         model.addAttribute("totalRevenue", orderDetailService.getTotalRevenue());
+        model.addAttribute("totalRevenueLast", orderDetailService.getTotalRevenueLast());
         model.addAttribute("totalOrder", orderDetailService.getTotalOrder());
+        model.addAttribute("totalOrderLast", orderDetailService.getTotalOrderLast());
         model.addAttribute("top3Product", orderDetailService.getTop3BestSelling());
         model.addAttribute("histories", historyService.findAll());
         model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(authority.getAccount()));
