@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Order;
+import com.fastshop.net.model.OrderDetail;
+import com.fastshop.net.repository.OrderDetailDAO;
 import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service.StatusService;
 import com.fastshop.net.service._CookieService;
@@ -50,6 +52,8 @@ public class OrderController {
     ProductDetailService productDetailService;
     @Autowired
     OrderService orderService;
+    @Autowired
+    OrderDetailDAO orderDetailDAO;
     @Autowired
     StatusService statusService;
     @Autowired
@@ -89,6 +93,17 @@ public class OrderController {
         } catch (Exception e) {
             return "redirect:/login";
         }
+    }
+
+
+    // cập nhật trạng thái hàng của user
+    // id là id của đơn hàng
+    @RequestMapping("/user/order/update/{orderid}")
+    public String update(@ModelAttribute("auth") Authority auth, @PathVariable("orderid") Long id) {
+        Order order = orderService.findById(id);
+        order.setStatus(statusService.findById(-1));
+        orderService.save(order);
+        return "redirect:/user/myorder";
     }
 
 
