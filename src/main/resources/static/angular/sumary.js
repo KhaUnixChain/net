@@ -74,6 +74,18 @@ function changeFree() {
     $("#getPathFree").text(url_discount_free);
 }
 
+function copyFree(index) {
+    let code = document.getElementById("voucher-" + index);
+    console.log(code.value);
+    code.select();
+    code.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(code.value);
+    if (document.execCommand("copy")) {
+        $("#link-voucher-" + index).css({"color":"green"});
+        $("#link-voucher-" + index).text("Copied");
+    }
+}
+
 app.controller("admin-employee", ($scope, $http) => {
     
 });
@@ -438,7 +450,6 @@ app.controller("checkout-ctrl", ($scope, $http) => {
     }
     $scope.cart.loadFromLocalStorage();
 
-    // ---------------------------------------------------------
     $scope.confirmFree = () => {
         $("#success_find").css("opacity", "0");
         $("#error_find").css("opacity", "0");
@@ -886,9 +897,6 @@ app.controller("comment-ctrl", ($scope, $http) => {
 	setTimeout(() => {
 		productid = document.getElementById('productId').value;
 		username = document.getElementById('username').value;
-
-		console.log(productid);
-		console.log(username);
 	}, 2000);
 
 	setTimeout(() => {
