@@ -135,7 +135,7 @@
         </th:block>
       </div>
 
-      <div class="container mt-3" th:id="${'order-' + o.id}" th:each="o, index : ${ordertoday}">
+      <div class="container mt-3" th:id="${'order-' + o.id}" th:each="i : ${#numbers.sequence(ordertoday.size() - 1, 0, -1)}" th:with="o=${ordertoday[i]}">
         <div class="card mb-4">
           <div class="card-body">
             <address class="border p-3">
