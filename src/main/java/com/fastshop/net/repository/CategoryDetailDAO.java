@@ -4,12 +4,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import com.fastshop.net.model.Category;
 import com.fastshop.net.model.CategoryDetail;
 
-@Repository
 public interface CategoryDetailDAO extends JpaRepository<CategoryDetail, String> {
     @Query("SELECT o FROM CategoryDetail o WHERE o.category = ?1")
     List<CategoryDetail> findByCategory(Category category);

@@ -4,13 +4,11 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import com.fastshop.net.model.Order;
 import com.fastshop.net.model.OrderDetail;
 import com.fastshop.net.model.Product;
 
-@Repository
 public interface OrderDetailDAO extends JpaRepository<OrderDetail, Long>{
     List<OrderDetail> findByOrder(Order order);
     @Query("select SUM(od.quantity*od.product.price) from OrderDetail od where MONTH(GETDATE()) = MONTH(od.order.createDate)")

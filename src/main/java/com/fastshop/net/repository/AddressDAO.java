@@ -5,11 +5,9 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import com.fastshop.net.model.Address;
 
-@Repository
 public interface AddressDAO extends JpaRepository<Address, Long>{
     @Query("SELECT o FROM Address o WHERE o.username = ?1")
     List<Address> findAllAddressByAccount(String username);
