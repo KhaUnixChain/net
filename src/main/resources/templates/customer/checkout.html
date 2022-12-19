@@ -326,10 +326,10 @@
                     <th>$ 1.2</th>
                   </tr>
                   <tr>
-                    <th>Giảm giá : </th>
+                    <th>Giảm giá {{ discount_add_voucher.free < 10 ? '' : discount_add_voucher.free | number:0 }} %: </th>
                     <td></td>
                     <td></td>
-                    <th> {{ discount_add_voucher.free > 0 ? discount_add_voucher.free : '...' }} %</th>
+                    <th>- $ {{ discount_add_voucher.free > 0 ? cart.amountDeliver*discount_add_voucher.free/100 : '0' | number:2 }}</th>
                   </tr>
                 </tbody>
               </table>
