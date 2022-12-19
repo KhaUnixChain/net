@@ -24,7 +24,11 @@ public class RestDiscountController {
 
     @GetMapping("/rest/discounts/{id}")
     public Discount findById(@PathVariable("id") String id) {
-        return discountService.findById(id);
+        try {
+            return discountService.findById(id);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @GetMapping("/rest/discounts/expiry")

@@ -131,7 +131,7 @@ app.controller('chart-ctrl', ($scope, $http) => {
 						labels: $scope.titles,
 						datasets: [
 							{
-								label: 'Categories',
+								label: 'Phân loại hàng',
 								data: [
 									12, 19, 34, 5, 2, 3, 12, 19, 29, 5, 2, 3, 44, 12, 26, 3, 5,
 									19, 16, 25, 33, 17,
@@ -164,45 +164,22 @@ app.controller('chart-ctrl', ($scope, $http) => {
 
 app.controller('chart2-ctrl', ($scope, $http) => {
 	$scope.titles = [];
-	$scope.load_title = () => {
-		var url = `${host_}/categories/name/`;
-		$http
-			.get(url)
-			.then((resp) => {
-				$scope.titles = resp.data;
-				var ctx = document.getElementById('myChart2');
-				var myChart = new Chart(ctx, {
-					type: 'line',
-					data: {
-						datasets: [
-							{
-								label: 'Sales',
-								data: [
-									{
-										x: '2022-01-01 00:00:00',
-										y: 50555,
-									},
-									{
-										x: '2022-06-06 00:00:00',
-										y: 60333,
-									},
-									{
-										x: '2022-12-30 23:59:59',
-										y: 20444,
-									},
-								],
-								borderColor: ['rgba(54, 162, 235, 1)'],
-							},
-						],
-					},
-				});
-			})
-			.catch((err) => {
-				console.log('Error load items', err);
-			});
-	};
+    
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
 
-	$scope.load_title();
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Contry', 'Mhl'],
+            ['Doanh số năm 2018',54.8],
+            ['Doanh số năm 2019',48.6],
+            ['Doanh số năm 2020',44.4],
+            ['Doanh số năm 2021',23.9],
+            ['Doanh số năm 2022',14.5]
+        ]);
+        var chart = new google.visualization.PieChart(document.getElementById('myChart23'));
+        chart.draw(data);
+    }
 });
 
 app.controller("category-ctrl", ($scope, $http) => {
@@ -344,6 +321,9 @@ app.controller("checkout-ctrl", ($scope, $http) => {
 
     $scope.qty = 1;
 
+    $scope.codeFree = "";
+    $scope.discount_add_voucher = {};
+
     $scope.cart = {
         items: [],
 
@@ -423,6 +403,29 @@ app.controller("checkout-ctrl", ($scope, $http) => {
         }
     }
     $scope.cart.loadFromLocalStorage();
+
+    // ---------------------------------------------------------
+    $scope.confirmFree = () => {
+        $("#success_find").css("opacity", "0");
+        $("#error_find").css("opacity", "0");
+
+        $http.get(`${host_}/discounts/${$scope.code_free}`).then((resp) => {
+            $('#find-free').css("display", "block");
+            setTimeout(() => {
+                $('#find-free').css("display", "none");
+                $scope.discount_add_voucher = resp.data;
+                if ($scope.discount_add_voucher == undefined || $scope.discount_add_voucher == null) {
+                    $("#error_find").css("opacity", "1");
+                    $("#success_find").css("opacity", "0");
+                }
+                else {
+                    $("#error_find").css("opacity", "0");
+                    $("#success_find").css("opacity", "1");
+                }
+            }, 3000);
+        }).catch((err) => { 
+        });
+    }
 
 
 
