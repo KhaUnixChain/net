@@ -49,6 +49,31 @@ function convert_vi_to_en(str) {
     return str;
 };
 
+function changeFree() {
+    var v = document.getElementById("codeFree").value;
+    var url_discount_free = `${host_}/discounts/${v}`;
+    $("#success_find").css("opacity", "0");
+    $("#error_find").css("opacity", "0");
+    $("#find-free").css("display", "block");
+    $("#btn-free").attr("disabled", "disabled");
+
+    setTimeout(() => {
+        $("#find-free").css("display", "none");
+        if (!v) {
+            $("#error_find").css("opacity", "1");
+            $("#error_find").text("(*) Bạn chưa nhập mã giảm giá.");
+            $("#success_find").css("opacity", "0");
+        }
+        else {
+            $("#error_find").css("opacity", "0");
+            $("#success_find").css({"opacity": "1", "color": "#495579"});
+            $("#success_find").text("(*) Đã nhập mã giảm giá. Tiếp tục kiểm tra voucher");
+            $("#btn-free").removeAttr("disabled");
+        }
+    }, 1000);
+    $("#getPathFree").text(url_discount_free);
+}
+
 app.controller("admin-employee", ($scope, $http) => {
     
 });
@@ -310,6 +335,7 @@ app.controller("cart-ctrl", ($scope, $http) => {
     $scope.show_discount = (id) => {
         document.getElementById("voucher-" + id).style.display = "block";
         document.getElementById("btn-voucher-" + id).style.display = "none";
+        document.getElementById("link-voucher-" + id).style.display = "block";
     }
 
     $scope.cart.loadFromLocalStorage();
@@ -321,7 +347,6 @@ app.controller("checkout-ctrl", ($scope, $http) => {
 
     $scope.qty = 1;
 
-    $scope.codeFree = "";
     $scope.discount_add_voucher = {};
 
     $scope.cart = {
@@ -390,6 +415,15 @@ app.controller("checkout-ctrl", ($scope, $http) => {
                        .reduce((total, qty) => total += qty,0);
         },
 
+        get amountDeliver() {
+            var tongtien = Number(this.amount + 1.2);
+            if ($scope.discount_add_voucher.free == undefined || $scope.discount_add_voucher.free == null || $scope.discount_add_voucher.free < 10) {
+                return tongtien;
+            } else {
+                return tongtien - tongtien * $scope.discount_add_voucher.free / 100;
+            }
+        },
+
         // Lưu giỏ hàng vào local storage
         saveToLocalStorage() {
             var json = JSON.stringify(angular.copy(this.items));
@@ -408,26 +442,42 @@ app.controller("checkout-ctrl", ($scope, $http) => {
     $scope.confirmFree = () => {
         $("#success_find").css("opacity", "0");
         $("#error_find").css("opacity", "0");
+        $("#find-free").css("display", "block");
 
-        $http.get(`${host_}/discounts/${$scope.code_free}`).then((resp) => {
-            $('#find-free').css("display", "block");
+        var path = $("#getPathFree").text();
+        
+        if ($('#btn-free').prop('disabled', false)) {
             setTimeout(() => {
-                $('#find-free').css("display", "none");
-                $scope.discount_add_voucher = resp.data;
-                if ($scope.discount_add_voucher == undefined || $scope.discount_add_voucher == null) {
-                    $("#error_find").css("opacity", "1");
-                    $("#success_find").css("opacity", "0");
-                }
-                else {
-                    $("#error_find").css("opacity", "0");
-                    $("#success_find").css("opacity", "1");
-                }
+                $http.get(path).then((resp) => {
+                    $("#find-free").css("display", "none");
+                    $scope.discount_add_voucher = resp.data;
+                    if (!$scope.discount_add_voucher) {
+                        $("#error_find").css("opacity", "1");
+                        $("#error_find").text("(*) Mã giảm giá không tồn tại.");
+                        $("#success_find").css("opacity", "0");
+                        $("#btn-free").attr("disabled", "disabled");
+                    }
+                    else if ($scope.discount_add_voucher && (new Date($scope.discount_add_voucher.dateEnd) < new Date()) ) {
+                        $("#error_find").css("opacity", "1");
+                        $("#error_find").text("(*) Mã giảm giá đã hết hạn sử dụng.");
+                        $("#success_find").css("opacity", "0");
+                        $("#btn-free").attr("disabled", "disabled");
+                    }
+                    else {
+                        $("#error_find").css("opacity", "0");
+                        $("#success_find").css({"opacity": "1", "color": "#379237"});
+                        $("#success_find").text("(*) Đã nhập thành công voucher.");
+                        $("#btn-free").css("display", "none");
+                        $("#codeFree").attr("disabled", "disabled");
+                        $("#btn-enter-free").text($scope.discount_add_voucher.id);
+                        $scope.form.total = Math.round($scope.cart.amountDeliver * 100) / 100;
+                    }
+                }).catch((err) => { 
+                    console.log(err);
+                });
             }, 3000);
-        }).catch((err) => { 
-        });
+        }
     }
-
-
 
     // ---------------------------------------------------------
     $scope.form = {
@@ -435,7 +485,7 @@ app.controller("checkout-ctrl", ($scope, $http) => {
         "account": {},
         "createDate": date,
         "dateConfirm":null,
-        "total" : $scope.cart.amount, 
+        "total" : Math.round($scope.cart.amountDeliver * 100) / 100, 
         "status": {}
     };
 

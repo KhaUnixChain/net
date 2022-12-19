@@ -85,10 +85,6 @@
                               <img th:src="@{${'/dist/img/free/empty_free.png'}}" class="col-12">
                               <div class="col-7 d-flex justify-content-between align-items-center text-end me-4" style="position: absolute; top: 13%;">
                                 <span style="font-size: 17px; font-weight: bolder;">Giảm [[${#numbers.formatDecimal(discount.free, 0, 0)}]]%</span>
-                                <svg style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle text-primary" viewBox="0 0 16 16">
-                                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
-                                </svg>
                               </div>
                               <div class="col-7 me-4" style="position: absolute; top: 47%;">
                                 <h2 th:id="${'voucher-' + index.index}" style="display: none;">[[${discount.id}]]</h2>
@@ -103,7 +99,13 @@
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
                                   </svg>
-                                  Xem
+                                  Nhấn xem
+                                </p>
+                                <p th:id="${'link-voucher-' + index.index}" style="display: none; color: dodgerblue; cursor: pointer;">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stickies" viewBox="0 0 16 16">
+                                    <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5V13a1 1 0 0 0 1 1V1.5a.5.5 0 0 1 .5-.5H14a1 1 0 0 0-1-1H1.5z"/>
+                                    <path d="M3.5 2A1.5 1.5 0 0 0 2 3.5v11A1.5 1.5 0 0 0 3.5 16h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 16 9.586V3.5A1.5 1.5 0 0 0 14.5 2h-11zM3 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V9h-4.5A1.5 1.5 0 0 0 9 10.5V15H3.5a.5.5 0 0 1-.5-.5v-11zm7 11.293V10.5a.5.5 0 0 1 .5-.5h4.293L10 14.793z"/>
+                                  </svg> Copy mã
                                 </p>
                               </div>
                             </th:block>
@@ -143,77 +145,73 @@
             <div class="align-items-center mb-4 pt-2 buy-product">
               <h3 class="text-muted">Số lượng mua</h3>
 
-              <div class="col-12 mb-3 p-2" style="border-radius: 10px; border: 1px dashed lightgray">
+              <div class="mb-3 p-2 pb-3" style="border-radius: 10px; border: 1px dashed lightgray">
                 <div class="d-flex justify-content-start align-items-center">
                   <div style="width: 32px;">
-                    <img src="https://salt.tikicdn.com/ts/upload/67/e4/c2/02b5400b39bb3371e06d33c1e9f4d854.png" alt="" height="16" width="37">
+                    <img src="https://salt.tikicdn.com/ts/upload/67/e4/c2/02b5400b39bb3371e06d33c1e9f4d854.png" height="16" width="60px">
                   </div>
                   <div class="text-success ms-2 fs-4 pt-1 ps-2" style="font-weight: bolder; border-left: 1px solid lightgray;">Thứ 7, ngày 17/12</div>
                 </div>
-                <div class="text-muted fs-4">Vận chuyển: 45.000đ <strike>92.000đ</strike></div>
-                <div class="text-muted fs-5">
+                <div class="text-muted fs-4 mb-2">Vận chuyển: 45.000đ <strike>92.000đ</strike></div>
+                <span class="text-muted fs-5 p-2" style="background-color: #EEEEEE;">
                   <img src="https://salt.tikicdn.com/ts/upload/df/e2/b4/063c4d55ca380f818547f00f5175d39f.png" alt="" width="13" height="">
                   <span>Freeship 100% với 308,41 ASA</span>
-                </div>
+                </span>
               </div>
 
-              <div class="input-group me-3 pb-3" style="width: max-content;">
-                <div class="input-group-btn">
-                  <button class="btn btn-light" style="box-shadow: none;" ng-click="minus()">
+              <div class="input-group d-flex justify-content-between me-3 pb-3">
+                <div class="btn-group" style="margin-right: 20px;">
+                  <button type="button" class="btn text-white" style="box-shadow: none; background-color: #A62349;" ng-click="minus()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                       class="bi bi-dash-lg" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z" />
                     </svg>
                   </button>
-                </div>
-
-                <!-- qty -->
-                <input type="text" class="text-center bg-white" ng-model="qty" style="width: 50px; border: 1px solid lightgray;" disabled>
-
-                <div class="input-group-btn">
-                  <button class="btn btn-light" style="box-shadow: none;" ng-click="plus()">
+                  <button type="button" class="btn" style="background-color: #F9F9F9; width: 50px; border: none; outline: none;" disabled>{{qty}}</button>
+                  <button type="button" class="btn text-white" style="box-shadow: none; background-color: #293462;" ng-click="plus()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
                     </svg>
                   </button>
                 </div>
+
+                <div>
+                  <!-- nút thêm giỏ hàng nhưng phải có điều kiện là auth != null -->
+                  <span th:if="${auth != null}">
+                    <button class="btn btn-outline-danger" onclick="add(true)"
+                      th:attr="ng-click=@{|cart.add(${product.id})|}" th:if="${auth.role.id == 'USER'}">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3 me-2" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                      </svg> Thêm vào giỏ hàng
+                    </button>
+                    <a href="/user/checkout" onclick="add(true)" th:attr="ng-click=@{|cart.add(${product.id})|}" style="text-decoration: none;" th:if="${auth.role.id == 'USER'}">
+                      <button class="btn btn-danger">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3 me-2" viewBox="0 0 16 16">
+                          <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                        </svg> Mua ngay
+                      </button>
+                    </a>
+                  </span>
+
+                  <!-- nút thêm giỏ hàng nhưng có điều kiện auth == null -->
+                  <span th:if="${auth == null}">
+                    <a href="/login" style="text-decoration: none;">
+                      <button class="btn btn-outline-danger">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3 me-2" viewBox="0 0 16 16">
+                          <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                        </svg> Thêm vào giỏ hàng
+                      </button>
+                    </a>
+                    <a href="/login" style="text-decoration: none;">
+                      <button class="btn btn-danger">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3 me-2" viewBox="0 0 16 16">
+                          <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                        </svg> Mua ngay
+                      </button>
+                    </a>
+                  </span>
+                </div>
               </div>
-
-
-              <!-- nút thêm giỏ hàng nhưng phải có điều kiện là auth != null -->
-              <span th:if="${auth != null}">
-                <button class="btn btn-outline-danger" onclick="add(true)"
-                  th:attr="ng-click=@{|cart.add(${product.id})|}" th:if="${auth.role.id == 'USER'}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3 me-2" viewBox="0 0 16 16">
-                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                  </svg> Thêm vào giỏ hàng
-                </button>
-                <a href="/user/checkout" onclick="add(true)" th:attr="ng-click=@{|cart.add(${product.id})|}" style="text-decoration: none;" th:if="${auth.role.id == 'USER'}">
-                  <button class="btn btn-danger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3 me-2" viewBox="0 0 16 16">
-                      <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                    </svg> Mua ngay
-                  </button>
-                </a>
-              </span>
-
-              <!-- nút thêm giỏ hàng nhưng có điều kiện auth == null -->
-              <span th:if="${auth == null}">
-                <a href="/login" style="text-decoration: none;">
-                  <button class="btn btn-outline-danger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3 me-2" viewBox="0 0 16 16">
-                      <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                    </svg> Thêm vào giỏ hàng
-                  </button>
-                </a>
-                <a href="/login" style="text-decoration: none;">
-                  <button class="btn btn-danger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3 me-2" viewBox="0 0 16 16">
-                      <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                    </svg> Mua ngay
-                  </button>
-                </a>
-              </span>
 
             </div>
 

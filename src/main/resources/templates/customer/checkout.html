@@ -171,18 +171,19 @@
               <h3 class="ps-1">Tổng tiền sản phẩm</h3> 
               <p class="ps-1">Phí vận chuyển</p>
               <p class="ps-1">Giảm giá</p>
-              <h1 class="text-danger mt-3">Tổng chi phí</h1>
+              <h1 class="text-danger mt-4">Tổng chi phí</h1>
             </div>
             <div class="text-end">
               <h3>$ {{cart.amount | number:2}}</h3>
               <p class="fs-3 align-middle">$ 1.2</p>
-              <a href="#" data-bs-toggle="modal" data-bs-target="#modal-enter-free">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-vector-pen" viewBox="0 0 16 16">
+              <button id="btn-enter-free" data-bs-toggle="modal" data-bs-target="#modal-enter-free">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-vector-pen me-2" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
                   <path fill-rule="evenodd" d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
                 </svg>
-                Nhập mã giảm giá
-              </a>
+                Giảm giá
+              </button>
+
 
               <!-- modal -->
               <div class="modal modal-blur fade" id="modal-enter-free" tabindex="-1" role="dialog" aria-hidden="true">
@@ -191,20 +192,20 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="modal-status bg-info"></div>
                     <div class="modal-body text-center">
-                      <div class="text-muted text-start mb-3">- Nhập mã giảm giá -</div>
+                      <div class="text-muted text-start mb-3">Nhập mã giảm giá</div>
                       <div class="d-flex justify-content-between align-items-center">
                         <div class="spinner-border spinner-border-sm me-2" id="find-free" style="display: none;"></div>
-
-                        <input type="text" class="form-control" ng-model="codeFree" ng-change="confirmFree()" placeholder="Mã giảm giá ..."/>
+                        <input type="text" class="form-control" id="codeFree" onchange="changeFree()" placeholder="Mã giảm giá ..." >
                       </div>
-                      <div class="mt-2 text-start align-items-center d-flex justify-content-start">
-                        <div class="error row" id="error_find" style="opacity: 0;">(*) Mã giảm giá không tồn tại</div>
-                        <div class="text-success" id="success_find" style="font-style: italic; opacity: 0;">(*) Mã giảm giá hợp lệ.</div>
+                      <div class="row mt-2 d-flex justify-content-start">
+                        <div class="error fs-5 text-start ps-2" id="error_find" style="opacity: 0;">(*) Mã giảm giá không tồn tại</div>
+                        <div class="text-start fs-5" id="success_find" style="font-style: italic; opacity: 0;">(*) Mã giảm giá hợp lệ.</div>
+                        <div id="getPathFree" hidden></div>
                       </div>
                     </div>
                     <div class="modal-footer">
                       <div class="row w-100">
-                        <button class="btn btn-info" >
+                        <button class="btn btn-info" id="btn-free" ng-click="confirmFree()" disabled>
                           Thêm ngay
                         </button>
                       </div>
@@ -215,7 +216,7 @@
 
 
               <p class="fs-3 align-middle">{{ item.discount.free }}</p>
-              <h1 class="text-danger mt-3">$ {{cart.amount + 1.2 | number:2}}</h1>
+              <h1 class="text-danger mt-3">$ {{cart.amountDeliver | number:2}}</h1>
             </div>
           </div>
 
@@ -325,10 +326,16 @@
                     <td></td>
                     <th>$ 1.2</th>
                   </tr>
+                  <tr>
+                    <th>Giảm giá : </th>
+                    <td></td>
+                    <td></td>
+                    <th> {{ discount_add_voucher.free > 0 ? discount_add_voucher.free : '...' }} %</th>
+                  </tr>
                 </tbody>
               </table>
               <br>
-              <h2 class="text-end text-danger">TỔNG TIỀN : $ {{cart.amount + 1.2 | number:2}}</h2>
+              <h2 class="text-end text-danger">TỔNG TIỀN : $ {{cart.amountDeliver | number:2}}</h2>
             </div>
 
 
