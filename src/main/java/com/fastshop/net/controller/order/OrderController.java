@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.model.Order;
-import com.fastshop.net.model.OrderDetail;
 import com.fastshop.net.repository.OrderDetailDAO;
 import com.fastshop.net.service.ProductService;
 import com.fastshop.net.service.StatusService;
