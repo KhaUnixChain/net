@@ -5,8 +5,8 @@
         <div class="col-lg-5 mb-30">
           <div id="product-carousel" class="carousel slide" data-ride="carousel"   style="position: relative;">
             <div class="carousel-inner">
-              <div class="carousel-item d-flex justify-content-center active pt-3 pb-3">
-                <img style="width: 70%; border-radius: 5px;" th:src="@{${'/dist/img/products/'+{product.image}}}" class="bg-white" alt="Image">
+              <div class="carousel-item d-flex justify-content-center active pt-2 pb-3">
+                <img style="width: 90%;" th:src="@{${'/dist/img/products/'+{product.image}}}" class="bg-white" alt="Image">
               </div>
             </div>
             <a class="carousel-control-prev text-muted" href="#product-carousel" data-slide="prev">
@@ -54,7 +54,7 @@
               </div>
               <small class="mt-1 ms-1 text-muted"> Đã bán [[${countBought}]] sản phẩm</small>
             </div>
-            <h1 class="mb-4 text-danger">$ [[${product.price}]] / cái</h1>
+            <h1 class="mb-4 text-danger">$ [[${product.price}]] / [[${product.category.unit}]]</h1>
             <div class="pt-2 pb-3" th:if="${discountUnexpery.size() > 0}">
               <h3 class="text-muted">Giảm giá hiện có</h3>
               <div class="d-flex align-items-center">
@@ -73,9 +73,9 @@
                 <!-- modal discount free -->
                 <div class="modal modal-blur fade" id="modal-free" tabindex="-1" style="display: none;" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                    <div class="modal-content" style="background-color: rgba(0,0,0, 0.1);">
-                      <div class="modal-header">
-                        <h5 class="modal-title text-primary">Danh sách ưu đãi</h5>
+                    <div class="modal-content" style="background-color: rgba(0,0,0,0.07);">
+                      <div class="modal-header bg-yellow">
+                        <h5 class="modal-title text-white">Danh sách ưu đãi</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">

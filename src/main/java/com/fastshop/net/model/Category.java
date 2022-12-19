@@ -28,6 +28,9 @@ public class Category implements Serializable{
 
 	Boolean status;
 
+	@Column(name = "unit", columnDefinition = "nvarchar(25)")
+	String unit;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "category")
 	List<Product> products;
