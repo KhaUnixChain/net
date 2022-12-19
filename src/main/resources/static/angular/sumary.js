@@ -1111,7 +1111,7 @@ app.controller("mode-cart-ctrl", ($scope, $http) => {
 
         setTimeout(() => {
             $http.put(url_id).then(() => {
-                window.location.href = "http://localhost:8080/admin/history";
+                window.location.href = window.location.href;
             }).catch((err) => {});    
         }, 800);
     };

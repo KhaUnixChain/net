@@ -68,8 +68,12 @@
                     <span ng-if="notify.status == false" class="status-dot status-dot-animated bg-red d-block"></span>
                     <span ng-if="notify.status == true" class="status-dot status-dot-animated bg-green d-block"></span>
                   </div>
-                  <div class="col text-truncate pe-4 me-2" style="width: 450px;">
+                  <div class="col text-truncate pe-4 me-2" th:if="${auth.role.id == 'ADMIN'}" style="width: 450px;">
                     <a href="#" ng-click="update_status(notify.id)" class="text-body d-block">{{notify.title}}</a>
+                    <div class="d-block text-muted pe-2 fs-5">{{notify.fileName}}</div>
+                  </div>
+                  <div class="col text-truncate pe-4 me-2" th:if="${auth.role.id == 'STAFF'}" style="width: 450px;">
+                    <span ng-click="update_status(notify.id)" class="text-body d-block">{{notify.title}}</span>
                     <div class="d-block text-muted pe-2 fs-5">{{notify.fileName}}</div>
                   </div>
                 </div>
