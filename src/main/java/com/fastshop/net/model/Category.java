@@ -22,7 +22,7 @@ public class Category implements Serializable{
 	@Column(name = "id", columnDefinition = "nvarchar(255)", nullable = false, unique = true)
 	String id;
 
-	@NotBlank(message = "Please enter name category.")
+	@NotBlank(message = "Vui lòng nhập tên thể loại hàng.")
 	@Column(name = "name", columnDefinition = "nvarchar(25)", nullable = false, unique = true)
 	String name;
 

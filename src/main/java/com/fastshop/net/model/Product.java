@@ -32,23 +32,23 @@ public class Product implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 
-	@NotBlank(message = "Product name cannot blank.")
+	@NotBlank(message = "Tên sản phẩm không được để trống.")
 	@Column(name = "name", columnDefinition = "nvarchar(50)", nullable = false)
 	String name;
 
 	String image;
 	
-	@PositiveOrZero(message = "Price must be greater equals 0.")
+	@PositiveOrZero(message = "Giá sản phẩm phải lớn hơn 0.")
 	Double price;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "Createdate")
 	Date createDate = new Date();
 
-	@NotNull(message = "You need choose least an avaiable")
+	@NotNull(message = "Bạn phải chọn trạng thái sản phẩm.")
 	Boolean available;
 
-	@PositiveOrZero(message = "Price must be greater equals 0.")
+	@PositiveOrZero(message = "Số lượng sản phẩm phải lớn hơn0.")
 	Integer number;
 
 	@ManyToOne

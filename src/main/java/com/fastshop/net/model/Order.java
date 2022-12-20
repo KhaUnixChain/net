@@ -30,7 +30,7 @@ public class Order  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 
-	@NotBlank(message = "Address cannot blank.")
+	@NotBlank(message = "Địa chỉ không được để trống.")
 	@Column(name = "address", columnDefinition = "nvarchar(100)", nullable = false)
 	String address;
 

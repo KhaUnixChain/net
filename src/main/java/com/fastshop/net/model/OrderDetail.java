@@ -22,7 +22,7 @@ public class OrderDetail  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 
-	@PositiveOrZero(message = "Quantity must be greater equals 0")
+	@PositiveOrZero(message = "Số lượng mua phải lớn hơn 0.")
 	Integer quantity;
 
 	@ManyToOne

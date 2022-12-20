@@ -32,18 +32,18 @@
               <p class="text-muted fs-5">Hãy điền đầy đủ username và password của bạn thông tin của các bạn luôn được chúng tôi bảo mật an toàn.</p>
             </div>
             <div class="mb-3 text-start">
-              <input type="text" class="form-control text-dark" th:field="*{usernameOrEmail}" placeholder="Username&hellip;">
+              <input type="text" class="form-control text-dark" th:field="*{usernameOrEmail}" placeholder="Tên đăng nhập hoặc email&hellip;">
               <!-- this is error username or email  -->
               <i class="error fs-5" th:errors="*{usernameOrEmail}"></i>
             </div>
             <div class="mb-1 text-start">
-              <input type="password" class="form-control text-dark" th:field="*{password}" placeholder="Password&hellip;">
+              <input type="password" class="form-control text-dark" th:field="*{password}" placeholder="Mật khẩu&hellip;">
               <!-- this is error password -->
               <i class="error fs-5" th:errors="*{password}"></i>
             </div>
             <div class="mb-4 text-start">
               <span class="form-label-description">
-                <a href="/forgot" class="fs-5">I forgot password ?</a>
+                <a href="/forgot" class="fs-5">Quên mật khẩu ?</a>
               </span>
             </div>
             <div class="mb-3">

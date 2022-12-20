@@ -33,25 +33,25 @@ import lombok.Setter;
 @Table(name = "Accounts")
 public class Account  implements Serializable{
 	@Id
-	@NotBlank(message = "(*) Username cannot blank.")
+	@NotBlank(message = "(*) Tên đăng nhập không được để trống.")
 	@Column(name = "username", columnDefinition = "varchar(30)", nullable = false)
 	private String username;
 
-	@Pattern(regexp = "^[a-zA-Z0-9!@#$%^&*()_+=.,/\\`~*-]{6,}$", message = "(*) Password's not enough to private and blank.")
+	@Pattern(regexp = "^[a-zA-Z0-9!@#$%^&*()_+=.,/\\`~*-]{6,}$", message = "(*) Mật khẩu không được nhỏ hơn 6 ký tự.")
 	@Column(name = "password", columnDefinition = "nvarchar(15)", nullable = false)
 	private String password;
 
-	@NotBlank(message = "(*) Fullname cannot blank.")
+	@NotBlank(message = "(*) Tên đầy đủ không được để trống")
 	@Column(name = "fullname", columnDefinition = "nvarchar(30)", nullable = false)
 	private String fullname;
 
-	@Email(message = "(*) Email not valid.")
-	@NotBlank(message = "(*) Email cannot blank.")
-	@Pattern(regexp = "^[a-zA-Z0-9._-]{1,}+@[a-zA-Z0-9-]{3,}+\\.[a-zA-Z0-9-]{1,}$", message = "(*) Email's have to match format internal.")
+	@Email(message = "(*) Email không hợp lệ.")
+	@NotBlank(message = "(*) Email không được để trống")
+	@Pattern(regexp = "^[a-zA-Z0-9._-]{1,}+@[a-zA-Z0-9-]{3,}+\\.[a-zA-Z0-9-]{1,}$", message = "(*) Email phải đúng định dạng example@example.com")
 	@Column(name = "email", columnDefinition = "varchar(30)", nullable = false, unique = true)
 	private String email;
 
-	@Pattern(regexp = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$", message = "(*) Phone is invalid of international number")
+	@Pattern(regexp = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$", message = "(*) Số điện thoại không đúng định dạng.")
 	@Column(name = "phone", columnDefinition = "varchar(15)", nullable = false, unique = true)
 	private String phone;
 
