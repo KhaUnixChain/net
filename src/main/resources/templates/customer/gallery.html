@@ -260,7 +260,7 @@
 
       <!-- danh sach cac san pham chay bang thymeleaf -->
       <div class="row row-cards" id="gallery-page" th:if="${products != null}">
-        <div th:if="${index.index < pageNumber}" th:each="item, index : ${products}" class="col-sm-6 col-lg-3">
+        <div th:each="item, index : ${products}" class="col-sm-6 col-lg-3">
           <a th:href="@{|${'/user/detail/'+{item.id}}|}" class="d-inline">
             <div class="card card-sm p-3 d-flex text-center">
               <img th:src="@{${'/dist/img/products/'+{item.image}}}" class="card-img-top">

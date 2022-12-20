@@ -49,9 +49,6 @@ public class WebMainController {
     @Autowired
     private ApplicationContext applicationContext;
 
-    int pageNumber = 0;
-    int pageSize = 12;
-
     /**
      * this is link for empty and go head /fastshop.com
      * @return
@@ -71,7 +68,6 @@ public class WebMainController {
     @RequestMapping("/fastshop.com")
     public String index(Model model, @ModelAttribute("auth") Authority auth) throws IOException {
         try {
-            pageNumber += 1;
             String title_main = "Fastshop.com - Nơi những mặt hàng được vận chuyển nhanh chóng mặt";
             int number_hint_keyword = 5;
             Resource[] resources_hot = applicationContext.getResources("classpath*:/static/hot/*");
@@ -79,7 +75,6 @@ public class WebMainController {
             model.addAttribute("files", resources_hot);
             model.addAttribute("discount", resources_dis);
             model.addAttribute("products", cartSevice.findAll());
-            model.addAttribute("pageNumber", pageSize * pageNumber);
             model.addAttribute("title_main", title_main);
             model.addAttribute("hints", categoryService.getOneProductEachCategories(number_hint_keyword));
 
