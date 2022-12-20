@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fastshop.net.model.Account;
 import com.fastshop.net.model.AccountDTO;
-
+import com.fastshop.net.model.Role;
 import com.fastshop.net.service._CookieService;
 import com.fastshop.net.service._MailService;
 import com.fastshop.net.service.AccountService;
@@ -69,28 +69,29 @@ public class ForgorController {
 
     @RequestMapping("/ChangeForgotPassword")
     public String uploadPassword(Model model, @ModelAttribute("accounts") AccountDTO accountDTO) {
-        if (accountDTO.getNewPassword().isEmpty()) {
-            model.addAttribute("error1", "Mật khẩu mới cần phải được nhập ...");
-        }
-        if (accountDTO.getConfirmPassword().isEmpty()) {
-            model.addAttribute("error2", "Mật khẩu Xác nhận cần được nhập ...");
-        }
+        String message = "";
+        model.addAttribute("error1", accountDTO.getNewPassword().isEmpty() ? "(*) Mật khẩu mới cần phải được nhập ..." : "");
+        model.addAttribute("error2", accountDTO.getConfirmPassword().isEmpty() ? "(*) Mật khẩu Xác nhận cần được nhập ..." : !accountDTO.getNewPassword().equals(accountDTO.getConfirmPassword()) ? "(*) Không trùng mật khẩu" : "");
+        String email = cookie.getValue("email");
+        Account account = accountService.findByEmail(email);
 
-        if (!accountDTO.getNewPassword().equals(accountDTO.getConfirmPassword())) {
-            model.addAttribute("error2", "Mật khẩu không khớp ...");
-        }
-
-        try {
-            if (accountDTO.getNewPassword().equals(accountDTO.getConfirmPassword())) {
-                String email = cookie.getValue("email");
-                Account account = accountService.findByEmail(email);
+        if (accountDTO.getNewPassword().isEmpty() == false && accountDTO.getConfirmPassword().isEmpty() == false && accountDTO.getNewPassword().equals(accountDTO.getConfirmPassword())) {
+            try {
                 account.setPassword(accountDTO.getConfirmPassword());
                 accountService.save(account);
+                Role role = authService.findByAccount(account).getRole();
+                String path = role.getId().equals("USER") ? "redirect:/login" : "redirect:/login.fastshop.com";
                 cookie.remove("email");
+                return path;
+            } catch (Exception e) {
+                message = e.getMessage();
+                model.addAttribute("error2","(*) " + message);
+                return "change-forgot"; 
             }
-            return "redirect:/login";
-        } catch (Exception e) {
-            e.printStackTrace();
+        }
+        else {
+            model.addAttribute("accounts", new AccountDTO());
+            model.addAttribute("account", cookie.getValue("email"));
             return "change-forgot";
         }
     }

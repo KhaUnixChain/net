@@ -26,22 +26,19 @@
             <img th:src="@{/dist/img/logo/logo_hien.png}" height="36" alt="">
           </a>
         </div>
-        <form class="card card-md" action="/ChangeForgotPassword" th:object="${accounts}">
+        <form class="card card-md" method="post" action="/ChangeForgotPassword" th:object="${accounts}">
           <div class="card-body text-center">
             <div class="mb-4">
-              <h2 class="card-title">Change Password</h2>
-              <p class="text-muted">Vui long nhap password moi</p>
+              <h2 class="card-title">Đổi mật khẩu mới</h2>
+              <p class="text-muted">Cập nhật lại mật khẩu mới của bạn</p>
             </div>
-            <div class="mb-4">
-              <!-- [[ ${account} ]] -->
-            </div>
-            <div class="mb-4">
+            <div class="mb-2">
               <input type="password" th:field="*{newPassword}" name="password" class="form-control" placeholder="Password&hellip;">
-              <!-- <span type="text" class="error">[[${error1}]]</span> -->
+              <div class="text-start text-danger fs-5">[[${error1}]]</div>
             </div>
             <div class="mb-4">
               <input type="password" th:field="*{confirmPassword}" name="password2" class="form-control" placeholder="Confirm Password&hellip;">
-              <!-- <span type="text" class="error">[[${error2}]]</span> -->
+              <div class="text-start text-danger fs-5">[[${error2}]]</div>
             </div>
             <div>
               <button type="submit" class="btn btn-primary w-100">
