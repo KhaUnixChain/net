@@ -299,7 +299,6 @@ app.controller("cart-ctrl", ($scope, $http) => {
     // luôn lấy dữ liệu từ trong localStorage để khi bấm F5 ko bị mất
     var id = account_.innerHTML;
     number.innerHTML = (localStorage.getItem(id) == undefined) ? 0 : JSON.parse(localStorage.getItem(id)).length;
-    $scope.letter = [0,1,2,3,4,5,6,7,8,9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 
     $scope.qty = 1;
 
@@ -310,7 +309,6 @@ app.controller("cart-ctrl", ($scope, $http) => {
     $scope.plus = () => {
         $scope.qty++;
     };
-
 
     $scope.cart = {
         item: [],
@@ -568,7 +566,6 @@ app.controller("checkout-ctrl", ($scope, $http) => {
         },
         thread3() {
             $scope.notify = {
-                "id"       :20,
                 "title"    : "Bạn đã đặt hàng #" + $scope.orderNow.id + " vào " + $scope.orderNow.createDate + " thành công. Hãy kiểm tra tin nhắn trong gmail.",
                 "fileName" : "- Tin nhắn thông báo -",
                 "sentDate" : "2022-12-10",

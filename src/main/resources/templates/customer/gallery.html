@@ -260,7 +260,7 @@
 
       <!-- danh sach cac san pham chay bang thymeleaf -->
       <div class="row row-cards" id="gallery-page" th:if="${products != null}">
-        <div th:each="item : ${products}" class="col-sm-6 col-lg-3">
+        <div th:if="${index.index < 20}" th:each="item, index : ${products}" class="col-sm-6 col-lg-3">
           <a th:href="@{|${'/user/detail/'+{item.id}}|}" class="d-inline">
             <div class="card card-sm p-3 d-flex text-center">
               <img th:src="@{${'/dist/img/products/'+{item.image}}}" class="card-img-top">
@@ -286,6 +286,15 @@
               </div>
             </div>
           </a>
+        </div>
+
+
+        <div class="text-center" th:if="${products.size() > 20}" style="z-index: 1; background: linear-gradient(0deg, #fff 35%, rgba(255,255,255,0.1) 100%); padding: 130px 0px 10px 0px; margin: -120px 5px 5px 0px;">
+          <p style="cursor: pointer;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+            </svg>
+          </p>
         </div>
       </div>
 
