@@ -77,10 +77,10 @@
             </div>
             <h1 class="mb-2 text-danger">$ [[${product.price}]] / [[${product.category.unit}]]</h1>
             <div class="card">
-              <div class="card-header" style="background-color: #FFEBAD;">
-                <h3 style="font-weight: bolder; color: navy;">KHUYẾN MÃI</h3>
+              <div class="card-header" style="background-color: #eae9e7;">
+                <h3 style="font-weight: bolder; color: #495579; margin: -2px;">KHUYẾN MÃI</h3>
               </div>
-              <ul style="list-style-type: none; line-height: 25px;">
+              <ul class="pt-2" style="list-style-type: none; line-height: 25px;">
                 <li><strong class="text-danger">Khuyến mãi tháng 12:</strong> Hơn 100 Voucher giá trị lên đến 50%</li>
                 <li>Cam kết <strong class="text-danger">giao hàng nhanh</strong> trong 2 ngày. Thanh toán nhanh chóng và tiện lợi</li>
                 <li><img src="https://didongmango.com/modules/products/assets/images/check@2x.png" width="20px" alt="">
@@ -196,15 +196,16 @@
             <div class="align-items-center mb-4 pt-2 buy-product">
               <h3 class="text-muted">Số lượng mua</h3>
               <div class="input-group d-flex justify-content-between me-3 pb-3">
-                <div class="btn-group" style="margin-right: 20px;">
-                  <button type="button" class="btn text-white" style="box-shadow: none; background-color: #A62349;" ng-click="minus()">
+                <div class="btn-group">
+                  <button type="button" class="btn text-white ps-4 pe-4" style="box-shadow: none; background-color: #A62349;" ng-click="minus()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                       class="bi bi-dash-lg" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z" />
                     </svg>
                   </button>
-                  <button type="button" class="btn" style="background-color: #F9F9F9; width: 50px; border: none; outline: none;" disabled>{{qty}}</button>
-                  <button type="button" class="btn text-white" style="box-shadow: none; background-color: #293462;" ng-click="plus()">
+                  <!-- qty -->
+                  <button type="button" class="btn ps-1 pe-1" style="background-color: #e9e8e8; width: 50px; border: none; outline: none; font-weight: bolder;" disabled>{{qty}}</button>
+                  <button type="button" class="btn text-white ps-4 pe-4" style="box-shadow: none; background-color: #293462;" ng-click="plus()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
                     </svg>
@@ -221,7 +222,7 @@
                       </svg> Thêm vào giỏ hàng
                     </button>
                     <a href="/user/checkout" onclick="add(true)" th:attr="ng-click=@{|cart.add(${product.id})|}" style="text-decoration: none;" th:if="${auth.role.id == 'USER'}">
-                      <button class="btn btn-danger">
+                      <button class="btn btn-danger ps-4 pe-4">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3 me-2" viewBox="0 0 16 16">
                           <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                         </svg> Mua ngay
@@ -256,8 +257,8 @@
         <div class="mt-4 bg-white ps-3 row">
           <h2 class="mb-2 text-primary">Địa chỉ giao hàng</h2>
           <div class="row ms-2">
-            <div class="col {{ l%2==0? 'bg-primary' : 'bg-danger' }} me-2" ng-repeat="l in letter"
-              style="height: 3px; opacity: 0.6; transform: skewX(40deg);"></div>
+            <div class="col {{ l%2==0? 'bg-primary' : 'bg-danger' }} me-2" ng-repeat="l in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]" 
+            style="height: 3px; opacity: 0.6;"></div>
           </div>
           <div class="row ms-1 pt-3 bg-light d-flex justify-content-between">
             <p class="text-tructure me-1 pt-2 col-lg-10">

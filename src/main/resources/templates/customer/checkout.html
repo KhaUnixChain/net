@@ -33,16 +33,16 @@
 
             <!-- qty -->
             <td class="align-middle input-group mt-4">
-              <button class="btn btn-light btn-minus" ng-click="cart.minus(item.id)" style="height: 30px; box-shadow: none;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+              <button class="btn btn-light btn-minus" ng-click="cart.minus(item.id)" style="height: 30px; box-shadow: none; background-color: #A62349;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg text-white" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"/>
                 </svg>
               </button>
 
               <input type="text" class="text-center bg-white" ng-change="cart.saveToLocalStorage()" ng-model="item.qty" style="width: 40px; height: 30px; border: 1px solid lightgray; " disabled>
 
-              <button class="btn btn-light btn-plus" ng-click="cart.plus(item.id)" style="height: 30px; box-shadow: none;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+              <button class="btn btn-light btn-plus" ng-click="cart.plus(item.id)" style="height: 30px; box-shadow: none; background-color: #293462;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg text-white" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                 </svg>
               </button>
@@ -76,12 +76,12 @@
       <div class="m-0 p-3 bg-white row mt-3">
         <h2 class="text-primary">Địa chỉ giao hàng</h2>
         <div class="d-flex justify-content-between" th:if="${address != '' && address != null}">
-          <p>Giao hàng tại địa chỉ : [[${address}]]</p>
+          <p><strong>Giao hàng tại địa chỉ :</strong> [[${address}]]</p>
           <a href="/user/address"><strong>Đổi địa chỉ</strong></a>
         </div>
 
         <div class="d-flex justify-content-between" th:if="${address == '' || address == null}">
-          <p>Giao hàng tại địa chỉ : <span class="text-danger">* ( Bạn chưa có địa chỉ nào. Hãy thêm địa chỉ để được xem trước hóa đơn )</span></p>
+          <p><strong>Giao hàng tại địa chỉ :</strong> <span class="text-danger">* ( Bạn chưa có địa chỉ nào. Hãy thêm địa chỉ để được xem trước hóa đơn )</span></p>
           <a href="/user/address"><strong>Thêm địa chỉ</strong></a>
         </div>
       </div>
