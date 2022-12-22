@@ -162,8 +162,8 @@
                     <td><b>[[${o.id}]]</b></td>
                     <td>[[${o.createDate}]]</td>
                     <td>
-                      <a th:href="@{${'/staff/detail/' + pro.product.id}}" th:each="pro : ${o.orderDetails}">
-                        <p>[[${pro.product.name}]]</p>
+                      <a href="####" onclick="showImage(this.id)" th:id="${pro.product.image}" th:each="pro : ${o.orderDetails}">
+                        [[${pro.product.name}]]
                       </a>
                     </td>
                     <td class="text-center">
@@ -397,4 +397,16 @@
       </div>
     </div>
   </div>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    function showImage(image) {
+      var path = "http://localhost:8080/dist/img/products/" + image;
+      Swal.fire({
+        title: document.getElementById(image).innerHTML,
+        imageUrl: path,
+        imageWidth: 400,
+        imageHeight: 350,
+      })
+    }
+  </script>
 </div>
