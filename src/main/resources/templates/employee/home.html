@@ -161,10 +161,10 @@
                   <tr>
                     <td><b>[[${o.id}]]</b></td>
                     <td>[[${o.createDate}]]</td>
-                    <td>
-                      <a href="####" onclick="showImage(this.id)" th:id="${pro.product.image}" th:each="pro : ${o.orderDetails}">
+                    <td class="text-truncate text-primary" style="cursor: pointer;">
+                      <p href="####" onclick="showImage(this.id)" th:id="${pro.product.image}" th:each="pro : ${o.orderDetails}">
                         [[${pro.product.name}]]
-                      </a>
+                      </p>
                     </td>
                     <td class="text-center">
                       <p th:each="pro : ${o.orderDetails}" class="text-center">[[${pro.quantity}]]</p>
