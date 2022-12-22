@@ -10,6 +10,7 @@ public interface OrderService {
     void save(Order order);
     void deleteById(Long id);
     Order findById(Long id);
+    Double totalRevenueByYear(int year);
     String findAddressByUsername(Account account);
     List<Order> findAll();
     List<Order> getAllOfOrderToday(Date date);

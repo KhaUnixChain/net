@@ -79,4 +79,9 @@ public class OrderServiceImpl implements OrderService{
     public List<Order> findByStatusAndAccount(Integer id, Account account) {
         return orderDAO.findByStatusAndAccount(id, account);
     }
+
+    @Override
+    public Double totalRevenueByYear(int year) {
+        return orderDAO.totalRevenueByYear(year);
+    }
 }

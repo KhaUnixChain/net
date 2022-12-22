@@ -50,6 +50,11 @@ public class RestOrderController {
         return orderService.getAllOfOrderToday(new Date());
     }
 
+    @GetMapping("/rest/orders/year/{year}")
+    public Double getTotalRevenueYear(@PathVariable("year") int year) {
+        return orderService.totalRevenueByYear(year);
+    }
+
     @GetMapping("/rest/orders/status/{username}/{id}")
     public List<Order> getOrderStatusId(@PathVariable("id") Integer id, @PathVariable("username") String username) {
         Account account = accountService.findByUsername(username);

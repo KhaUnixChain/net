@@ -31,4 +31,7 @@ public interface OrderDAO extends JpaRepository<Order, Long>{
 
     @Query("SELECT o FROM Order o WHERE o.status.id = ?1 AND o.account = ?2")
     List<Order> findByStatusAndAccount(Integer id, Account account);
+
+    @Query("SELECT SUM(o.total) FROM Order o WHERE YEAR(o.createDate) = ?1 AND o.status.id = 4")
+    Double totalRevenueByYear(int year);
 }

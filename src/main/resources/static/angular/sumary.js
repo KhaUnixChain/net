@@ -201,18 +201,36 @@ app.controller('chart-ctrl', ($scope, $http) => {
 
 app.controller('chart2-ctrl', ($scope, $http) => {
 	$scope.titles = [];
+    $scope.revenue = {
+        item: [],
+        get total() {
+            return this.item
+                        .map(item => item)
+                        .reduce((total, r) => total+=r, 0);
+        }
+    };
+    // console.log($scope.revenue);
     
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
 
+    for (let index = 0; index < 5; index++) {
+        var year = new Date().getFullYear() - index;
+        var urlRevenue = `${host_}/orders/year/${year}`;
+        $http.get(urlRevenue).then((resp) => {
+            $scope.revenue.item[index] = resp.data;
+        }).catch((err) => {
+        });
+    }
+
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
             ['Contry', 'Mhl'],
-            ['Doanh số năm 2018',54.8],
-            ['Doanh số năm 2019',48.6],
-            ['Doanh số năm 2020',44.4],
-            ['Doanh số năm 2021',23.9],
-            ['Doanh số năm 2022',14.5]
+            ['Doanh thu năm ' + (new Date().getFullYear() - 4), $scope.revenue.item[4] * 100 / $scope.revenue.total],
+            ['Doanh thu năm ' + (new Date().getFullYear() - 3), $scope.revenue.item[3] * 100 / $scope.revenue.total],
+            ['Doanh thu năm ' + (new Date().getFullYear() - 2), $scope.revenue.item[2] * 100 / $scope.revenue.total],
+            ['Doanh thu năm ' + (new Date().getFullYear() - 1), $scope.revenue.item[1] * 100 / $scope.revenue.total],
+            ['Doanh thu năm ' + (new Date().getFullYear() - 0), $scope.revenue.item[0] * 100 / $scope.revenue.total]
         ]);
         var chart = new google.visualization.PieChart(document.getElementById('myChart23'));
         chart.draw(data);
