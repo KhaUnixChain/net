@@ -156,23 +156,21 @@ app.controller("history-ctrl", ($scope, $http) => {
 app.controller('chart-ctrl', ($scope, $http) => {
 	$scope.titles = [];
 	$scope.load_title = () => {
-		var url = `${host_}/categories/name/`;
+		var url = `${host_}/orderdetails/category/report`;
 		$http
 			.get(url)
 			.then((resp) => {
 				$scope.titles = resp.data;
 				var ctx = document.getElementById('myChart');
+                // console.log($scope.titles);
 				var myChart = new Chart(ctx, {
 					type: 'line',
 					data: {
-						labels: $scope.titles,
+						labels: $scope.titles.map(item => item.group.name),
 						datasets: [
 							{
 								label: 'Phân loại hàng',
-								data: [
-									12, 19, 34, 5, 2, 3, 12, 19, 29, 5, 2, 3, 44, 12, 26, 3, 5,
-									19, 16, 25, 33, 17,
-								],
+								data: $scope.titles.map(item => item.count),
 								backgroundColor: [
 									'rgba(255, 99, 132, 0.2)',
 									'rgba(54, 162, 235, 0.2)',

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fastshop.net.model.CatReport;
 import com.fastshop.net.model.OrderDetail;
 import com.fastshop.net.service.OrderDetailService;
 
@@ -29,6 +30,11 @@ public class RestOrderDetailController {
     @GetMapping("/rest/orderdetails/{id}")
     public OrderDetail getOrderId(@PathVariable("id") Long id) {
         return orderDetailService.findById(id);
+    }
+
+    @GetMapping("/rest/orderdetails/category/report")
+    public List<CatReport> reportCategory() {
+        return orderDetailService.getNumberOrderedEachCategory();
     }
 
     @PostMapping("/rest/orderdetails")

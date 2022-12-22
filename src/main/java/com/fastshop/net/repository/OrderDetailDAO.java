@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.fastshop.net.model.CatReport;
 import com.fastshop.net.model.Order;
 import com.fastshop.net.model.OrderDetail;
 import com.fastshop.net.model.Product;
@@ -23,4 +24,6 @@ public interface OrderDetailDAO extends JpaRepository<OrderDetail, Long>{
     Integer countByProduct(Product product);
     @Query("select od.product.name from OrderDetail od group by od.product.name order by SUM(od.quantity) DESC")
     List<String> getTop3BestSelling();
+    @Query("SELECT new CatReport(od.product.category, COUNT(od)) FROM OrderDetail od GROUP BY od.product.category")
+    List<CatReport> getNumberOrderedEachCategory();
 }

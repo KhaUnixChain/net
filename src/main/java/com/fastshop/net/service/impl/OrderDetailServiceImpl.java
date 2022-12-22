@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fastshop.net.model.CatReport;
 import com.fastshop.net.model.OrderDetail;
 import com.fastshop.net.model.Product;
 import com.fastshop.net.repository.OrderDetailDAO;
@@ -71,5 +72,10 @@ public class OrderDetailServiceImpl implements OrderDetailService{
     @Override
     public Integer getTotalOrderLast() {
         return orderDetailDAO.getTotalOrderLast();
+    }
+
+    @Override
+    public List<CatReport> getNumberOrderedEachCategory() {
+        return orderDetailDAO.getNumberOrderedEachCategory();
     }
 }
