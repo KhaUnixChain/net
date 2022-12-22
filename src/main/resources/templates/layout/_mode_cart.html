@@ -59,10 +59,10 @@
             <div class="card-header">
               <h3 class="card-title">Thông báo của bạn</h3>
             </div>
-            <div class="list-group list-group-flush list-group-hoverable">
+            <div class="list-group list-group-flush list-group-hoverable" style="height: 420px; overflow-y: scroll;">
   
               <!-- display for staff -->
-              <div class="list-group-item" ng-repeat="notify in count_notify | limitTo: 5">
+              <div class="list-group-item" ng-repeat="notify in count_notify">
                 <div class="row align-items-center">
                   <div class="col-auto">
                     <span ng-if="notify.status == false" class="status-dot status-dot-animated bg-red d-block"></span>
