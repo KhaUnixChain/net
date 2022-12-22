@@ -1122,13 +1122,18 @@ app.controller("mode-cart-ctrl", ($scope, $http) => {
             $http.get(url_id).then((resp) => {
                 $scope.notify = resp.data;
             }).catch((err) => {});    
-        }, 400);
+        }, 200);
         
 
         setTimeout(() => {
             $http.put(url_id).then(() => {
-                window.location.href = window.location.href;
-            }).catch((err) => {});    
-        }, 800);
+                if (window.location.href.includes("admin")) {
+                    window.location.href = "http://localhost:8080/admin/history";
+                }
+                else if (window.location.href.includes("staff")) {
+                    window.location.href = window.location.href;
+                }
+            }).catch((err) => {});
+        }, 300);
     };
 });
