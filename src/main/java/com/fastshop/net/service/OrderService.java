@@ -11,7 +11,9 @@ public interface OrderService {
     void deleteById(Long id);
     Order findById(Long id);
     Double totalRevenueByYear(int year);
+    Integer countOrderSuccess();
     String findAddressByUsername(Account account);
+    List<String> getListUsernameOrdered();
     List<Order> findAll();
     List<Order> getAllOfOrderToday(Date date);
     List<Order> findNotByCreateDate(Date toNow);

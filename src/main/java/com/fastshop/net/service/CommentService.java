@@ -19,5 +19,6 @@ public interface CommentService {
     List<Comment> findByAccount(Account account);
     void save(Comment account);
     void deleteById(Integer id);
+    Integer countByRateEquals5();
     List<Comment> listCommentByUser(String username);
 }

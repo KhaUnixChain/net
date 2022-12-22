@@ -84,4 +84,14 @@ public class OrderServiceImpl implements OrderService{
     public Double totalRevenueByYear(int year) {
         return orderDAO.totalRevenueByYear(year);
     }
+
+    @Override
+    public Integer countOrderSuccess() {
+        return orderDAO.countOrderSuccess();
+    }
+
+    @Override
+    public List<String> getListUsernameOrdered() {
+        return orderDAO.getListUsernameOrdered();
+    }
 }

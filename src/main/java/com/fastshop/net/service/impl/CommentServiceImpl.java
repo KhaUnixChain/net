@@ -90,4 +90,9 @@ public class CommentServiceImpl implements CommentService{
     public List<Comment> listCommentByUser(String username) {
         return commentDAO.listCommentByUser(username);
     }
+
+    @Override
+    public Integer countByRateEquals5() {
+        return commentDAO.countByRateEquals5();
+    }
 }

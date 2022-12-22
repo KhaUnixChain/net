@@ -23,4 +23,7 @@ public interface CommentDAO extends JpaRepository<Comment, Integer>{
 
     @Query("SELECT o FROM Comment o WHERE o.account.username = ?1")
     List<Comment> listCommentByUser(String username);
+
+        @Query("SELECT COUNT(o) FROM Comment o WHERE o.rate = 5")
+    Integer countByRateEquals5();
 }

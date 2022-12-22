@@ -10,6 +10,8 @@ import com.fastshop.net.model.Account;
 import com.fastshop.net.model.Authority;
 import com.fastshop.net.service.AccountService;
 import com.fastshop.net.service.AuthorityService;
+import com.fastshop.net.service.CommentService;
+import com.fastshop.net.service.DiscountService;
 import com.fastshop.net.service.HistoryService;
 import com.fastshop.net.service.NotifyService;
 import com.fastshop.net.service.OrderDetailService;
@@ -32,25 +34,43 @@ public class AdminController {
     @Autowired
     OrderService orderService;
     @Autowired
+    DiscountService discountService;
+    @Autowired
+    CommentService commentService;
+    @Autowired
     OrderDetailService orderDetailService;
     @Autowired
     NotifyService notifyService;
 
     @RequestMapping("/admin/home")
     public String home(Model model, @ModelAttribute("auth") Authority authority) {
-        String title_main = "Admin - Thống kê doanh số bán hàng";
-        model.addAttribute("page", "admin.home");
-        model.addAttribute("title_main", title_main);
-        model.addAttribute("totalRevenue", orderDetailService.getTotalRevenue());
-        model.addAttribute("totalRevenueLast", orderDetailService.getTotalRevenueLast());
-        model.addAttribute("totalOrder", orderDetailService.getTotalOrder());
-        model.addAttribute("totalOrderLast", orderDetailService.getTotalOrderLast());
-        model.addAttribute("top3Product", orderDetailService.getTop3BestSelling());
-        model.addAttribute("histories", historyService.findAll());
-        model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(authority.getAccount()));
+        try {
+            String title_main = "Admin - Thống kê doanh số bán hàng";
+            model.addAttribute("page", "admin.home");
+            model.addAttribute("title_main", title_main);
+            model.addAttribute("totalRevenue", orderDetailService.getTotalRevenue());
+            model.addAttribute("totalRevenueLast", orderDetailService.getTotalRevenueLast());
+            model.addAttribute("totalOrder", orderDetailService.getTotalOrder());
+            model.addAttribute("totalOrderLast", orderDetailService.getTotalOrderLast());
+            model.addAttribute("top3Product", orderDetailService.getTop3BestSelling());
 
-        return "index";
+            // thông số số lượng của admin
+            model.addAttribute("members", authorityService.countByRoleEqualsUser());
+            model.addAttribute("memeberOrdered", orderService.getListUsernameOrdered().size());
+            model.addAttribute("histories", historyService.findAll());
+            model.addAttribute("voucherAll", discountService.findByAll().size());
+            model.addAttribute("voucherUnexpiry", discountService.findByDiscountUnexpiry().size());
+            model.addAttribute("orderAll", orderService.findAll().size());
+            model.addAttribute("orderSuccess", orderService.countOrderSuccess());
+            model.addAttribute("commentsAll", commentService.findAll().size());
+            model.addAttribute("comments5", commentService.countByRateEquals5());
 
+            model.addAttribute("count_notify", notifyService.findAllByAccAndNowAndStatusTrueOrderBy(authority.getAccount()));
+            return "index";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/login.fastshop.com";
+        }
     }
 
     @RequestMapping("/admin/employee")
