@@ -44,18 +44,24 @@ public class ForgorController {
     @RequestMapping("/forgot/access")
 	 public String sendMail(Model model, @RequestParam("email") String email) {
 		try {
-			Account account = accountService.findByEmail(email);
-			if (account != null) {
-				cookie.add("email", email, 1*24*60);
-				mailService.send(
-                    email, 
-                    "Xác nhận tài khoản của bạn",
-                    "<a href='http://localhost:8080/ChangeForgot'><button class='btn btn-primary'>Nhấn xác nhận</button></a>"
-                );
-			}
-            return "success/success";
+            if (email.isEmpty()) {
+                model.addAttribute("error_forgot", "(*) Vui lòng nhập email.");
+                return "forgot";
+            }
+            else {
+                Account account = accountService.findByEmail(email);
+                if (account != null) {
+                    cookie.add("email", email, 1*24*60);
+                    mailService.send(
+                        email, 
+                        "Xác nhận tài khoản của bạn",
+                        "<a href='http://localhost:8080/ChangeForgot'><button class='btn btn-primary'>Nhấn xác nhận</button></a>"
+                    );
+                }
+                return "success/success";
+            }
 		} catch (Exception e) {
-			model.addAttribute("error_forgot", e.getMessage());
+			model.addAttribute("error_forgot", "(*) Email của bạn không tồn tại.");
             return "forgot";
 		}
 	}
