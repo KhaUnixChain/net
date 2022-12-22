@@ -12,6 +12,7 @@ public interface AuthorityService {
     void deleteByAuthority(Authority authority);
     Role getRoleByAccount(Account account);
     Authority findByAccount(Account account);
+    Integer countByRoleEqualsUser();
     List<Authority> findAll();
     List<Account> getListStaff();
     List<Account> findByKeyword(String keyword);

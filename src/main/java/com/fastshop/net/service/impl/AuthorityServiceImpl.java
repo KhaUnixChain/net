@@ -55,4 +55,9 @@ public class AuthorityServiceImpl implements AuthorityService{
     public List<Account> findByKeyword(String keyword) {
         return authorityDAO.findByKeyword(keyword);
     }
+
+    @Override
+    public Integer countByRoleEqualsUser() {
+        return authorityDAO.countByRoleEqualsUser();
+    }
 }

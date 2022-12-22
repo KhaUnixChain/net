@@ -17,4 +17,7 @@ public interface AuthorityDAO extends JpaRepository<Authority, Integer>{
 
     @Query("SELECT au.account FROM Authority au WHERE (au.role.id='STAFF') AND (au.account.id=?1)")
     List<Account> findByKeyword(String keyword);
+
+    @Query("SELECT COUNT(o) FROM Authority o WHERE o.role.id ='USER'")
+    Integer countByRoleEqualsUser();
 }
