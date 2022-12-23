@@ -113,22 +113,22 @@
           <div class="modal-body">
             <div class="mb-3">
               <label class="form-label">Mã loại hàng:</label>
-              <input type="text" th:field="*{id}" class="form-control" name="example-text-input" placeholder="Nhập mã loại hàng ở đây">
+              <input type="text" th:field="*{id}" class="form-control" pattern="^[A-Z]{1,5}$" required name="example-text-input" placeholder="Nhập mã loại hàng ở đây">
             </div>
             <div class="mb-3">
               <label class="form-label">Tên loại hàng:</label>
-              <input type="text" th:field="*{name}" class="form-control" name="example-text-input" placeholder="Nhập tên mã loại hàng ở đây">
+              <input type="text" th:field="*{name}" class="form-control" required name="example-text-input" placeholder="Nhập tên mã loại hàng ở đây">
             </div>
             <div class="mb-3">
               <label class="form-label">Đơn vị:</label>
-              <input type="text" th:field="*{unit}" class="form-control" name="example-text-input" placeholder="Nhập đơn vị">
+              <input type="text" th:field="*{unit}" class="form-control" required name="example-text-input" placeholder="Nhập đơn vị">
             </div>
           </div>
           <div class="modal-footer">
             <a href="#" class="btn btn-outline-secondary" data-bs-dismiss="modal">
               Hủy bỏ
             </a>
-            <button type="submit" class="btn btn-success ms-auto" data-bs-dismiss="modal">
+            <button type="submit" class="btn btn-success ms-auto">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
               Thêm mới
             </butt>
