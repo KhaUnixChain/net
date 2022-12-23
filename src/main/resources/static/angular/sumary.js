@@ -318,12 +318,18 @@ app.controller("cart-ctrl", ($scope, $http) => {
 
     $scope.qty = 1;
 
+    $scope.number_orgin = Number(document.getElementById("numberProduct").innerHTML);
+
     $scope.minus = () => {
         $scope.qty = ($scope.qty < 2) ? 1 : $scope.qty-1;
     };
 
     $scope.plus = () => {
         $scope.qty++;
+        if ($scope.qty > $scope.number_orgin) {
+            $scope.qty = $scope.number_orgin;
+            $('.toast').toast('show');
+        }
     };
 
     $scope.cart = {
