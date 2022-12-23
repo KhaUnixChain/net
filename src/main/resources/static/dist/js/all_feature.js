@@ -16,7 +16,7 @@ var percent_100 = 0;
 function add(status) {
     if (status == true) {
         $(document).ready(function(){
-            $('.toast').toast('show');
+            $('.toast-add').toast('show');
         });   
     }
 };

@@ -328,7 +328,10 @@ app.controller("cart-ctrl", ($scope, $http) => {
         $scope.qty++;
         if ($scope.qty > $scope.number_orgin) {
             $scope.qty = $scope.number_orgin;
-            $('.toast').toast('show');
+            $('.toast-warning').toast('show');
+            setTimeout(() => {
+                $('.toast-warning').toast('hide');
+            }, 1000);
         }
     };
 
