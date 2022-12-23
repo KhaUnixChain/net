@@ -298,11 +298,9 @@ app.controller("atm-ctrl", ($scope, $http) => {
 
             setInterval(() => {
                 $http.post(url_c, $scope.atm).then((resp) => {
-                    console.log("ATM create ok", resp);
+                    $("#load-page").css("display", "none");
                     window.location.href = "http://localhost:8080/user/wallet";
-                }).catch((err) => {
-                    console.log("ATM failed", err);
-                });
+                }).catch((err) => {});
             }, 3000);
         }
     };
@@ -331,7 +329,7 @@ app.controller("cart-ctrl", ($scope, $http) => {
             $('.toast-warning').toast('show');
             setTimeout(() => {
                 $('.toast-warning').toast('hide');
-            }, 1000);
+            }, 1100);
         }
     };
 
@@ -396,6 +394,9 @@ app.controller("checkout-ctrl", ($scope, $http) => {
         plus(id_product) {
             var item = this.items.find(item => item.id == id_product);
             item.qty++;
+            if (item.qty > item.number) {
+                item.qty = item.number;
+            }
             this.saveToLocalStorage();
         },
 
@@ -549,17 +550,17 @@ app.controller("checkout-ctrl", ($scope, $http) => {
                 }).catch((err) => {
                     console.log("Order failed", err);
                 });
-            }, 3000);
+            }, 2000);
 
             setTimeout(() => {
                 this.thread2();
-            }, 6000);
+            }, 4000);
 
             setTimeout(() => {
                 this.thread3();
-            }, 7000);
+            }, 5000);
         },
-        thread2(){     
+        thread2(){
             for (var item of $scope.cart.items) {
                 $scope.detail = {
                     "product": {

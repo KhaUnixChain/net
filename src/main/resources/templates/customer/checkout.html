@@ -5,10 +5,10 @@
       <table ng-if="cart.items.length != 0" class="table bg-white table-borderless text-center" style="box-shadow:  0 0 1px gray;">
         <thead style="font-weight: bolder;">
           <tr>
-            <th class="text-center p-3">Chọn</th>
+            <th class="text-center p-3">STT</th>
             <th class="text-center p-3">Tên sản phẩm</th>
             <th class="text-start p-3">Giá cả</th>
-            <th class="text-start p-3">Số lượng</th>
+            <th class="text-start p-3">Số lượng mua</th>
             <th class="text-start p-3">Tổng tiền</th>
             <th class="text-center p-3">Xóa sản phẩm</th>
           </tr>
@@ -16,13 +16,13 @@
         <tbody class="align-middle">
           <tr class="mb-4" ng-repeat="(key,item) in cart.items">
             <td class="text-primary" style="font-weight: bolder;">
-              <input type="checkbox" style="width: 20px; height: 20px;" checked>
+              {{key + 1}}.
             </td>
             <td class="text-start pt-4" style="padding-left: 30px;">
-              <a href="/user/detail/{{item.id}}" class="text-truncate">
-                <img src="http://localhost:8080/products/{{item.image}}" alt="" style="width: 30px;">{{item.name}}
+              <a href="#" onclick="showImageUser(this.id)" id="{{item.image}}" class="text-truncate">
+                {{item.name}}
               </a>
-              <p class="fs-5 mt-3 text-muted">
+              <p class="fs-5 mt-2 text-muted">
                 <img th:src="@{/dist/img/free/7_ngay.png}" style="width: 15px;" class="me-1" alt="">
                 Giao hàng chỉ trong 2 ngày
               </p>
@@ -406,4 +406,15 @@
   <!-- script swal -->
   <link rel="stylesheet" th:href="@{/dist/css/checkout.css}">
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    function showImageUser(image) {
+      var path = "http://localhost:8080/dist/img/products/" + image;
+      Swal.fire({
+        title: document.getElementById(image).innerHTML,
+        imageUrl: path,
+        imageWidth: 400,
+        imageHeight: 350,
+      })
+    }
+  </script>
 </div>
